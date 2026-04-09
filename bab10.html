@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Latihan Soal – Bab 10 PAI Kelas VIII</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cyan:    #0891b2;
+  --cyan-dk: #0e7490;
+  --cyan-lt: #ecfeff;
+  --gold:    #f59e0b;
+  --rose:    #f43f5e;
+  --green:   #22c55e;
+  --ink:     #0c1a2e;
+  --muted:   #6b7280;
+  --card:    #ffffff;
+  --bg:      #ecfeff;
+  --radius:  16px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;}
+
+header{
+  background:linear-gradient(135deg,#164e63 0%,#0891b2 50%,#0ea5e9 100%);
+  color:#fff;padding:28px 24px 24px;text-align:center;
+  position:relative;overflow:hidden;
+}
+header::before{
+  content:'';position:absolute;inset:0;
+  background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/svg%3E");
+}
+.badge{
+  display:inline-block;background:rgba(255,255,255,.18);
+  border:1px solid rgba(255,255,255,.35);border-radius:99px;
+  font-size:12px;font-weight:700;letter-spacing:1px;
+  text-transform:uppercase;padding:4px 14px;margin-bottom:10px;
+}
+header h1{font-size:clamp(17px,3.8vw,25px);font-weight:900;line-height:1.3;position:relative;}
+header p{font-size:14px;opacity:.82;margin-top:6px;position:relative;}
+.shuffle-note{font-size:11px;opacity:.6;margin-top:2px;font-style:italic;}
+.final-badge{
+  display:inline-block;margin-top:10px;
+  background:var(--gold);color:#fff;
+  border-radius:99px;font-size:12px;font-weight:800;
+  padding:4px 14px;letter-spacing:.5px;position:relative;
+}
+
+.container{max-width:760px;margin:0 auto;padding:0 16px 40px;}
+
+.identity-card{
+  background:var(--card);border-radius:var(--radius);
+  box-shadow:0 4px 24px rgba(0,0,0,.08);
+  padding:24px;margin-top:-20px;position:relative;z-index:2;
+}
+.identity-card h2{font-size:18px;font-weight:900;color:var(--cyan-dk);margin-bottom:4px;}
+.identity-card .sub{font-size:13px;color:var(--muted);margin-bottom:16px;}
+.input-row{display:flex;gap:12px;flex-wrap:wrap;}
+.input-group{flex:1;min-width:200px;}
+.input-group label{
+  display:block;font-size:12px;font-weight:800;
+  color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;
+}
+.input-group input{
+  width:100%;padding:11px 14px;border:2px solid #e2e8f0;
+  border-radius:10px;font-family:'Nunito',sans-serif;
+  font-size:15px;font-weight:600;color:var(--ink);
+  transition:border-color .2s;background:#f8fafc;
+}
+.input-group input:focus{
+  outline:none;border-color:var(--cyan);background:#fff;
+  box-shadow:0 0 0 3px rgba(8,145,178,.12);
+}
+.input-group input::placeholder{color:#94a3b8;font-weight:600;}
+
+.progress-sticky{
+  position:sticky;top:0;z-index:10;
+  background:rgba(236,254,255,.92);backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+  padding:14px 0 10px;margin-top:20px;
+  border-bottom:1px solid rgba(8,145,178,.1);
+}
+.prog-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+.prog-label{font-size:13px;font-weight:800;color:var(--muted);}
+.prog-chips{display:flex;gap:6px;}
+.prog-chip{font-size:12px;font-weight:800;padding:3px 10px;border-radius:99px;}
+.prog-chip.cg{background:#f0fdf4;color:var(--green);}
+.prog-chip.cr{background:#fff1f2;color:var(--rose);}
+.prog-bar{height:8px;background:#a5f3fc;border-radius:99px;overflow:hidden;}
+.prog-fill{
+  height:100%;border-radius:99px;
+  background:linear-gradient(90deg,var(--cyan),#0ea5e9);
+  transition:width .5s cubic-bezier(.4,0,.2,1);
+}
+.show-result-btn{
+  display:none;margin-top:8px;
+  padding:8px 16px;border-radius:8px;
+  background:var(--cyan);color:#fff;
+  font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;
+  border:none;cursor:pointer;transition:all .2s;
+}
+.show-result-btn:hover{background:var(--cyan-dk);}
+
+.q-card{
+  background:var(--card);border-radius:var(--radius);
+  box-shadow:0 2px 16px rgba(0,0,0,.06);
+  margin-top:16px;padding:22px 24px;
+  border-left:4px solid var(--cyan);
+}
+.q-card[data-type="Pemahaman"]{border-left-color:#0284c7;}
+.q-card[data-type="Penerapan & Analisis"]{border-left-color:var(--gold);}
+.q-card.answered-correct{border-left-color:var(--green);}
+.q-card.answered-wrong{border-left-color:var(--rose);}
+
+.q-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-wrap:wrap;gap:6px;}
+.q-type-badge{
+  font-size:10px;font-weight:800;letter-spacing:.8px;
+  text-transform:uppercase;padding:3px 10px;border-radius:6px;
+}
+.q-type-badge.t-hafalan{background:var(--cyan-lt);color:var(--cyan-dk);}
+.q-type-badge.t-pemahaman{background:#e0f2fe;color:#0369a1;}
+.q-type-badge.t-penerapan{background:#fef3c7;color:#92400e;}
+.q-num{font-size:12px;font-weight:700;color:var(--muted);}
+.q-text{font-size:15px;font-weight:700;line-height:1.65;white-space:pre-line;margin-bottom:16px;}
+.q-options{display:flex;flex-direction:column;gap:8px;}
+
+.opt-btn{
+  display:flex;align-items:flex-start;gap:12px;
+  background:#f8fafc;border:2px solid #e2e8f0;border-radius:10px;
+  padding:11px 14px;cursor:pointer;
+  font-family:'Nunito',sans-serif;font-size:14px;font-weight:600;
+  text-align:left;transition:all .2s;width:100%;
+}
+.opt-btn:hover:not(:disabled){border-color:var(--cyan);background:var(--cyan-lt);transform:translateX(3px);}
+.opt-label{
+  min-width:26px;height:26px;background:#e2e8f0;border-radius:7px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:12px;font-weight:800;color:var(--muted);flex-shrink:0;transition:all .2s;
+}
+.opt-btn.correct{border-color:var(--green);background:#f0fdf4;}
+.opt-btn.correct .opt-label{background:var(--green);color:#fff;}
+.opt-btn.wrong{border-color:var(--rose);background:#fff1f2;}
+.opt-btn.wrong .opt-label{background:var(--rose);color:#fff;}
+.opt-btn.dimmed{opacity:.5;}
+.opt-btn:disabled{cursor:default;}
+
+.q-feedback{
+  display:none;margin-top:14px;border-radius:10px;
+  padding:12px 16px;font-size:13px;line-height:1.65;
+}
+.q-feedback.show{display:block;animation:slideUp .3s ease;}
+.q-feedback.fb-correct{background:#f0fdf4;border-left:4px solid var(--green);}
+.q-feedback.fb-wrong{background:#fff1f2;border-left:4px solid var(--rose);}
+.q-feedback strong{display:block;font-size:14px;margin-bottom:3px;}
+@keyframes slideUp{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
+
+.result-overlay{
+  display:none;position:fixed;inset:0;z-index:100;
+  background:rgba(15,23,42,.6);backdrop-filter:blur(6px);
+  -webkit-backdrop-filter:blur(6px);
+  justify-content:center;align-items:center;padding:20px;
+}
+.result-overlay.show{display:flex;animation:fadeIn .4s ease;}
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+.result-modal{
+  background:var(--card);border-radius:20px;
+  box-shadow:0 24px 64px rgba(0,0,0,.2);
+  max-width:480px;width:100%;padding:36px 28px;
+  text-align:center;position:relative;overflow:hidden;
+  animation:modalPop .4s cubic-bezier(.2,.8,.3,1.2);
+  max-height:90vh;overflow-y:auto;
+}
+@keyframes modalPop{from{opacity:0;transform:scale(.85) translateY(30px);}to{opacity:1;transform:none;}}
+.result-modal .confetti-container{position:absolute;inset:0;pointer-events:none;overflow:hidden;}
+.confetti{position:absolute;top:-10px;opacity:0;animation:confettiFall linear forwards;}
+@keyframes confettiFall{
+  0%{opacity:1;transform:translateY(0) rotate(0deg) scale(1);}
+  80%{opacity:1;}
+  100%{opacity:0;transform:translateY(420px) rotate(720deg) scale(.5);}
+}
+.r-emoji{font-size:56px;position:relative;}
+.r-greeting{font-size:14px;color:var(--muted);margin-top:12px;font-weight:700;}
+.r-name{font-size:24px;font-weight:900;color:var(--ink);margin:4px 0 0;}
+.r-class{font-size:13px;color:var(--cyan);font-weight:700;margin-bottom:20px;}
+.r-score-wrap{background:var(--bg);border-radius:14px;padding:20px;margin-bottom:20px;}
+.r-score-label{font-size:12px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;}
+.r-score{font-size:52px;font-weight:900;color:var(--cyan);line-height:1.1;}
+.r-score span{font-size:20px;font-weight:700;color:var(--muted);}
+.r-stats{display:flex;gap:10px;justify-content:center;margin-top:14px;}
+.r-stat{background:#fff;border-radius:10px;padding:10px 16px;font-size:12px;font-weight:700;color:var(--muted);}
+.r-stat b{display:block;font-size:20px;font-weight:900;}
+.r-stat.sg b{color:var(--green);}
+.r-stat.sr b{color:var(--rose);}
+.r-predikat{display:inline-block;padding:6px 20px;border-radius:99px;font-weight:800;font-size:14px;margin-bottom:16px;}
+.r-motivasi{
+  font-size:14px;line-height:1.7;color:var(--muted);
+  background:#f8fafc;border-radius:12px;padding:14px 18px;
+  margin-bottom:16px;text-align:left;
+}
+.r-motivasi strong{color:var(--ink);}
+.congrats-banner{
+  background:linear-gradient(135deg,var(--cyan-lt),#fef9c3);
+  border:2px solid var(--gold);border-radius:12px;
+  padding:12px 16px;font-size:13px;font-weight:700;color:#92400e;
+  margin-bottom:20px;text-align:left;
+}
+.r-btns{display:flex;flex-direction:column;gap:10px;}
+.btn{
+  padding:13px 24px;border-radius:12px;font-family:'Nunito',sans-serif;
+  font-size:15px;font-weight:800;border:none;cursor:pointer;transition:all .2s;
+}
+.btn-primary{background:var(--cyan);color:#fff;box-shadow:0 4px 12px rgba(8,145,178,.3);}
+.btn-primary:hover{background:var(--cyan-dk);transform:translateY(-2px);}
+.btn-outline{background:transparent;color:var(--muted);border:2px solid #e2e8f0;}
+.btn-outline:hover{border-color:var(--cyan);color:var(--cyan);}
+
+.dist-bar{display:flex;height:6px;border-radius:99px;overflow:hidden;margin-top:24px;gap:2px;}
+.dist-bar div{height:100%;border-radius:99px;transition:width .4s;}
+.dist-legend{display:flex;justify-content:center;gap:16px;margin-top:6px;font-size:11px;font-weight:800;color:var(--muted);}
+.dist-legend span{display:flex;align-items:center;gap:3px;}
+.dist-legend i{width:8px;height:8px;border-radius:50%;display:inline-block;}
+
+@media(max-width:500px){
+  .q-card{padding:16px 14px;}
+  .opt-btn{padding:10px 12px;font-size:13px;}
+  .result-modal{padding:28px 20px;}
+  .r-score{font-size:42px;}
+  .identity-card{padding:18px 16px;}
+}
+
+  /* --- PERBAIKAN FOOTER BY MENTOR --- */
+.main-footer {
+    background-color: #1e293b !important; /* Warna gelap modern */
+    color: white !important;
+    padding: 12px 0 !important;
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    z-index: 9999 !important; /* Supaya tidak tertutup elemen soal */
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.2);
+    font-family: 'Nunito', sans-serif;
+}
+
+.footer-container {
+    display: flex !important;
+    /* Baris di bawah ini adalah kuncinya! */
+    justify-content: space-between !important; 
+    align-items: center !important;
+    max-width: 1000px;
+    margin: 0 auto !important;
+    padding: 0 20px !important;
+}
+
+.footer-left select {
+    padding: 6px 10px !important;
+    border-radius: 8px !important;
+    border: 1px solid #475569 !important;
+    background: #334155 !important;
+    color: white !important;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.footer-right p {
+    margin: 0 !important;
+    font-size: 13px !important;
+    text-align: right !important; /* Memastikan teks rata kanan */
+    white-space: nowrap; /* Mencegah teks turun ke bawah/terpotong */
+}
+
+/* Supaya konten soal paling bawah tidak tertutup footer */
+body {
+    padding-bottom: 70px !important;
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="badge">PAI & Budi Pekerti · SMP Kelas VIII</div>
+  <h1>🏛️ Latihan Soal Bab 10<br>Meneladani Inspirasi dan Kontribusi Ilmuwan Muslim<br>pada Masa Bani Abbasiyah untuk Kemanusiaan dan Peradaban</h1>
+  <p>25 soal pilihan ganda · 4 pilihan jawaban</p>
+  <p class="shuffle-note">🔄 Urutan soal diacak setiap kali membuka halaman</p>
+  <div class="final-badge">🎯 Bab Terakhir! Selesaikan semuanya!</div>
+</header>
+
+<div class="container">
+  <section class="identity-card">
+    <h2>📝 Data Peserta</h2>
+    <p class="sub">Isi nama dan kelas sebelum mengerjakan soal</p>
+    <div class="input-row">
+      <div class="input-group">
+        <label for="inp-nama">Nama Lengkap</label>
+        <input type="text" id="inp-nama" placeholder="Masukkan nama lengkap...">
+      </div>
+      <div class="input-group">
+        <label for="inp-kelas">Kelas</label>
+        <input type="text" id="inp-kelas" placeholder="Contoh: VIII-A">
+      </div>
+    </div>
+  </section>
+
+  <div class="progress-sticky">
+    <div class="prog-top">
+      <span class="prog-label" id="prog-label">0 dari 25 soal dijawab</span>
+      <div class="prog-chips">
+        <span class="prog-chip cg" id="chip-g">✅ 0</span>
+        <span class="prog-chip cr" id="chip-r">❌ 0</span>
+      </div>
+    </div>
+    <div class="prog-bar"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
+    <button class="show-result-btn" id="btn-show-result" onclick="openResult()">🎉 Lihat Hasil</button>
+  </div>
+
+  <div id="questions-container"></div>
+
+  <div style="margin-top:24px;">
+    <div class="dist-bar" id="dist-bar"></div>
+    <div class="dist-legend">
+      <span><i style="background:var(--cyan)"></i>A</span>
+      <span><i style="background:#0284c7"></i>B</span>
+      <span><i style="background:var(--gold)"></i>C</span>
+      <span><i style="background:var(--rose)"></i>D</span>
+    </div>
+  </div>
+</div>
+
+<div class="result-overlay" id="result-overlay">
+  <div class="result-modal">
+    <div class="confetti-container" id="confetti-box"></div>
+    <div class="r-emoji" id="r-emoji"></div>
+    <div class="r-greeting">Selamat!</div>
+    <div class="r-name" id="r-name"></div>
+    <div class="r-class" id="r-class"></div>
+    <div class="r-score-wrap">
+      <div class="r-score-label">Skor Kamu</div>
+      <div class="r-score"><span id="r-score"></span><span>/100</span></div>
+      <div class="r-stats">
+        <div class="r-stat sg"><b id="r-correct">0</b>Benar</div>
+        <div class="r-stat sr"><b id="r-wrong">0</b>Salah</div>
+      </div>
+    </div>
+    <div class="r-predikat" id="r-predikat"></div>
+    <div class="r-motivasi" id="r-motivasi"></div>
+    <div class="congrats-banner">
+      🎓 Selamat! Kamu telah menyelesaikan semua latihan soal Bab 1–10.<br>
+      Kini saatnya mengulang bab yang masih perlu diperkuat sebelum ujian. Semangat! 💪
+    </div>
+    <div class="r-btns">
+      <button class="btn btn-outline" onclick="closeResult()">Tinjau Jawaban Saya</button>
+      <button class="btn btn-primary" onclick="restart()">🔁 Ulangi Latihan</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════
+// DATA SOAL — Bab 10 (DISTRIBUSI JAWABAN SEIMBANG)
+// A=7, B=5, C=7, D=6
+// ═══════════════════════════════════════════════════════
+const questions = [
+
+// ── Soal 1 → Jawaban B ──
+{
+  type:"Hafalan & Ingatan",
+  text:"Titik Fokus (kata kunci) Bab 10 adalah...",
+  options:["Ilmu Pengetahuan, Teknologi, dan Seni","Abbasiyah, Ilmuwan Muslim, Peradaban","Kedokteran, Filsafat, dan Astronomi","Al-Kindi, Ibnu Sina, dan Al-Khawarizmi"],
+  answer:1,
+  explanation:"Titik Fokus Bab 10 adalah 'Abbasiyah, Ilmuwan Muslim, Peradaban.' Ketiganya merangkum isi bab: sejarah Dinasti Abbasiyah sebagai latar, para ilmuwan muslim yang lahir dari tradisi literasi Bayt al-Hikmah, serta kontribusi mereka bagi peradaban umat Islam, kemanusiaan, renaisance Eropa, dan dunia."
+},
+// ── Soal 2 → Jawaban A ──
+{
+  type:"Hafalan & Ingatan",
+  text:"Rumah sakit pertama pada masa Dinasti Abbasiyah dibangun oleh...",
+  options:["Khalifah Harun al-Rasyid pada awal abad ke-9","Khalifah al-Makmun pada awal abad ke-10","Khalifah al-Mansur bersamaan dengan pembangunan Kota Baghdad","Ibnu Sina sebagai bagian dari pengembangan ilmu kedokteran"],
+  answer:0,
+  explanation:"Rumah sakit pertama pada masa Abbasiyah dibuat oleh Harun al-Rasyid pada awal abad kesembilan. Tidak lama kemudian rumah sakit-rumah sakit lain tumbuh di seluruh dunia Muslim. Rumah sakit saat itu sudah memiliki bangsal khusus perempuan, apotik sendiri, perpustakaan medis, dan kursus kedokteran."
+},
+// ── Soal 3 → Jawaban D ──
+{
+  type:"Hafalan & Ingatan",
+  text:"Ibnu Sina dikenal sebagai peletak dasar ilmu kedokteran modern. Dua karya monumentalnya adalah...",
+  options:["Kitab al-Ḥāwi dan Kāmil al-Ṣinā'ah","Firdaus al-Ḥikmah dan al-Zīj","Tahzīb al-Akhlāq dan Ihyā' ulūm al-dīn","Kitab al-Syifā' dan al-Qānūn fi al-Ṭibb"],
+  answer:3,
+  explanation:"Dua karya monumental Ibnu Sina (Abu Ali al-Huseyn bin Abdullah, 980–1073 M): (1) Kitāb al-Syifā' — tentang ilmu pengobatan; (2) al-Qānūn fi al-Ṭibb — tentang dasar-dasar ilmu kedokteran yang dijadikan teori dasar yang dipelajari mahasiswa kedokteran di seluruh dunia. Karena kontribusinya, Ibnu Sina disebut sebagai Bapak kedokteran modern."
+},
+// ── Soal 4 → Jawaban C ──
+{
+  type:"Hafalan & Ingatan",
+  text:"Al-Farabi mendapat julukan 'Guru Kedua' dalam bidang filsafat. Mengapa ia mendapat julukan ini?",
+  options:["Karena ia adalah murid langsung Aristoteles yang belajar di Yunani","Karena ia menjadi guru para filosof muslim setelah al-Kindi","Karena ia mampu menyajikan karya-karya filsafat Yunani (terutama Aristoteles) sehingga mudah dipahami, menjadikannya 'guru kedua' setelah Aristoteles","Karena ia mendirikan sekolah filsafat kedua di Baghdad setelah sekolah al-Kindi"],
+  answer:2,
+  explanation:"Al-Farabi (870–950 M) dikenal sebagai 'guru kedua' dalam bidang filsafat setelah filosof Yunani Aristoteles. Julukan ini diberikan karena al-Farabi mampu menyajikan karya-karya filsafat Yunani dengan cara yang mudah dipahami oleh para ilmuwan. Ia menulis sekitar 100 buku tentang filsafat, bahasa, musik, dan politik."
+},
+// ── Soal 5 → Jawaban A ──
+{
+  type:"Hafalan & Ingatan",
+  text:"Al-Battani adalah astronom Abbasiyah yang dikenal karena penemuannya bahwa...",
+  options:["Jumlah hari dalam setahun ada 365 hari, 5 jam, 46 menit, dan 24 detik","Bumi mengelilingi matahari, bukan sebaliknya","Tata surya terdiri dari sembilan planet termasuk Bumi","Gerhana terjadi karena posisi Bumi, Bulan, dan Matahari sejajar"],
+  answer:0,
+  explanation:"Al-Battani (877–918 M) adalah ilmuwan yang menemukan bahwa jumlah hari dalam setahun ada 365 hari, 5 jam, 46 menit, dan 24 detik. Karya utamanya berjudul Kitab al-Zīj. Penemuannya ini merupakan kontribusi besar bagi perkembangan astronomi dunia."
+},
+// ── Soal 6 → Jawaban D ──
+{
+  type:"Hafalan & Ingatan",
+  text:"Empat Imam Mazhab Fikih yang berkembang pada masa Dinasti Abbasiyah adalah...",
+  options:["Imam Bukhari, Imam Muslim, Imam Abu Dawud, dan Imam at-Tirmizi","Al-Kindi, Al-Farabi, Ibnu Sina, dan Al-Ghazali","Al-Mawardi, Miskawayh, Al-Ghazali, dan At-Tabari","Abu Hanifah, Malik ibnu Anas, Muhammad al-Syafi'i, dan Ahmad ibn Hanbal"],
+  answer:3,
+  explanation:"Empat Imam Mazhab Fikih: (1) Abu Hanifah (699–767 M) — Mazhab Hanafi; (2) Malik ibnu Anas (715–795 M) — Mazhab Maliki, berpengaruh di Afrika Barat dan Utara; (3) Muhammad ibn Idris al-Syafi'i (767–805 M) — Mazhab Syafi'i, berpengaruh di Asia Tenggara termasuk Indonesia; (4) Ahmad ibn Hanbal (780–855 M) — Mazhab Hambali, berpengaruh di Semenanjung Arab."
+},
+// ── Soal 7 → Jawaban C ──
+{
+  type:"Hafalan & Ingatan",
+  text:"Karya sastra besar dari masa Abbasiyah yang kisah-kisahnya masih populer hingga kini (Aladdin, Ali Baba, Sinbad) berasal dari hikayat bernama...",
+  options:["Hazār Afsāna — ditulis langsung oleh Khalifah Harun al-Rasyid","Jamī' al-Bayān — kitab tafsir yang juga memuat cerita rakyat","Alf Laylah wa-Laylah (1001 Malam) — berasal dari Hazār Afsāna Persia dan ditulis ulang oleh Al-Jahsyiyari","Kitāb al-Syifā' — karya Ibnu Sina yang memuat kisah-kisah inspiratif"],
+  answer:2,
+  explanation:"Hikayat '1001 Malam' (Alf Laylah wa-Laylah) adalah karya sastra besar dari masa Abbasiyah. Asalnya dari karya Persia kuno berjudul Hazār Afsāna (seribu cerita). Al-Jahsyiyari menerjemahkan dan menulis ulangnya pada masa kekhalifahan Harun al-Rasyid. Kisah-kisah seperti Aladdin, Ali Baba, dan Sinbad si Pelaut berasal dari hikayat ini."
+},
+// ── Soal 8 → Jawaban A ──
+{
+  type:"Hafalan & Ingatan",
+  text:"Kitab tafsir pertama yang cukup lengkap pada masa Abbasiyah berjudul Jamī' al-Bayān fī Ta'wīl al-Qur'ān, disusun oleh...",
+  options:["Ibnu Jarir at-Tabari (839–923 M), ahli tafsir terkemuka masa Abbasiyah","Imam al-Ghazali yang juga dikenal sebagai Bapak ilmu jiwa Islam","Al-Mawardi, peletak dasar ilmu politik Islam","Ibnu Miskawayh, filosof akhlak yang dijuluki 'guru ketiga'"],
+  answer:0,
+  explanation:"Kitab tafsir Jamī' al-Bayān fī Ta'wīl al-Qur'ān (dikenal sebagai Tafsir aṭ-Ṭabari) disusun oleh Abu Ja'far Muhammad bin Jarir at-Tabari (839–923 M), lebih dikenal sebagai Ibnu Jarir atau at-Tabari. Tafsirnya merupakan pelopor penyusunan kitab-kitab tafsir pada masa-masa berikutnya."
+},
+// ── Soal 9 → Jawaban D ──
+{
+  type:"Pemahaman",
+  text:"Faktor utama yang mendorong berkembangnya beragam ilmu pengetahuan di wilayah Abbasiyah adalah...",
+  options:["Kebijakan khalifah yang mewajibkan semua warga belajar ilmu pengetahuan","Kedatangan para ilmuwan Yunani yang mengajar langsung di Baghdad","Dukungan militer Abbasiyah yang melindungi para ilmuwan dari ancaman","Tradisi literasi yang tinggi — banyak perpustakaan publik maupun pribadi yang menjamur di seantero wilayah Abbasiyah"],
+  answer:3,
+  explanation:"Tradisi literasi yang sangat tinggi menjadi faktor utama berkembangnya ilmu pengetahuan di wilayah Abbasiyah. Berbagai perpustakaan, baik publik maupun pribadi, menjamur di mana-mana. Tradisi ini menyebabkan berkembangnya beragam ilmu — kedokteran, matematika, astronomi, kimia, seni, ilmu kalam, fikih, tafsir, dan hadis."
+},
+// ── Soal 10 → Jawaban B ──
+{
+  type:"Pemahaman",
+  text:"Gambar al-Razi dan Ibnu Sina menghiasi aula besar Fakultas Kedokteran di Universitas Paris hingga kini. Hal ini membuktikan...",
+  options:["Bahwa kedua ilmuwan tersebut pernah belajar di Universitas Paris","Jasa keduanya dalam meletakkan dasar bagi pengembangan ilmu kedokteran modern yang digunakan secara luas hingga saat ini","Bahwa Prancis merupakan negara yang paling banyak mengadopsi ilmu Islam","Bahwa ilmu kedokteran modern sepenuhnya bersumber dari tradisi Islam"],
+  answer:1,
+  explanation:"Potret al-Razi dan Ibnu Sina menghiasi aula Fakultas Kedokteran Universitas Paris karena jasa keduanya dalam meletakkan dasar bagi pengembangan ilmu kedokteran modern. Hal ini menunjukkan bahwa kontribusi ilmuwan muslim Abbasiyah diakui dan dihormati oleh dunia Barat hingga saat sekarang."
+},
+// ── Soal 11 → Jawaban C ──
+{
+  type:"Pemahaman",
+  text:"Ilmu Kalam berkembang pada masa Abbasiyah. Dua aliran yang memiliki pengaruh luas di dunia Islam hingga sekarang yang muncul pada masa Abbasiyah adalah...",
+  options:["Muktazilah dan Khawarij","Jabariyah dan Qadariyah","Asy'ariyah dan Maturidiyah","Murjiah dan Syi'ah"],
+  answer:2,
+  explanation:"Ilmu Kalam sudah berkembang sejak sebelum masa Abbasiyah dengan berbagai aliran (Khawarij, Murjiah, Jabariyah, Qadariyah, Muktazilah). Namun pada masa Abbasiyah muncul dua aliran yang memiliki pengaruh luas di dunia Islam hingga sekarang, yakni Asy'ariyah dan Maturidiyah. Di Indonesia, mayoritas umat Islam mengikuti akidah Asy'ariyah."
+},
+// ── Soal 12 → Jawaban C ──
+{
+  type:"Pemahaman",
+  text:"Al-Biruni disebut sebagai peletak dasar metode ilmiah modern. Kontribusinya mencakup bidang-bidang...",
+  options:["Hanya astronomi dan geografi","Hanya matematika dan fisika","Matematika, astronomi, geografi, geologi, kimia, dan sejarah","Kedokteran, filsafat, dan musik"],
+  answer:2,
+  explanation:"Al-Biruni (973–1073 M) adalah peletak dasar metode ilmiah modern yang meliputi bidang matematika, astronomi, geografi, geologi, kimia, dan sejarah. Karya utamanya berjudul Kitab al-Qānūn al-Mas'ūdi fi al-Hay'ah w-al-Nujūm. Ia juga dikenal sebagai 'bapak geodesi' dunia karena kontribusinya dalam ilmu bumi."
+},
+// ── Soal 13 → Jawaban A ──
+{
+  type:"Pemahaman",
+  text:"Kontribusi peradaban Islam Abbasiyah bagi umat Islam saat ini paling terasa dalam hal...",
+  options:["Ilmu pengetahuan agama — akidah Asy'ariyah, fikih Imam Syafi'i, akhlak Imam Ghazali, dan enam kitab hadis masih menjadi pedoman beragama umat Islam Indonesia hingga kini","Teknologi modern yang digunakan sehari-hari seperti komputer dan smartphone","Sistem pemerintahan demokrasi yang diadopsi dari Baghdad","Bahasa Arab yang digunakan sebagai bahasa internasional ilmu pengetahuan"],
+  answer:0,
+  explanation:"Kontribusi terbesar peradaban Abbasiyah bagi umat Islam adalah ilmu pengetahuan agama. Umat Islam Indonesia sampai sekarang masih menggunakan produk ilmu pengetahuan agama masa Abbasiyah: akidah Asy'ariyah, fikih Imam Syafi'i, akhlak Imam Ghazali, serta enam kitab hadis. Ini menunjukkan betapa besarnya kontribusi peradaban Islam masa Abbasiyah terhadap keberadaan umat Islam hingga masa kini."
+},
+// ── Soal 14 → Jawaban C ──
+{
+  type:"Pemahaman",
+  text:"Kontribusi peradaban Abbasiyah bagi kemanusiaan ditandai oleh interaksi sosial yang 'egaliter'. Maksud egaliter dalam konteks ini adalah...",
+  options:["Semua orang diperlakukan sama dan diberi upah yang sama rata","Penguasa memberikan tanah yang sama kepada semua rakyatnya","Kompetensi seseorang tidak didasarkan pada ikatan kesukuan atau agama — semua orang, baik muslim, Kristen, Yahudi, Arab, Persia, maupun suku bangsa lain, mendapat kesempatan berkarya","Semua agama diakui sama-sama benarnya oleh penguasa Abbasiyah"],
+  answer:2,
+  explanation:"Penguasa Abbasiyah mengembangkan interaksi sosial yang egaliter: kompetensi seseorang tidak didasarkan pada ikatan kesukuan ataupun agama. Para penguasa memberikan kesempatan kepada siapapun — baik umat Islam, Kristen, Yahudi, Arab, Persia, Turki, maupun suku bangsa lain — untuk berkarya di bidangnya. Hal ini melahirkan pengakuan terhadap nilai-nilai kemanusiaan, termasuk hak kebebasan beragama."
+},
+// ── Soal 15 → Jawaban B ──
+{
+  type:"Pemahaman",
+  text:"Hubungan antara peradaban Abbasiyah dan renaisance Eropa adalah...",
+  options:["Renaisance Eropa mendahului peradaban Abbasiyah dan menginspirasi para ilmuwan Baghdad","Banyak pelajar Eropa yang belajar di Bayt al-Hikmah dan menerjemahkan karya-karya ilmuwan Abbasiyah ke bahasa Latin, yang kemudian menjadi bekal bangsa Eropa menuju renaisance (masa pencerahan)","Keduanya berkembang secara terpisah tanpa pengaruh satu sama lain","Renaisance Eropa murni bersumber dari warisan Yunani kuno tanpa pengaruh Islam"],
+  answer:1,
+  explanation:"Sejarawan Philip K. Hitti mencatat bahwa saat bangsawan Eropa baru belajar menuliskan nama mereka, Baghdad sudah menjadi kota metropolitan yang gemerlapan. Banyak pelajar Eropa dikirim ke Baghdad belajar di Bayt al-Hikmah. Mereka menerjemahkan karya-karya ilmuwan Abbasiyah ke bahasa Latin. Berbekal terjemahan itu, bangsa Eropa bergerak menuju masa pencerahan (renaisance)."
+},
+// ── Soal 16 → Jawaban D ──
+{
+  type:"Pemahaman",
+  text:"Ilmu Fikih berbeda dari ilmu Kalam dalam hal...",
+  options:["Ilmu Fikih mempelajari akidah, sedangkan Ilmu Kalam mempelajari hukum","Ilmu Fikih hanya untuk ulama besar, sedangkan Ilmu Kalam untuk semua orang","Ilmu Fikih bersumber dari hadis saja, sedangkan Ilmu Kalam dari Al-Qur'an saja","Ilmu Fikih mengkaji hukum syariat dari segi formal peribadatan dan interaksi sosial, sedangkan Ilmu Kalam mempelajari tentang Tuhan dan pokok-pokok keyakinan"],
+  answer:3,
+  explanation:"Ilmu Fikih mengkaji hukum syariat Islam dari segi-segi formal peribadatan dan berinteraksi sosial — membahas pelaksanaan hukum Islam dalam ibadah maupun muamalah dari Al-Qur'an dan hadis. Sedangkan Ilmu Kalam (disebut juga ilmu akidah/tauhid/Ushuluddin) mempelajari tentang Tuhan beserta segala aspeknya, termasuk pokok-pokok keyakinan dan keesaan Allah."
+},
+// ── Soal 17 → Jawaban C ──
+{
+  type:"Pemahaman",
+  text:"Kontribusi peradaban Islam Abbasiyah bagi dunia modern dapat ditelusuri dari rantai sejarah yang BENAR adalah...",
+  options:["Abbasiyah → Yunani → Renaisance Eropa → Revolusi Industri → Dunia Modern","Yunani Kuno → Abbasiyah → Revolusi Industri → Renaisance Eropa → Dunia Modern","Abbasiyah (tradisi literasi & Bayt al-Hikmah) → Penerjemahan ke Eropa → Renaisance Eropa → Revolusi Industri → Peradaban Modern","Abbasiyah → Penaklukan Eropa → Revolusi Islam → Demokrasi Modern"],
+  answer:2,
+  explanation:"Rantai kontribusi Abbasiyah bagi dunia modern: Tradisi literasi & Bayt al-Hikmah Abbasiyah melahirkan ilmuwan dan ilmu pengetahuan → Pelajar Eropa belajar ke Baghdad, menerjemahkan karya ke bahasa Latin → Eropa memasuki renaisance (masa pencerahan) → Muncul revolusi industri → Perkembangan Iptek modern → Tatanan dunia modern termasuk sistem demokrasi."
+},
+// ── Soal 18 → Jawaban A ──
+{
+  type:"Pemahaman",
+  text:"Hikayat 1001 Malam bercerita tentang Ratu Syahrazad yang selalu mengakhiri kisahnya dengan menegangkan setiap malam. Tujuan Syahrazad melakukan ini adalah...",
+  options:["Untuk menghindari hukuman mati dari Raja Syahriar dengan membuat raja selalu penasaran mendengar kelanjutan kisah pada malam berikutnya","Untuk menguji kesabaran Raja Syahriar dalam mendengarkan cerita","Untuk menghibur Raja Syahriar yang sedang sakit keras","Untuk mengumpulkan sebanyak mungkin cerita rakyat dari seluruh penjuru dunia"],
+  answer:0,
+  explanation:"Hikayat 1001 Malam bercerita: Syahrazad selalu mengakhiri kisahnya dengan akhir yang menegangkan dan menggantung setiap malam. Akibatnya Raja Syahriar selalu tertarik dan penasaran mendengar kelanjutan kisah malam berikutnya. Strategi ini sengaja dilakukan Ratu Syahrazad untuk menghindari hukuman mati. Setelah 1001 malam, raja mengurungkan niatnya dan mengangkat Syahrazad menjadi permaisuri."
+},
+// ── Soal 19 → Jawaban D ──
+{
+  type:"Penerapan & Analisis",
+  text:"Pernyataan-pernyataan tentang perkembangan ilmu pengetahuan di Abbasiyah berikut ini, yang BENAR adalah...\n(1) Banyak pelajar datang ke Baghdad untuk belajar di Bayt al-Hikmah\n(2) Banyak perpustakaan didirikan di kota-kota besar wilayah Abbasiyah\n(4) Perkembangan ilmu pengetahuan dipengaruhi oleh tradisi literasi yang kuat",
+  options:["(1) dan (2) saja","(1) dan (4) saja","(2) dan (4) saja","(1), (2), dan (4) semuanya benar"],
+  answer:3,
+  explanation:"Semua pernyataan (1), (2), dan (4) benar: (1) Banyak pelajar dari dalam dan luar negeri datang belajar di Bayt al-Hikmah ✓; (2) Berbagai perpustakaan publik maupun pribadi menjamur di seluruh wilayah Abbasiyah ✓; (4) Tradisi literasi yang kuat mendorong perkembangan ilmu pengetahuan ✓. Yang TIDAK benar adalah pernyataan (3) 'banyak bangsawan yang belajar ke luar negeri untuk mengembangkan Bayt al-Hikmah' — justru Baghdad yang menarik pelajar dari seluruh dunia."
+},
+// ── Soal 20 → Jawaban B ──
+{
+  type:"Penerapan & Analisis",
+  text:"Perhatikan tabel pasangan Ilmuwan dan Inspirasinya:\n1-Al-Farabi     : A-Penemu teori 1 tahun = 365 hari\n2-Al-Biruni     : B-Guru kedua bidang filsafat setelah Aristoteles\n3-Al-Khawarizmi : C-Peletak dasar metode ilmiah modern\n4-Al-Battani    : D-Penemu Aljabar\n\nPasangan yang BENAR adalah...",
+  options:["1-A, 2-C, 3-D, 4-B","1-B, 2-C, 3-D, 4-A","1-B, 2-A, 3-C, 4-D","1-C, 2-D, 3-B, 4-A"],
+  answer:1,
+  explanation:"Pasangan yang benar: (1) Al-Farabi = B (Guru kedua bidang filsafat setelah Aristoteles); (2) Al-Biruni = C (Peletak dasar metode ilmiah modern); (3) Al-Khawarizmi = D (Penemu Aljabar — melalui karyanya Ḥisāb al-Jabr wal-Muqābalah); (4) Al-Battani = A (Menemukan 1 tahun = 365 hari, 5 jam, 46 menit, 24 detik). Jadi: 1-B, 2-C, 3-D, 4-A."
+},
+// ── Soal 21 → Jawaban A ──
+{
+  type:"Penerapan & Analisis",
+  text:"Perhatikan tabel pasangan Ilmuwan dan Karya:\n1-Al-Razi   : A-Al-Ḥāwi\n2-Ibnu Sina : B-Kāmil al-Ṣinā'ah al-Ṭibbīyah\n3-Al-Majusi : C-Al-Qānūn fi al-Ṭibb\n4-Al-Biruni : D-Al-Qānūn al-Mas'ūdi\n\nPasangan yang TEPAT adalah...",
+  options:["1-A, 2-C, 3-B, 4-D","1-C, 2-D, 3-A, 4-B","1-D, 2-C, 3-A, 4-B","1-C, 2-B, 3-D, 4-A"],
+  answer:0,
+  explanation:"Pasangan yang tepat: (1) Al-Razi = A (Al-Ḥāwi — tentang pengetahuan pengobatan Yunani, Persia, Hindu plus kontribusi baru); (2) Ibnu Sina = C (Al-Qānūn fi al-Ṭibb — dasar-dasar ilmu kedokteran, jadi teori dasar dunia); (3) Al-Majusi = B (Kāmil al-Ṣinā'ah al-Ṭibbīyah — kamus sains dan praktik kedokteran); (4) Al-Biruni = D (Al-Qānūn al-Mas'ūdi fi al-Hay'ah — peletak metode ilmiah modern). Jadi: 1-A, 2-C, 3-B, 4-D."
+},
+// ── Soal 22 → Jawaban D ──
+{
+  type:"Penerapan & Analisis",
+  text:"Pernyataan-pernyataan tentang ilmu tafsir pada masa Abbasiyah yang BENAR adalah...\n(1) Pada awal masa Abbasiyah, ilmu tafsir masih menjadi bagian ilmu hadis\n(2) Ilmu tafsir adalah ilmu untuk memahami isi kandungan Al-Qur'an\n(3) Kitab Jamī' al-Bayān fī Ta'wīl al-Qur'ān merupakan kitab tafsir pertama yang cukup lengkap",
+  options:["(1) dan (2) saja","(2) dan (3) saja","(1) dan (3) saja","(1), (2), dan (3) semuanya benar"],
+  answer:3,
+  explanation:"Semua pernyataan (1), (2), dan (3) benar: (1) Pada awal masa Abbasiyah, ilmu tafsir masih menjadi bagian ilmu hadis ✓; (2) Ilmu tafsir adalah ilmu yang dikembangkan untuk memahami isi kandungan Al-Qur'an ✓; (3) Kitab Jamī' al-Bayān fī Ta'wīl al-Qur'ān (Tafsir at-Tabari) adalah kitab tafsir yang cukup lengkap yang merupakan pelopor penyusunan kitab-kitab tafsir ✓."
+},
+// ── Soal 23 → Jawaban B ──
+{
+  type:"Penerapan & Analisis",
+  text:"Pernyataan-pernyataan tentang Hikayat 1001 Malam yang BENAR adalah...\n(1) Bercerita tentang kisah Raja Syahriar dan Ratu Syahrazad\n(3) Bersumber dari Persia kuno berjudul Hazār Afsāna\n(4) Ditulis ulang oleh Al-Jahsyiyari dengan judul Alf Laylah wa-Laylah",
+  options:["(1) dan (3) saja","(1), (3), dan (4) semuanya benar","(1) dan (4) saja","(3) dan (4) saja"],
+  answer:1,
+  explanation:"Semua pernyataan (1), (3), dan (4) benar: (1) Bercerita tentang Ratu Syahrazad yang menceritakan kisah-kisah kepada Raja Syahriar ✓; (3) Bersumber dari karya Persia kuno Hazār Afsāna (seribu cerita) ✓; (4) Ditulis ulang oleh Al-Jahsyiyari menjadi Alf Laylah wa-Laylah ✓. Yang tidak sepenuhnya tepat: pernyataan yang menyebut hikayat ini khusus bercerita tentang kehidupan Khalifah Harun al-Rasyid — Harun al-Rasyid hanya salah satu karakter yang dimasukkan."
+},
+// ── Soal 24 → Jawaban C ──
+{
+  type:"Penerapan & Analisis",
+  text:"BJ Habibie merancang pesawat N250 Gatotkaca yang dianggap 'melebihi zamannya' pada 1995. Kisah ini paling menginspirasi nilai dari Bab 10, yaitu...",
+  options:["Bahwa Indonesia pernah lebih maju dari negara-negara Barat di bidang teknologi penerbangan","Bahwa krisis ekonomi adalah musuh terbesar kemajuan ilmu pengetahuan","Bahwa ilmuwan muslim modern bisa memberikan kontribusi besar bagi kemajuan teknologi dan bangsa, meneladani semangat para ilmuwan muslim masa Abbasiyah","Bahwa teknologi hanya bisa berkembang dengan dukungan penuh dari pemerintah"],
+  answer:2,
+  explanation:"Kisah BJ Habibie dalam rubrik 'Mari Bertafakur' Bab 10 menginspirasi nilai bahwa ilmuwan muslim modern bisa memberikan kontribusi besar bagi kemajuan teknologi dan bangsa — meneladani semangat para ilmuwan muslim masa Abbasiyah yang lahir dari tradisi literasi dan keilmuan yang kuat. BJ Habibie adalah contoh nyata bahwa semangat berkarya bisa menghasilkan kontribusi besar bagi peradaban."
+},
+// ── Soal 25 → Jawaban A ──
+{
+  type:"Penerapan & Analisis",
+  text:"Seorang siswa membaca buku yang menyatakan perkembangan ilmu pengetahuan modern berawal dari renaisance Eropa yang bersumber dari Yunani kuno. Pandangan yang TEPAT tentang pernyataan tersebut berdasarkan Bab 10 adalah...",
+  options:["Tidak tepat sepenuhnya — pernyataan itu mengabaikan peran besar peradaban Islam Abbasiyah yang menjadi jembatan antara warisan Yunani kuno dan renaisance Eropa melalui kegiatan penerjemahan dan pengembangan ilmu","Benar sepenuhnya — renaisance Eropa memang bersumber murni dari Yunani kuno","Benar sebagian — Yunani berperan, tapi Islam hanya sebagai penerjemah pasif tanpa kontribusi nyata","Tidak relevan dibahas karena sejarah ilmu pengetahuan bukan urusan agama"],
+  answer:0,
+  explanation:"Pernyataan buku itu tidak tepat sepenuhnya. Bab 10 menjelaskan bahwa pelajar Eropa belajar ke Baghdad dan menerjemahkan karya-karya ilmuwan Abbasiyah ke bahasa Latin — inilah yang menjadi bekal renaisance Eropa. Peradaban Abbasiyah bukan sekadar 'perantara' tetapi juga mengembangkan dan memperkaya ilmu pengetahuan dari Yunani dengan kontribusi-kontribusi orisinal. Tanpa peran Abbasiyah, renaisance Eropa tidak mungkin terjadi seperti yang kita kenal."
+}
+
+];
+
+// ═══════════════════════════════════════════════════════
+// ALGORITMA ACAK — Fisher-Yates + no-adjacent-answer
+// ═══════════════════════════════════════════════════════
+function shuffleNoAdjacent(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  for (let pass = 0; pass < 500; pass++) {
+    let clean = true;
+    for (let i = 0; i < arr.length - 1; i++) {
+      if (arr[i].answer === arr[i + 1].answer) {
+        clean = false;
+        let swapped = false;
+        for (let k = i + 2; k < arr.length; k++) {
+          const ansK = arr[k].answer;
+          const ansBefore = (i > 0) ? arr[i - 1].answer : -1;
+          const ansAfter = (k < arr.length - 1) ? arr[k + 1].answer : -1;
+          if (ansK !== arr[i].answer && ansK !== ansAfter && ansK !== ansBefore) {
+            [arr[i + 1], arr[k]] = [arr[k], arr[i + 1]];
+            swapped = true; break;
+          }
+        }
+        if (!swapped) {
+          for (let k = i + 2; k < arr.length; k++) {
+            const ansK = arr[k].answer;
+            const ansBefore = (i > 0) ? arr[i - 1].answer : -1;
+            const ansAfterI = arr[i + 1].answer;
+            const ansAfterK = (k < arr.length - 1) ? arr[k + 1].answer : -1;
+            if (ansK !== ansAfterI && ansK !== ansBefore &&
+                arr[i].answer !== ansAfterK && arr[i].answer !== ansBefore) {
+              [arr[i], arr[k]] = [arr[k], arr[i]];
+              swapped = true; break;
+            }
+          }
+        }
+      }
+    }
+    if (clean) break;
+  }
+}
+
+// ═══════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════
+let scoreCorrect = 0;
+let scoreWrong = 0;
+let answered = [];
+
+// ═══════════════════════════════════════════════════════
+// RENDER
+// ═══════════════════════════════════════════════════════
+function typeClass(type) {
+  if (type.includes("Hafalan")) return "t-hafalan";
+  if (type.includes("Pemahaman")) return "t-pemahaman";
+  return "t-penerapan";
+}
+
+function renderAll() {
+  const box = document.getElementById("questions-container");
+  const labels = ["A", "B", "C", "D"];
+  let html = "";
+  questions.forEach((q, i) => {
+    html += `<div class="q-card" id="qcard-${i}" data-type="${q.type}">`;
+    html += `<div class="q-header">
+      <span class="q-type-badge ${typeClass(q.type)}">${q.type}</span>
+      <span class="q-num">Soal ${i + 1} dari ${questions.length}</span>
+    </div>`;
+    html += `<div class="q-text">${q.text}</div>`;
+    html += `<div class="q-options" id="opts-${i}">`;
+    q.options.forEach((opt, j) => {
+      html += `<button class="opt-btn" id="opt-${i}-${j}" onclick="pickAnswer(${i},${j})">
+        <span class="opt-label">${labels[j]}</span>
+        <span>${opt}</span>
+      </button>`;
+    });
+    html += `</div>`;
+    html += `<div class="q-feedback" id="fb-${i}"></div>`;
+    html += `</div>`;
+  });
+  box.innerHTML = html;
+  renderDistBar();
+}
+
+function renderDistBar() {
+  const counts = [0, 0, 0, 0];
+  questions.forEach(q => counts[q.answer]++);
+  const total = questions.length;
+  const colors = ["var(--cyan)", "#0284c7", "var(--gold)", "var(--rose)"];
+  let html = "";
+  counts.forEach((c, i) => {
+    html += `<div style="width:${(c / total * 100)}%;background:${colors[i]}"></div>`;
+  });
+  document.getElementById("dist-bar").innerHTML = html;
+}
+
+// ═══════════════════════════════════════════════════════
+// LOGIKA JAWAB
+// ═══════════════════════════════════════════════════════
+function pickAnswer(qi, oi) {
+  if (answered[qi]) return;
+  answered[qi] = true;
+  const q = questions[qi];
+  const isCorrect = (oi === q.answer);
+  if (isCorrect) scoreCorrect++; else scoreWrong++;
+
+  const labels = ["A", "B", "C", "D"];
+  q.options.forEach((_, j) => {
+    const btn = document.getElementById(`opt-${qi}-${j}`);
+    btn.disabled = true;
+    if (j === q.answer) btn.classList.add("correct");
+    else if (j === oi && !isCorrect) btn.classList.add("wrong");
+    else btn.classList.add("dimmed");
+  });
+
+  const card = document.getElementById(`qcard-${qi}`);
+  card.classList.add(isCorrect ? "answered-correct" : "answered-wrong");
+
+  const fb = document.getElementById(`fb-${qi}`);
+  fb.className = "q-feedback show " + (isCorrect ? "fb-correct" : "fb-wrong");
+  if (isCorrect) {
+    fb.innerHTML = `<strong>✅ Benar! Jawaban kamu tepat.</strong>${q.explanation}`;
+  } else {
+    fb.innerHTML = `<strong>❌ Salah. Jawaban yang benar adalah <u>${labels[q.answer]}</u>.</strong>${q.explanation}`;
+  }
+
+  updateProgress();
+  if (answered.every(a => a)) {
+    setTimeout(() => openResult(), 900);
+  }
+}
+
+function updateProgress() {
+  const done = answered.filter(a => a).length;
+  const total = questions.length;
+  const pct = Math.round((done / total) * 100);
+  document.getElementById("prog-label").textContent = `${done} dari ${total} soal dijawab`;
+  document.getElementById("prog-fill").style.width = pct + "%";
+  document.getElementById("chip-g").textContent = "✅ " + scoreCorrect;
+  document.getElementById("chip-r").textContent = "❌ " + scoreWrong;
+}
+
+// ═══════════════════════════════════════════════════════
+// MODAL HASIL
+// ═══════════════════════════════════════════════════════
+function openResult() {
+  if (!answered.every(a => a)) return;
+  const nama  = document.getElementById("inp-nama").value.trim() || "Peserta";
+  const kelas = document.getElementById("inp-kelas").value.trim();
+  const pct   = Math.round((scoreCorrect / questions.length) * 100);
+
+  let emoji, predikat, prColor;
+  if      (pct >= 90) { emoji = "🏆"; predikat = "Sangat Baik (A)";   prColor = "#22c55e"; }
+  else if (pct >= 75) { emoji = "⭐"; predikat = "Baik (B)";           prColor = "#0891b2"; }
+  else if (pct >= 60) { emoji = "👍"; predikat = "Cukup (C)";          prColor = "#f59e0b"; }
+  else if (pct >= 40) { emoji = "📚"; predikat = "Kurang (D)";         prColor = "#f97316"; }
+  else                { emoji = "💪"; predikat = "Sangat Kurang (E)";  prColor = "#f43f5e"; }
+
+  let motivasi;
+  if (pct >= 90) {
+    motivasi = `<strong>Masya Allah, luar biasa!</strong> Pemahaman kamu tentang peradaban Abbasiyah sudah sangat mendalam. Kamu menguasai materi tentang Bayt al-Hikmah, para ilmuwan muslim dari al-Razi hingga al-Biruni, empat imam mazhab, aliran ilmu kalam Asy'ariyah dan Maturidiyah, serta rantai kontribusi Abbasiyah bagi renaisance Eropa dan dunia modern dengan sempurna. Terus jadikan semangat ilmuwan Abbasiyah sebagai inspirasi!`;
+  } else if (pct >= 75) {
+    motivasi = `<strong>Hebat sekali!</strong> Kamu sudah menunjukkan pemahaman yang baik tentang peradaban Abbasiyah. Masih ada sedikit materi yang perlu diperdalam — coba tinjau kembali soal yang salah, terutama pasangan ilmuwan dan karya-karyanya. Kamu hampir sempurna!`;
+  } else if (pct >= 60) {
+    motivasi = `<strong>Cukup baik!</strong> Kamu sudah memahami dasar-dasar peradaban Abbasiyah. Coba baca kembali materi tentang ilmuwan muslim (al-Razi, Ibnu Sina, al-Farabi, al-Biruni, al-Battani), empat imam mazhab, dan hubungan Abbasiyah dengan renaisance Eropa di buku paket, lalu ulangi latihan ini!`;
+  } else if (pct >= 40) {
+    motivasi = `<strong>Jangan berkecil hati!</strong> Materi Bab 10 memang kaya dengan nama ilmuwan dan karyanya. Coba buat tabel ringkasan: ilmuwan → bidang → karya utama. Pelajari juga perbedaan ilmu fikih, kalam, hadis, dan tafsir. Kerjakan ulang latihan ini — kamu pasti bisa lebih baik!`;
+  } else {
+    motivasi = `<strong>Tetap semangat!</strong> Mulai dari membaca ulang Bab 10 secara perlahan. Fokus pada: (1) Tradisi literasi & Bayt al-Hikmah; (2) Enam ilmuwan muslim dan kontribusinya; (3) Empat imam mazhab; (4) Aliran ilmu kalam Asy'ariyah & Maturidiyah; (5) Hubungan Abbasiyah dengan renaisance Eropa. Ingat, setiap usaha belajar tidak akan mengkhianati hasil. Semangat! 💪`;
+  }
+
+  document.getElementById("r-emoji").textContent   = emoji;
+  document.getElementById("r-name").textContent    = nama;
+  document.getElementById("r-class").textContent   = kelas ? "Kelas " + kelas : "";
+  document.getElementById("r-score").textContent   = pct;
+  document.getElementById("r-correct").textContent = scoreCorrect;
+  document.getElementById("r-wrong").textContent   = scoreWrong;
+
+  const pr = document.getElementById("r-predikat");
+  pr.textContent = predikat;
+  pr.style.background = prColor + "22";
+  pr.style.color = prColor;
+  document.getElementById("r-motivasi").innerHTML = motivasi;
+
+  const confettiBox = document.getElementById("confetti-box");
+  confettiBox.innerHTML = "";
+  if (pct >= 75) {
+    const colors = ["#22c55e","#f59e0b","#0891b2","#f43f5e","#3b82f6","#a855f7","#ec4899","#0ea5e9"];
+    for (let c = 0; c < 50; c++) {
+      const el = document.createElement("div");
+      el.className = "confetti";
+      el.style.left = Math.random() * 100 + "%";
+      el.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+      el.style.animationDelay = (Math.random() * 2) + "s";
+      el.style.animationDuration = (2 + Math.random() * 2.5) + "s";
+      const size = 6 + Math.random() * 6;
+      el.style.width = size + "px";
+      el.style.height = size + "px";
+      el.style.borderRadius = Math.random() > 0.5 ? "50%" : "2px";
+      confettiBox.appendChild(el);
+    }
+  }
+  document.getElementById("result-overlay").classList.add("show");
+}
+
+function closeResult() {
+  document.getElementById("result-overlay").classList.remove("show");
+  document.getElementById("btn-show-result").style.display = "block";
+}
+
+function restart() {
+  scoreCorrect = 0;
+  scoreWrong = 0;
+  document.getElementById("inp-nama").value = "";
+  document.getElementById("inp-kelas").value = "";
+  document.getElementById("result-overlay").classList.remove("show");
+  document.getElementById("btn-show-result").style.display = "none";
+  shuffleNoAdjacent(questions);
+  answered = new Array(questions.length).fill(false);
+  updateProgress();
+  renderAll();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+// ═══════════════════════════════════════════════════════
+// INISIALISASI
+// ═══════════════════════════════════════════════════════
+shuffleNoAdjacent(questions);
+answered = new Array(questions.length).fill(false);
+renderAll();
+updateProgress();
+</script>
+
+  <footer class="main-footer">
+    <div class="footer-container">
+        <div class="footer-left">
+            <select onchange="location = this.value;">
+                <option value="">Pindah ke...</option>
+                <option value="index.html">🏠 Beranda Utama</option>
+                <option value="bab1.html">Bab 1</option>
+                <option value="bab2.html">Bab 2</option>
+                <option value="bab3.html">Bab 3</option>
+                <option value="bab4.html">Bab 4</option>
+                <option value="bab5.html">Bab 5</option>
+                <option value="bab6.html">Bab 6</option>
+                <option value="bab7.html">Bab 7</option>
+                <option value="bab8.html">Bab 8</option>
+                <option value="bab9.html">Bab 9</option>
+                <option value="bab10.html">Bab 10</option>
+            </select>
+        </div>
+        <div class="footer-right">
+            <p>Copyright 2026 by @just.muhammad</p>
+        </div>
+    </div>
+</footer>
+</body>
+</html>
+
