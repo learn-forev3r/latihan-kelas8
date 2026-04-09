@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Latihan Soal – Bab 9 PAI Kelas VIII</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --orange:     #ea580c;
+    --orange-dk:  #c2410c;
+    --orange-lt:  #fff7ed;
+    --gold:       #f59e0b;
+    --rose:       #f43f5e;
+    --green:      #22c55e;
+    --ink:        #1c0a00;
+    --muted:      #6b7280;
+    --card:       #ffffff;
+    --bg:         #fff7ed;
+    --radius:     16px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;}
+
+  header{
+    background:linear-gradient(135deg,#7c2d12 0%,#ea580c 60%,#f97316 100%);
+    color:#fff;padding:28px 24px 24px;text-align:center;
+    position:relative;overflow:hidden;
+  }
+  header::before{
+    content:'';position:absolute;inset:0;
+    background:url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.05' fill-rule='evenodd'%3E%3Ccircle cx='20' cy='20' r='8'/%3E%3C/g%3E%3C/svg%3E");
+  }
+  .badge{
+    display:inline-block;background:rgba(255,255,255,.18);
+    border:1px solid rgba(255,255,255,.35);border-radius:99px;
+    font-size:12px;font-weight:700;letter-spacing:1px;
+    text-transform:uppercase;padding:4px 14px;margin-bottom:10px;
+  }
+  header h1{font-size:clamp(17px,3.8vw,25px);font-weight:900;line-height:1.3;position:relative;}
+  header p{font-size:14px;opacity:.82;margin-top:6px;position:relative;}
+  .shuffle-note{font-size:11px;opacity:.6;margin-top:2px;font-style:italic;}
+
+  .container{max-width:760px;margin:0 auto;padding:0 16px 40px;}
+
+  .identity-card{
+    background:var(--card);border-radius:var(--radius);
+    box-shadow:0 4px 24px rgba(0,0,0,.08);
+    padding:24px;margin-top:-20px;position:relative;z-index:2;
+  }
+  .identity-card h2{font-size:18px;font-weight:900;color:var(--orange-dk);margin-bottom:4px;}
+  .identity-card .sub{font-size:13px;color:var(--muted);margin-bottom:16px;}
+  .input-row{display:flex;gap:12px;flex-wrap:wrap;}
+  .input-group{flex:1;min-width:200px;}
+  .input-group label{
+    display:block;font-size:12px;font-weight:800;
+    color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;
+  }
+  .input-group input{
+    width:100%;padding:11px 14px;border:2px solid #e2e8f0;
+    border-radius:10px;font-family:'Nunito',sans-serif;
+    font-size:15px;font-weight:600;color:var(--ink);
+    transition:border-color .2s;background:#f8fafc;
+  }
+  .input-group input:focus{
+    outline:none;border-color:var(--orange);background:#fff;
+    box-shadow:0 0 0 3px rgba(234,88,12,.12);
+  }
+  .input-group input::placeholder{color:#94a3b8;font-weight:600;}
+
+  .progress-sticky{
+    position:sticky;top:0;z-index:10;
+    background:rgba(255,247,237,.92);backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+    padding:14px 0 10px;margin-top:20px;
+    border-bottom:1px solid rgba(234,88,12,.1);
+  }
+  .prog-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+  .prog-label{font-size:13px;font-weight:800;color:var(--muted);}
+  .prog-chips{display:flex;gap:6px;}
+  .prog-chip{font-size:12px;font-weight:800;padding:3px 10px;border-radius:99px;}
+  .prog-chip.cg{background:#f0fdf4;color:var(--green);}
+  .prog-chip.cr{background:#fff1f2;color:var(--rose);}
+  .prog-bar{height:8px;background:#fed7aa;border-radius:99px;overflow:hidden;}
+  .prog-fill{
+    height:100%;border-radius:99px;
+    background:linear-gradient(90deg,var(--orange),#f97316);
+    transition:width .5s cubic-bezier(.4,0,.2,1);
+  }
+  .show-result-btn{
+    display:none;margin-top:8px;
+    padding:8px 16px;border-radius:8px;
+    background:var(--orange);color:#fff;
+    font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;
+    border:none;cursor:pointer;transition:all .2s;
+  }
+  .show-result-btn:hover{background:var(--orange-dk);}
+
+  .q-card{
+    background:var(--card);border-radius:var(--radius);
+    box-shadow:0 2px 16px rgba(0,0,0,.06);
+    margin-top:16px;padding:22px 24px;
+    border-left:4px solid var(--orange);
+  }
+  .q-card[data-type="Pemahaman"]{border-left-color:#0284c7;}
+  .q-card[data-type="Penerapan & Analisis"]{border-left-color:var(--gold);}
+  .q-card.answered-correct{border-left-color:var(--green);}
+  .q-card.answered-wrong{border-left-color:var(--rose);}
+
+  .q-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-wrap:wrap;gap:6px;}
+  .q-type-badge{
+    font-size:10px;font-weight:800;letter-spacing:.8px;
+    text-transform:uppercase;padding:3px 10px;border-radius:6px;
+  }
+  .q-type-badge.t-hafalan{background:var(--orange-lt);color:var(--orange-dk);}
+  .q-type-badge.t-pemahaman{background:#e0f2fe;color:#0369a1;}
+  .q-type-badge.t-penerapan{background:#fef3c7;color:#92400e;}
+  .q-num{font-size:12px;font-weight:700;color:var(--muted);}
+  .q-text{font-size:15px;font-weight:700;line-height:1.65;white-space:pre-line;margin-bottom:16px;}
+
+  .q-options{display:flex;flex-direction:column;gap:8px;}
+  .opt-btn{
+    display:flex;align-items:flex-start;gap:12px;
+    background:#f8fafc;border:2px solid #e2e8f0;border-radius:10px;
+    padding:11px 14px;cursor:pointer;
+    font-family:'Nunito',sans-serif;font-size:14px;font-weight:600;
+    text-align:left;transition:all .2s;width:100%;
+  }
+  .opt-btn:hover:not(:disabled){border-color:var(--orange);background:var(--orange-lt);transform:translateX(3px);}
+  .opt-label{
+    min-width:26px;height:26px;background:#e2e8f0;border-radius:7px;
+    display:flex;align-items:center;justify-content:center;
+    font-size:12px;font-weight:800;color:var(--muted);flex-shrink:0;transition:all .2s;
+  }
+  .opt-btn.correct{border-color:var(--green);background:#f0fdf4;}
+  .opt-btn.correct .opt-label{background:var(--green);color:#fff;}
+  .opt-btn.wrong{border-color:var(--rose);background:#fff1f2;}
+  .opt-btn.wrong .opt-label{background:var(--rose);color:#fff;}
+  .opt-btn.dimmed{opacity:.5;}
+  .opt-btn:disabled{cursor:default;}
+
+  .q-feedback{
+    display:none;margin-top:14px;border-radius:10px;
+    padding:12px 16px;font-size:13px;line-height:1.65;
+  }
+  .q-feedback.show{display:block;animation:slideUp .3s ease;}
+  .q-feedback.fb-correct{background:#f0fdf4;border-left:4px solid var(--green);}
+  .q-feedback.fb-wrong{background:#fff1f2;border-left:4px solid var(--rose);}
+  .q-feedback strong{display:block;font-size:14px;margin-bottom:3px;}
+  @keyframes slideUp{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
+
+  .result-overlay{
+    display:none;position:fixed;inset:0;z-index:100;
+    background:rgba(15,23,42,.6);backdrop-filter:blur(6px);
+    -webkit-backdrop-filter:blur(6px);
+    justify-content:center;align-items:center;padding:20px;
+  }
+  .result-overlay.show{display:flex;animation:fadeIn .4s ease;}
+  @keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+
+  .result-modal{
+    background:var(--card);border-radius:20px;
+    box-shadow:0 24px 64px rgba(0,0,0,.2);
+    max-width:480px;width:100%;padding:36px 28px;
+    text-align:center;position:relative;overflow:hidden;
+    animation:modalPop .4s cubic-bezier(.2,.8,.3,1.2);
+  }
+  @keyframes modalPop{from{opacity:0;transform:scale(.85) translateY(30px);}to{opacity:1;transform:none;}}
+
+  .result-modal .confetti-container{position:absolute;inset:0;pointer-events:none;overflow:hidden;}
+  .confetti{position:absolute;top:-10px;opacity:0;animation:confettiFall linear forwards;}
+  @keyframes confettiFall{
+    0%{opacity:1;transform:translateY(0) rotate(0deg) scale(1);}
+    80%{opacity:1;}
+    100%{opacity:0;transform:translateY(420px) rotate(720deg) scale(.5);}
+  }
+
+  .r-emoji{font-size:56px;position:relative;}
+  .r-greeting{font-size:14px;color:var(--muted);margin-top:12px;font-weight:700;}
+  .r-name{font-size:24px;font-weight:900;color:var(--ink);margin:4px 0 0;}
+  .r-class{font-size:13px;color:var(--orange);font-weight:700;margin-bottom:20px;}
+  .r-score-wrap{background:var(--bg);border-radius:14px;padding:20px;margin-bottom:20px;}
+  .r-score-label{font-size:12px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;}
+  .r-score{font-size:52px;font-weight:900;color:var(--orange);line-height:1.1;}
+  .r-score span{font-size:20px;font-weight:700;color:var(--muted);}
+  .r-stats{display:flex;gap:10px;justify-content:center;margin-top:14px;}
+  .r-stat{background:#fff;border-radius:10px;padding:10px 16px;font-size:12px;font-weight:700;color:var(--muted);}
+  .r-stat b{display:block;font-size:20px;font-weight:900;}
+  .r-stat.sg b{color:var(--green);}
+  .r-stat.sr b{color:var(--rose);}
+
+  .r-predikat{display:inline-block;padding:6px 20px;border-radius:99px;font-weight:800;font-size:14px;margin-bottom:16px;}
+  .r-motivasi{
+    font-size:14px;line-height:1.7;color:var(--muted);
+    background:#f8fafc;border-radius:12px;padding:14px 18px;
+    margin-bottom:24px;text-align:left;
+  }
+  .r-motivasi strong{color:var(--ink);}
+
+  .r-btns{display:flex;flex-direction:column;gap:10px;}
+  .btn{
+    padding:13px 24px;border-radius:12px;font-family:'Nunito',sans-serif;
+    font-size:15px;font-weight:800;border:none;cursor:pointer;transition:all .2s;
+  }
+  .btn-primary{background:var(--orange);color:#fff;box-shadow:0 4px 12px rgba(234,88,12,.3);}
+  .btn-primary:hover{background:var(--orange-dk);transform:translateY(-2px);}
+  .btn-outline{background:transparent;color:var(--muted);border:2px solid #e2e8f0;}
+  .btn-outline:hover{border-color:var(--orange);color:var(--orange);}
+
+  .dist-bar{
+    display:flex;height:6px;border-radius:99px;overflow:hidden;
+    margin-top:24px;gap:2px;
+  }
+  .dist-bar div{height:100%;border-radius:99px;transition:width .4s;}
+  .dist-legend{
+    display:flex;justify-content:center;gap:16px;margin-top:6px;
+    font-size:11px;font-weight:800;color:var(--muted);
+  }
+  .dist-legend span{display:flex;align-items:center;gap:3px;}
+  .dist-legend i{width:8px;height:8px;border-radius:50%;display:inline-block;}
+
+  @media(max-width:500px){
+    .q-card{padding:16px 14px;}
+    .opt-btn{padding:10px 12px;font-size:13px;}
+    .result-modal{padding:28px 20px;}
+    .r-score{font-size:42px;}
+    .identity-card{padding:18px 16px;}
+  }
+
+/* --- PERBAIKAN FOOTER BY MENTOR --- */
+.main-footer {
+    background-color: #1e293b !important; /* Warna gelap modern */
+    color: white !important;
+    padding: 12px 0 !important;
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    z-index: 9999 !important; /* Supaya tidak tertutup elemen soal */
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.2);
+    font-family: 'Nunito', sans-serif;
+}
+
+.footer-container {
+    display: flex !important;
+    /* Baris di bawah ini adalah kuncinya! */
+    justify-content: space-between !important; 
+    align-items: center !important;
+    max-width: 1000px;
+    margin: 0 auto !important;
+    padding: 0 20px !important;
+}
+
+.footer-left select {
+    padding: 6px 10px !important;
+    border-radius: 8px !important;
+    border: 1px solid #475569 !important;
+    background: #334155 !important;
+    color: white !important;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.footer-right p {
+    margin: 0 !important;
+    font-size: 13px !important;
+    text-align: right !important; /* Memastikan teks rata kanan */
+    white-space: nowrap; /* Mencegah teks turun ke bawah/terpotong */
+}
+
+/* Supaya konten soal paling bawah tidak tertutup footer */
+body {
+    padding-bottom: 70px !important;
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="badge">PAI & Budi Pekerti · SMP Kelas VIII</div>
+  <h1>💰 Latihan Soal Bab 9<br>Menjadi Pribadi yang Dapat Dipercaya serta<br>Terhindar dari Riba dalam Jual Beli dan Hutang Piutang</h1>
+  <p>25 soal pilihan ganda · 4 pilihan jawaban</p>
+  <p class="shuffle-note">🔄 Urutan soal diacak setiap kali membuka halaman</p>
+</header>
+
+<div class="container">
+  <section class="identity-card">
+    <h2>📝 Data Peserta</h2>
+    <p class="sub">Isi nama dan kelas sebelum mengerjakan soal</p>
+    <div class="input-row">
+      <div class="input-group">
+        <label for="inp-nama">Nama Lengkap</label>
+        <input type="text" id="inp-nama" placeholder="Masukkan nama lengkap...">
+      </div>
+      <div class="input-group">
+        <label for="inp-kelas">Kelas</label>
+        <input type="text" id="inp-kelas" placeholder="Contoh: VIII-A">
+      </div>
+    </div>
+  </section>
+
+  <div class="progress-sticky">
+    <div class="prog-top">
+      <span class="prog-label" id="prog-label">0 dari 25 soal dijawab</span>
+      <div class="prog-chips">
+        <span class="prog-chip cg" id="chip-g">✅ 0</span>
+        <span class="prog-chip cr" id="chip-r">❌ 0</span>
+      </div>
+    </div>
+    <div class="prog-bar"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
+    <button class="show-result-btn" id="btn-show-result" onclick="openResult()">🎉 Lihat Hasil</button>
+  </div>
+
+  <div id="questions-container"></div>
+
+  <div style="margin-top:24px;">
+    <div class="dist-bar" id="dist-bar"></div>
+    <div class="dist-legend">
+      <span><i style="background:var(--orange)"></i>A</span>
+      <span><i style="background:#0284c7"></i>B</span>
+      <span><i style="background:var(--gold)"></i>C</span>
+      <span><i style="background:var(--rose)"></i>D</span>
+    </div>
+  </div>
+</div>
+
+<div class="result-overlay" id="result-overlay">
+  <div class="result-modal">
+    <div class="confetti-container" id="confetti-box"></div>
+    <div class="r-emoji" id="r-emoji"></div>
+    <div class="r-greeting">Selamat!</div>
+    <div class="r-name" id="r-name"></div>
+    <div class="r-class" id="r-class"></div>
+    <div class="r-score-wrap">
+      <div class="r-score-label">Skor Kamu</div>
+      <div class="r-score"><span id="r-score"></span><span>/100</span></div>
+      <div class="r-stats">
+        <div class="r-stat sg"><b id="r-correct">0</b>Benar</div>
+        <div class="r-stat sr"><b id="r-wrong">0</b>Salah</div>
+      </div>
+    </div>
+    <div class="r-predikat" id="r-predikat"></div>
+    <div class="r-motivasi" id="r-motivasi"></div>
+    <div class="r-btns">
+      <button class="btn btn-outline" onclick="closeResult()">Tinjau Jawaban Saya</button>
+      <button class="btn btn-primary" onclick="restart()">🔁 Ulangi Latihan</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════
+// DATA SOAL — distribusi seimbang & terverifikasi:
+// A=7, B=6, C=6, D=6 (total 25)
+// Pola: A,D,B,A,C,D,B,A,C,D,B,A,C,D,B,A,C,D,B,A,C,D,B,A,C
+// Tidak ada dua jawaban berurutan yang sama
+// ═══════════════════════════════════════════════════════
+const questions = [
+  // ── Soal 1 → Jawaban A ──
+  {
+    type:"Hafalan & Ingatan",
+    text:"Titik Fokus (kata kunci) Bab 9 adalah...",
+    options:["Muamalah, Jual Beli, Hutang Piutang, Riba","Jujur, Amanah, Tanggung Jawab, dan Kepercayaan","Kredit, Leasing, Bunga Bank, dan Bank Syariah","Rukun, Syarat, Khiyar, dan Akad"],
+    answer:0,
+    explanation:"Titik Fokus Bab 9 adalah 'Muamalah, Jual Beli, Hutang Piutang, Riba.' Keempat kata kunci ini merangkum isi bab yang membahas ketentuan fikih muamalah tentang jual beli, hutang piutang, dan riba, termasuk penerapannya di era modern."
+  },
+  // ── Soal 2 → Jawaban D ──
+  {
+    type:"Hafalan & Ingatan",
+    text:"Secara istilah, jual beli adalah...",
+    options:["Memberikan sesuatu kepada orang lain sebagai hadiah tanpa imbalan","Meminjam barang atau uang dengan kewajiban mengembalikannya","Menyerahkan sesuatu kepada orang lain sebagai amanah yang harus dijaga","Menukar suatu barang dengan barang yang lain dengan cara tertentu yang diatur dalam fikih muamalah"],
+    answer:3,
+    explanation:"Secara bahasa, jual beli dalam bahasa Arab adalah al-bay'u yang berarti mengambil atau memberikan sesuatu. Secara istilah, jual beli adalah menukar suatu barang dengan barang yang lain dengan cara tertentu. Cara-cara itu diatur dalam ketentuan fikih muamalah yang mencakup rukun, syarat, dan khiyar."
+  },
+  // ── Soal 3 → Jawaban B ──
+  {
+    type:"Hafalan & Ingatan",
+    text:"Tiga rukun jual beli dalam fikih muamalah adalah...",
+    options:["Niat, akad, dan barang","Penjual dan pembeli, objek yang dijual belikan, serta akad (ijab kabul) jual beli","Saksi, jaminan, dan pencatatan transaksi","Penjual, harga yang disepakati, dan khiyar"],
+    answer:1,
+    explanation:"Tiga rukun jual beli: (1) Adanya penjual dan pembeli; (2) Ada objek yang dijual belikan; (3) Akad (ijab kabul) jual beli. Ketiganya wajib ada — jika salah satu tidak ada maka jual beli tidak sah. Di luar rukun, ada syarat-syarat yang harus dipenuhi pada masing-masing rukun agar jual beli menjadi sah."
+  },
+  // ── Soal 4 → Jawaban A ──
+  {
+    type:"Hafalan & Ingatan",
+    text:"Khiyar artinya memilih antara dua hal dalam jual beli. Tiga macam khiyar adalah...",
+    options:["Khiyar majelis, khiyar syarat, dan khiyar 'aibi","Khiyar niat, khiyar harga, dan khiyar waktu","Khiyar penjual, khiyar pembeli, dan khiyar bersama","Khiyar ijab, khiyar kabul, dan khiyar akad"],
+    answer:0,
+    explanation:"Tiga macam khiyar: (1) Khiyar majelis — selama penjual dan pembeli masih berada di tempat jual beli; (2) Khiyar syarat — pembeli meminta waktu tertentu untuk memutuskan, batas maksimalnya tiga hari tiga malam; (3) Khiyar 'aibi — pembeli boleh mengembalikan barang atau meminta pengurangan harga karena ada cacat yang terjadi sebelum akad tapi baru diketahui sesudah akad."
+  },
+  // ── Soal 5 → Jawaban C ──
+  {
+    type:"Hafalan & Ingatan",
+    text:"Perbedaan antara hutang piutang dayn dan qarḍ adalah...",
+    options:["Dayn hanya berlaku untuk hutang uang, qarḍ berlaku untuk hutang barang","Dayn lebih umum — mencakup segala jenis hutang dari sebab apapun; qarḍ lebih khusus — hutang yang terjadi karena akad pinjaman","Dayn tidak memerlukan akad, qarḍ wajib memakai akad tertulis","Dayn hukumnya boleh, qarḍ hukumnya wajib"],
+    answer:2,
+    explanation:"Dayn lebih umum: mencakup segala jenis hutang yang terjadi karena sebab apapun (jual beli, sewa menyewa, pinjam meminjam). Qarḍ lebih khusus: hutang yang memang terjadi karena akad pinjaman atau hutang-piutang. Semua qarḍ adalah dayn, tetapi tidak semua dayn adalah qarḍ. Contoh dayn: kekurangan pembayaran di kantin. Contoh qarḍ: meminjam uang ke teman."
+  },
+  // ── Soal 6 → Jawaban D ──
+  {
+    type:"Hafalan & Ingatan",
+    text:"Dua macam riba menurut Bab 9 adalah...",
+    options:["Riba jual beli dan riba hutang piutang","Riba bank dan riba rentenir","Riba nasi'ah dan riba faḍal","Riba kecil dan riba besar"],
+    answer:3,
+    explanation:"Dua macam riba: (1) Riba Nasi'ah — tambahan yang disyaratkan pemberi hutang sebagai imbalan dari penundaan pembayaran (contoh: harga hutang berubah naik karena keterlambatan bayar); (2) Riba Faḍal — tukar menukar barang sejenis dengan disertai kelebihan pada salah satunya (contoh: menukar 10 kg beras kualitas baik dengan 15 kg beras kualitas jelek)."
+  },
+  // ── Soal 7 → Jawaban B ──
+  {
+    type:"Hafalan & Ingatan",
+    text:"Ayat Al-Qur'an yang menegaskan bahwa Allah menghalalkan jual beli dan mengharamkan riba adalah...",
+    options:["Q.S. al-Baqarah/2:275","Q.S. an-Nisa'/4:29","Q.S. al-Baqarah/2:282","Q.S. al-Maidah/5:90"],
+    answer:0,
+    explanation:"Q.S. al-Baqarah/2:275 berbunyi: 'Allah telah menghalalkan jual beli dan mengharamkan riba.' Ayat ini menjadi landasan hukum utama dalam fikih muamalah yang membedakan jual beli (halal) dari riba (haram). Sementara Q.S. al-Baqarah/2:282 berisi anjuran mencatat hutang piutang."
+  },
+  // ── Soal 8 → Jawaban A ──
+  {
+    type:"Hafalan & Ingatan",
+    text:"Tiga anjuran dalam Q.S. al-Baqarah/2:282 yang berkaitan dengan hutang piutang adalah...",
+    options:["Menuliskan hutang piutang, menghadirkan saksi, dan memberikan jaminan","Membayar hutang tepat waktu, memberitahu saksi, dan membuat perjanjian di atas materai","Tidak berhutang kecuali mendesak, melunasi sebelum jatuh tempo, dan bersedekah sebagai kafarah","Minta izin kepada ulama, menggunakan akad tertulis, dan melibatkan notaris"],
+    answer:0,
+    explanation:"Q.S. al-Baqarah/2:282 menganjurkan tiga hal dalam transaksi hutang piutang: (1) Menuliskan hutang piutang; (2) Menghadirkan saksi; dan (3) Memberikan jaminan. Tiga anjuran ini dimaksudkan agar pihak yang berhutang terikat dalam tanggung jawab untuk melunasi hutangnya."
+  },
+  // ── Soal 9 → Jawaban C ──
+  {
+    type:"Pemahaman",
+    text:"Mengapa Islam menetapkan fikih muamalah yang mengatur transaksi jual beli dan hutang piutang?",
+    options:["Agar umat Islam bisa menghindari semua jenis transaksi yang melibatkan uang","Karena Islam ingin mengontrol semua aktivitas ekonomi umatnya","Karena manusia memiliki potensi sifat tamak dan rakus yang bisa merugikan orang lain, sehingga perlu aturan agar transaksi menghasilkan kemaslahatan dan terhindar dari kezaliman","Agar ulama bisa menetapkan standar harga yang adil di pasar"],
+    answer:2,
+    explanation:"Islam menetapkan fikih muamalah karena selain memiliki kecenderungan bertakwa, manusia juga berpotensi memiliki sifat tamak dan rakus yang dapat merugikan orang lain. Jika tidak diatur, sifat tamak ini bisa menyebabkan manusia memakan harta orang lain dengan cara batil — mempraktikkan riba, menipu, dan mengeksploitasi. Fikih muamalah hadir untuk menjamin kemaslahatan bersama dan terhindar dari kemaksiatan terhadap sesama."
+  },
+  // ── Soal 10 → Jawaban D ──
+  {
+    type:"Pemahaman",
+    text:"Syarat sah penjual dan pembeli dalam jual beli adalah berakal, balig, dan dengan kehendak sendiri. Mengapa 'dengan kehendak sendiri' menjadi syarat?",
+    options:["Karena hukum perdata mensyaratkan kontrak bebas paksaan","Karena orang yang dipaksa tidak bisa membayar harga dengan benar","Karena Islam mengutamakan kebebasan individu di atas segalanya","Karena transaksi yang dipaksa tidak sah dan bisa merugikan salah satu pihak serta bertentangan dengan prinsip keadilan dalam Islam"],
+    answer:3,
+    explanation:"Syarat 'dengan kehendak sendiri' (bukan karena dipaksa) penting karena transaksi yang dilakukan atas paksaan melanggar prinsip keadilan dan kerelaan (riḍa) yang menjadi fondasi muamalah Islam. Jual beli yang sah harus didasari kerelaan kedua belah pihak. Tanpa kerelaan, transaksi menjadi tidak adil dan mungkin menzalimi pihak yang dipaksa."
+  },
+  // ── Soal 11 → Jawaban B ──
+  {
+    type:"Pemahaman",
+    text:"Hukum asal jual beli adalah mubah (boleh). Dalam kondisi apa jual beli bisa menjadi HARAM?",
+    options:["Jika jual beli dilakukan tanpa menyebut nama Allah terlebih dahulu","Jika dilakukan dalam rangka kemaksiatan, seperti menjual barang haram, merusak harga pasar, atau menjual barang yang merusak ketenteraman masyarakat","Jika dilakukan secara kredit tanpa akad yang jelas","Jika dilakukan antara penjual dan pembeli yang berbeda agama"],
+    answer:1,
+    explanation:"Jual beli bisa berubah menjadi haram apabila dilakukan dalam rangka kemaksiatan: menjual barang haram, jual beli dengan tujuan merusak harga pasar, atau menjual barang yang bisa merusak ketenteraman masyarakat. Jual beli juga bisa menjadi wajib (jika menjual merupakan keharusan, seperti untuk membayar hutang) atau sunah (jika barang sangat diperlukan pembeli)."
+  },
+  // ── Soal 12 → Jawaban A ──
+  {
+    type:"Pemahaman",
+    text:"Khiyar 'aibi memberikan hak kepada pembeli untuk...",
+    options:["Mengembalikan barang yang dibeli atau meminta pengurangan harga karena ada cacat yang terjadi sebelum akad tapi baru diketahui setelah akad","Membatalkan akad jual beli kapan saja selama masih berada di tempat transaksi","Meminta waktu tiga hari untuk mempertimbangkan melanjutkan atau membatalkan pembelian","Memilih barang terbaik dari sejumlah barang yang ditawarkan penjual"],
+    answer:0,
+    explanation:"Khiyar 'aibi adalah kebolehan pembeli mengembalikan barang yang dibelinya atau meminta pengurangan harga karena adanya cacat pada barang yang terjadi sebelum akad dan baru diketahui setelah akad jual beli. Ini melindungi pembeli dari kerugian akibat barang cacat yang tidak diketahui saat transaksi."
+  },
+  // ── Soal 13 → Jawaban C ──
+  {
+    type:"Pemahaman",
+    text:"Hukum mengembalikan hutang adalah fardu ain, artinya...",
+    options:["Wajib kolektif — cukup jika ada satu orang yang membayar mewakili kelompok","Sunah muakkad — sangat dianjurkan tapi tidak wajib","Wajib bagi setiap individu yang berhutang — meskipun yang menghutangi tidak menagih, orang yang berhutang tetap wajib membayar","Wajib hanya jika yang menghutangi membutuhkan uangnya kembali"],
+    answer:2,
+    explanation:"Mengembalikan hutang hukumnya wajib (fardu ain) bagi setiap orang yang berhutang. Meskipun yang menghutangi tidak menagih, orang yang berhutang tetap wajib membayar. Jika seseorang sudah memiliki uang untuk melunasi hutang tapi menunda-nunda, ia sudah berbuat zalim. Ini berbeda dengan memberi hutang yang hukumnya boleh (bahkan bisa sunah atau wajib tergantung situasi)."
+  },
+  // ── Soal 14 → Jawaban D ──
+  {
+    type:"Pemahaman",
+    text:"Riba nasi'ah terjadi ketika...",
+    options:["Dua barang sejenis ditukar dengan jumlah yang tidak sama","Penjual menaikkan harga melebihi batas wajar keuntungan","Pemberi hutang mensyaratkan tambahan sebagai imbalan dari penundaan atau penangguhan pembayaran hutang","Pembeli membeli barang tanpa mengetahui harga aslinya"],
+    answer:3,
+    explanation:"Riba nasi'ah adalah riba yang tambahannya disyaratkan oleh pemberi hutang kepada yang berhutang sebagai imbalan dari penundaan atau penangguhan bayaran. Contoh dari buku: Bu Rini berhutang beras seharga Rp.75.000, namun saat melunasi sebulan kemudian diminta membayar Rp.80.000 karena harga beras naik. Kelebihan Rp.5.000 sebagai akibat penundaan pembayaran inilah riba nasi'ah."
+  },
+  // ── Soal 15 → Jawaban B ──
+  {
+    type:"Pemahaman",
+    text:"Mengapa jual beli online secara umum diperbolehkan dalam fikih muamalah?",
+    options:["Karena teknologi digital telah diakui oleh Majelis Ulama Indonesia","Karena jual beli online tidak menggunakan uang fisik sehingga bebas dari riba","Karena para ulama sudah bersepakat membolehkan semua transaksi digital","Karena pada dasarnya tetap memenuhi rukun jual beli: penjual dan pembeli ada, pemeriksaan barang bisa lewat gambar/video/spesifikasi, dan akad ijab kabul diwakili oleh aplikasi permohonan dan pengisian"],
+    answer:1,
+    explanation:"Jual beli online diperbolehkan karena pada dasarnya tetap memenuhi rukun: (1) Penjual dan pembeli ada (meskipun tidak satu majelis fisik); (2) Pemeriksaan barang bisa dilakukan lewat gambar, video, dan spesifikasi produk; (3) Akad ijab kabul diwakili oleh aplikasi permohonan penjual dan pengisian oleh pembeli. Yang perlu diperhatikan: transaksi tidak mengandung penipuan, judi, dan riba. Nilai kejujuran, tanggung jawab, dan kepercayaan menjadi kunci."
+  },
+  // ── Soal 16 → Jawaban A ──
+  {
+    type:"Pemahaman",
+    text:"Perbedaan pendapat ulama tentang leasing (jual beli kredit melalui lembaga keuangan) adalah...",
+    options:["Sebagian ulama menganggapnya halal karena akad syuf'ah (kepemilikan bersama), sebagian lain menganggapnya haram karena akadnya dinilai sebagai hutang piutang qarḍ dengan bunga (riba)","Semua ulama sepakat bahwa leasing halal karena akadnya adalah jual beli","Semua ulama sepakat bahwa leasing haram karena mengandung riba","Leasing halal jika bunganya di bawah 10% per tahun dan haram jika di atas itu"],
+    answer:0,
+    explanation:"Ada dua pandangan ulama tentang leasing: (1) Halal — akadnya adalah syuf'ah (kepemilikan bersama/māl musytarak antara pembeli dan finance sampai angsuran lunas); (2) Haram — akad antara pembeli dan finance dinilai sebagai hutang piutang qarḍ, di mana pembeli meminjam uang ke finance untuk beli barang, lalu membayar kembali dengan bunga yang dinilai sebagai riba nasi'ah. Perbedaan ini belum ada kesepakatan."
+  },
+  // ── Soal 17 → Jawaban C ──
+  {
+    type:"Pemahaman",
+    text:"Status hukum bunga bank menurut pembahasan Bab 9 adalah...",
+    options:["Haram — karena sudah ada fatwa MUI dan Muhammadiyah yang mengharamkannya","Halal — karena sudah ada ulama Al-Azhar yang menghalalkannya","Masalah khilāfiyah (perbedaan pendapat ulama) — ada yang menyamakannya dengan riba (haram), ada yang menganggapnya bukan riba (halal), ada yang memandangnya syubhat; belum ada ijmā' ulama","Syubhat — sehingga wajib dihindari oleh semua muslim"],
+    answer:2,
+    explanation:"Bunga bank adalah masalah khilāfiyah. Ada yang mengharamkan (MUI 2003, Muhammadiyah 2010, Dr. Yusuf Qardawi, Syaikh bin Baz) karena dinilai riba nasi'ah. Ada yang menghalalkan (Syeikh Mahmud Syaltut dan Dr. Ali Jum'ah dari Al-Azhar) karena dinilai sebagai bagi hasil yang telah disepakati. NU pada Munas 1992 memiliki tiga pendapat: haram, halal, dan syubhat. Belum ada kesepakatan (ijmā')."
+  },
+  // ── Soal 18 → Jawaban D ──
+  {
+    type:"Pemahaman",
+    text:"Nilai utama yang ingin diwujudkan Islam melalui fikih muamalah dalam transaksi jual beli dan hutang piutang adalah...",
+    options:["Keuntungan maksimal bagi para pebisnis muslim","Kekuasaan ekonomi Islam atas perekonomian dunia","Pemerataan kekayaan secara paksa melalui aturan zakat dan infak","Praktik jual beli dan hutang piutang yang adil berdasarkan kejujuran, tanggung jawab, dan kepercayaan"],
+    answer:3,
+    explanation:"Melalui fikih muamalah, Islam ingin menghadirkan praktik jual beli dan hutang piutang yang adil berdasarkan tiga nilai utama: kejujuran, tanggung jawab, dan kepercayaan. Adanya akad yang jelas mengajarkan kejujuran (tidak ada pihak yang bisa menipu). Anjuran mencatat, menghadirkan saksi, dan memberikan jaminan mendorong tanggung jawab. Kejujuran dan tanggung jawab pada akhirnya melahirkan kepercayaan."
+  },
+  // ── Soal 19 → Jawaban B ──
+  {
+    type:"Penerapan & Analisis",
+    text:"Pasangan kata dan artinya yang TEPAT:\n1-Bay' : A-Tambahan dalam hutang\n2-Dayn : B-Hutang dengan akad pinjaman\n3-Qarḍ : C-Hutang dengan akad umum\n4-Ribā : D-Jual beli\n\nPasangan yang benar adalah...",
+    options:["1-A, 2-C, 3-B, 4-D","1-B, 2-C, 3-D, 4-A","1-D, 2-C, 3-B, 4-A","1-C, 2-B, 3-D, 4-A"],
+    answer:2,
+    explanation:"Pasangan yang tepat: (1) Bay' = D (Jual beli — al-bay'u berarti mengambil atau memberikan sesuatu/jual beli); (2) Dayn = C (Hutang dengan akad umum — mencakup segala jenis hutang dari sebab apapun); (3) Qarḍ = B (Hutang dengan akad pinjaman — khusus hutang karena pinjam meminjam); (4) Ribā = A (Tambahan dalam hutang/transaksi). Jadi: 1-D, 2-C, 3-B, 4-A."
+  },
+  // ── Soal 20 → Jawaban A ──
+  {
+    type:"Penerapan & Analisis",
+    text:"Pak Aan ingin membeli ponsel dari Pak Ade. Pak Aan meminta waktu satu hari untuk berpikir sebelum memutuskan membeli atau tidak. Istilah yang tepat untuk situasi ini adalah khiyar...",
+    options:["Syarat — karena Pak Aan meminta waktu tertentu sebagai syarat sebelum memutuskan","Majelis — karena masih dalam satu kesempatan pertemuan","'Aibi — karena khawatir ada cacat tersembunyi pada ponsel","Akad — karena akad belum disepakati"],
+    answer:0,
+    explanation:"Pak Aan meminta waktu satu hari untuk berpikir sebelum memutuskan membeli atau tidak. Ini adalah khiyar syarat — khiyar yang dijadikan syarat pada waktu akad jual beli, di mana pembeli meminta waktu tertentu untuk memutuskan. Batas waktu khiyar syarat adalah tiga hari tiga malam."
+  },
+  // ── Soal 21 → Jawaban C ──
+  {
+    type:"Penerapan & Analisis",
+    text:"Perhatikan ilustrasi-ilustrasi berikut!\n(1) Wawan kekurangan uang di kantin, Bu Nina izinkan bayar besok\n(2) Bapak Yuni beli ponsel dengan 10 kali angsuran\n(3) Bu Agus beli beras, minta tunda bayar sampai minggu depan\n(4) Pak Adi meminjam uang ke Pak Ari untuk beli sepeda\n\nIlustrasi yang mengandung hutang piutang QARḌ adalah...",
+    options:["Wawan","Yuni","Bu Agus","Pak Adi"],
+    answer:3,
+    explanation:"Qarḍ adalah hutang yang terjadi karena akad pinjaman. Pak Adi meminjam uang ke Pak Ari — ini adalah pinjam meminjam murni (qarḍ). Sedangkan Wawan dan Bu Agus mengalami dayn (hutang karena jual beli yang belum dibayar lunas). Yuni mengalami jual beli kredit (dayn juga, bukan qarḍ murni)."
+  },
+  // ── Soal 22 → Jawaban D ──
+  {
+    type:"Penerapan & Analisis",
+    text:"Budi membeli sepeda dengan harga tunai Rp1.000.000, namun jika diangsur 5 kali menjadi Rp1.500.000 (Rp300.000/cicilan). Budi menyepakatinya. Pandangan fikih yang TEPAT adalah...",
+    options:["Transaksi ini mengandung riba karena ada kelebihan Rp500.000 dari harga tunai","Transaksi ini termasuk jual beli kredit yang dibolehkan — akadnya adalah jual beli dengan harga yang disepakati kedua belah pihak, bukan hutang piutang qarḍ","Ada ketidakadilan karena penjual mengambil keuntungan terlalu banyak","Ulama masih berbeda pendapat tentang kehalalan/keharaman transaksi kredit seperti ini"],
+    answer:3,
+    explanation:"Jual beli kredit (tanpa pihak ketiga/leasing) adalah transaksi yang hukumnya boleh dan halal menurut pandangan para ulama secara umum. Kebolehannya karena akad yang dilakukan adalah akad jual beli (bukan hutang piutang), dan harga disepakati sejak awal oleh kedua belah pihak. Tambahan harga karena pembayaran kredit bukan riba karena berbeda dengan tambahan dalam akad hutang piutang."
+  },
+  // ── Soal 23 → Jawaban B ──
+  {
+    type:"Penerapan & Analisis",
+    text:"Dua anak penjual tisu dalam kisah rubrik 'Mari Bertafakur' Bab 9 bersikeras mengembalikan kembalian Rp4.000 kepada pembeli, bahkan menyisihkan sisanya untuk dikembalikan kemudian. Kisah ini paling mencerminkan nilai...",
+    options:["Riba faḍal — karena ada pertukaran yang tidak seimbang","Khiyar — karena pembeli boleh memilih menerima atau menolak kembalian","Kejujuran dan tanggung jawab dalam muamalah — mengembalikan hak orang lain meskipun pembeli sudah mengizinkan mereka mengambilnya","Akad yang tidak sah — karena pembeli sudah menyatakan tidak mau kembalian"],
+    answer:1,
+    explanation:"Kisah dua anak penjual tisu yang memaksakan pengembalian uang kembalian kepada pembeli mencerminkan nilai kejujuran dan tanggung jawab dalam muamalah. Meskipun pembeli sudah mengizinkan mereka mengambil kembaliannya, mereka tetap berusaha mengembalikan hak orang lain. Ini adalah teladan nyata tentang bagaimana fikih muamalah mendorong kejujuran dan tanggung jawab dalam setiap transaksi."
+  },
+  // ── Soal 24 → Jawaban A ──
+  {
+    type:"Penerapan & Analisis",
+    text:"Pernyataan-pernyataan tentang fikih muamalah di era modern yang BENAR adalah...\n(1) Jual beli kredit hukumnya boleh dan halal\n(3) Majelis Ulama Indonesia memandang bunga bank sebagai riba\n(4) Ulama masih berbeda pendapat tentang kredit menggunakan leasing\n(5) Ulama belum bersepakat tentang kehalalan/keharaman bunga bank",
+    options:["(1), (3), dan (4)","(1), (4), dan (5)","(3), (4), dan (5)","(1), (3), (4), dan (5) semuanya benar"],
+    answer:0,
+    explanation:"Semua pernyataan (1), (3), (4), dan (5) benar: (1) Jual beli kredit boleh dan halal ✓ — menurut pandangan umum ulama; (3) MUI memandang bunga bank sebagai riba dan mengeluarkan fatwa haram tahun 2003 ✓; (4) Ulama berbeda pendapat tentang leasing ✓ — sebagian menghalalkan (akad syuf'ah), sebagian mengharamkan (akad qarḍ dengan riba); (5) Belum ada ijmā' ulama tentang bunga bank ✓ — ini masalah khilāfiyah."
+  },
+  // ── Soal 25 → Jawaban C ──
+  {
+    type:"Penerapan & Analisis",
+    text:"Khalifah Umar bin Khattab membatalkan niatnya berhutang dari kas negara setelah diingatkan oleh bendahara: 'Apakah Anda dapat memastikan akan hidup sampai bulan depan?' Kisah ini paling mencerminkan nilai...",
+    options:["Bahwa pemimpin tidak boleh berhutang dalam kondisi apapun","Tanggung jawab dalam hutang piutang — kesadaran bahwa hutang harus dipertanggungjawabkan dan tidak boleh mewariskan hutang yang tidak pasti bisa dilunasi","Bahwa hutang lebih baik dihindari kecuali mendesak, dan hutang yang tidak dilunasi sebelum mati akan menjadi beban di akhirat","Kebesaran hati Umar yang lebih memilih hidup sederhana daripada berhutang"],
+    answer:2,
+    explanation:"Kisah Khalifah Umar mencerminkan tanggung jawab dalam hutang piutang — kesadaran mendalam bahwa hutang adalah kewajiban yang harus dilunasi dan tidak boleh ditinggalkan sebagai warisan yang memberatkan. Umar berkata kepada putranya: 'Ayahmu tidak dapat memperhitungkan umurnya walaupun sesaat. Ayahmu tidak ingin mewariskan utang kepadamu.' Ini sejalan dengan ajaran fikih bahwa mengembalikan hutang adalah fardu ain."
+  }
+];
+
+// ═══════════════════════════════════════════════════════
+// ALGORITMA ACAK — Fisher-Yates + penjamin tidak ada
+// jawaban berurutan yang sama
+// ═══════════════════════════════════════════════════════
+function shuffleNoAdjacent(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  for (let pass = 0; pass < 500; pass++) {
+    let clean = true;
+    for (let i = 0; i < arr.length - 1; i++) {
+      if (arr[i].answer === arr[i + 1].answer) {
+        clean = false;
+        let swapped = false;
+        for (let k = i + 2; k < arr.length; k++) {
+          const ansK = arr[k].answer;
+          const ansBefore = (i > 0) ? arr[i - 1].answer : -1;
+          const ansAfter = (k < arr.length - 1) ? arr[k + 1].answer : -1;
+          if (ansK !== arr[i].answer && ansK !== ansAfter && ansK !== ansBefore) {
+            [arr[i + 1], arr[k]] = [arr[k], arr[i + 1]];
+            swapped = true; break;
+          }
+        }
+        if (!swapped) {
+          for (let k = i + 2; k < arr.length; k++) {
+            const ansK = arr[k].answer;
+            const ansBefore = (i > 0) ? arr[i - 1].answer : -1;
+            const ansAfterI = arr[i + 1].answer;
+            const ansAfterK = (k < arr.length - 1) ? arr[k + 1].answer : -1;
+            if (ansK !== ansAfterI && ansK !== ansBefore &&
+                arr[i].answer !== ansAfterK && arr[i].answer !== ansBefore) {
+              [arr[i], arr[k]] = [arr[k], arr[i]];
+              swapped = true; break;
+            }
+          }
+        }
+      }
+    }
+    if (clean) break;
+  }
+}
+
+// ═══════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════
+let scoreCorrect = 0;
+let scoreWrong = 0;
+let answered = [];
+
+// ═══════════════════════════════════════════════════════
+// RENDER
+// ═══════════════════════════════════════════════════════
+function typeClass(type) {
+  if (type.includes("Hafalan")) return "t-hafalan";
+  if (type.includes("Pemahaman")) return "t-pemahaman";
+  return "t-penerapan";
+}
+
+function renderAll() {
+  const box = document.getElementById("questions-container");
+  const labels = ["A", "B", "C", "D"];
+  let html = "";
+  questions.forEach((q, i) => {
+    html += `<div class="q-card" id="qcard-${i}" data-type="${q.type}">`;
+    html += `<div class="q-header">
+      <span class="q-type-badge ${typeClass(q.type)}">${q.type}</span>
+      <span class="q-num">Soal ${i + 1} dari ${questions.length}</span>
+    </div>`;
+    html += `<div class="q-text">${q.text}</div>`;
+    if (q.arabic) html += `<div class="q-arabic">${q.arabic}</div>`;
+    html += `<div class="q-options" id="opts-${i}">`;
+    q.options.forEach((opt, j) => {
+      html += `<button class="opt-btn" id="opt-${i}-${j}" onclick="pickAnswer(${i},${j})">
+        <span class="opt-label">${labels[j]}</span>
+        <span>${opt}</span>
+      </button>`;
+    });
+    html += `</div>`;
+    html += `<div class="q-feedback" id="fb-${i}"></div>`;
+    html += `</div>`;
+  });
+  box.innerHTML = html;
+  renderDistBar();
+}
+
+function renderDistBar() {
+  const counts = [0, 0, 0, 0];
+  questions.forEach(q => counts[q.answer]++);
+  const total = questions.length;
+  const colors = ["var(--orange)", "#0284c7", "var(--gold)", "var(--rose)"];
+  let html = "";
+  counts.forEach((c, i) => {
+    html += `<div style="width:${(c / total * 100)}%;background:${colors[i]}"></div>`;
+  });
+  document.getElementById("dist-bar").innerHTML = html;
+}
+
+// ═══════════════════════════════════════════════════════
+// LOGIKA JAWAB
+// ═══════════════════════════════════════════════════════
+function pickAnswer(qi, oi) {
+  if (answered[qi]) return;
+  answered[qi] = true;
+
+  const q = questions[qi];
+  const isCorrect = (oi === q.answer);
+  if (isCorrect) scoreCorrect++; else scoreWrong++;
+
+  const labels = ["A", "B", "C", "D"];
+
+  q.options.forEach((_, j) => {
+    const btn = document.getElementById(`opt-${qi}-${j}`);
+    btn.disabled = true;
+    if (j === q.answer) {
+      btn.classList.add("correct");
+    } else if (j === oi && !isCorrect) {
+      btn.classList.add("wrong");
+    } else {
+      btn.classList.add("dimmed");
+    }
+  });
+
+  const card = document.getElementById(`qcard-${qi}`);
+  card.classList.add(isCorrect ? "answered-correct" : "answered-wrong");
+
+  const fb = document.getElementById(`fb-${qi}`);
+  fb.className = "q-feedback show " + (isCorrect ? "fb-correct" : "fb-wrong");
+  if (isCorrect) {
+    fb.innerHTML = `<strong>✅ Benar! Jawaban kamu tepat.</strong>${q.explanation}`;
+  } else {
+    fb.innerHTML = `<strong>❌ Salah. Jawaban yang benar adalah <u>${labels[q.answer]}</u>.</strong>${q.explanation}`;
+  }
+
+  updateProgress();
+
+  if (answered.every(a => a)) {
+    setTimeout(() => openResult(), 900);
+  }
+}
+
+function updateProgress() {
+  const done = answered.filter(a => a).length;
+  const total = questions.length;
+  const pct = Math.round((done / total) * 100);
+  document.getElementById("prog-label").textContent = `${done} dari ${total} soal dijawab`;
+  document.getElementById("prog-fill").style.width = pct + "%";
+  document.getElementById("chip-g").textContent = "✅ " + scoreCorrect;
+  document.getElementById("chip-r").textContent = "❌ " + scoreWrong;
+}
+
+// ═══════════════════════════════════════════════════════
+// MODAL HASIL
+// ═══════════════════════════════════════════════════════
+function openResult() {
+  if (!answered.every(a => a)) return;
+
+  const nama = document.getElementById("inp-nama").value.trim() || "Peserta";
+  const kelas = document.getElementById("inp-kelas").value.trim();
+  const pct = Math.round((scoreCorrect / questions.length) * 100);
+
+  let emoji, predikat, prColor;
+  if (pct >= 90)      { emoji = "🏆"; predikat = "Sangat Baik (A)"; prColor = "#22c55e"; }
+  else if (pct >= 75) { emoji = "⭐"; predikat = "Baik (B)"; prColor = "#ea580c"; }
+  else if (pct >= 60) { emoji = "👍"; predikat = "Cukup (C)"; prColor = "#f59e0b"; }
+  else if (pct >= 40) { emoji = "📚"; predikat = "Kurang (D)"; prColor = "#f97316"; }
+  else                { emoji = "💪"; predikat = "Sangat Kurang (E)"; prColor = "#f43f5e"; }
+
+  let motivasi;
+  if (pct >= 90) {
+    motivasi = `<strong>Masya Allah, luar biasa!</strong> Pemahaman kamu tentang fikih muamalah sudah sangat mendalam. Kamu memahami rukun jual beli, tiga macam khiyar, perbedaan dayn dan qarḍ, dua jenis riba (nasi'ah dan faḍal), status hukum bunga bank sebagai khilāfiyah, serta nilai kejujuran dan tanggung jawab dalam setiap transaksi dengan sempurna. Terus jadilah pribadi yang amanah dalam semua urusanmu!`;
+  } else if (pct >= 75) {
+    motivasi = `<strong>Hebat sekali!</strong> Kamu sudah menunjukkan pemahaman yang baik tentang muamalah Islam. Masih ada sedikit materi yang perlu diperdalam — coba tinjau kembali soal yang salah dan pahami penjelasannya. Perbedaan antara jual beli kredit yang halal dan riba nasi'ah sering membingungkan, jadi pastikan kamu memahami perbedaan akadnya dengan benar. Kamu hampir sempurna!`;
+  } else if (pct >= 60) {
+    motivasi = `<strong>Cukup baik!</strong> Kamu sudah memahami dasar-dasar fikih muamalah, tetapi beberapa materi perlu diperdalam lagi. Coba baca kembali penjelasan tentang tiga rukun jual beli, perbedaan khiyar majelis/syarat/'aibi, perbedaan dayn dan qarḍ, serta dua jenis riba di buku paket, lalu ulangi latihan ini. Pasti skor kamu akan naik!`;
+  } else if (pct >= 40) {
+    motivasi = `<strong>Jangan berkecil hati!</strong> Materi tentang muamalah memang memerlukan perhatian khusus karena ada banyak istilah fikih baru — seperti rukun, syarat, khiyar, dayn, qarḍ, riba nasi'ah, riba faḍal, syuf'ah, dan khilāfiyah. Coba pelajari kembali Bab 9 secara perlahan, buat tabel perbandingan dayn vs qarḍ dan riba nasi'ah vs faḍal, lalu kerjakan ulang latihan ini. Kamu pasti bisa lebih baik!`;
+  } else {
+    motivasi = `<strong>Tetap semangat!</strong> Belajar fikih muamalah sangat penting karena setiap hari kita melakukan transaksi jual beli. Mulai dari membaca ulang materi Bab 9 di buku paket, pahami tiga rukun jual beli (penjual-pembeli, objek, akad), hafal tiga macam khiyar, ingat perbedaan hutang biasa (dayn) dan hutang pinjaman (qarḍ), lalu coba lagi latihan soal ini. Ingat, setiap usaha belajar tidak akan pernah mengkhianati hasil. Semangat! 💪`;
+  }
+
+  document.getElementById("r-emoji").textContent = emoji;
+  document.getElementById("r-name").textContent = nama;
+  document.getElementById("r-class").textContent = kelas ? "Kelas " + kelas : "";
+  document.getElementById("r-score").textContent = pct;
+  document.getElementById("r-correct").textContent = scoreCorrect;
+  document.getElementById("r-wrong").textContent = scoreWrong;
+
+  const pr = document.getElementById("r-predikat");
+  pr.textContent = predikat;
+  pr.style.background = prColor + "22";
+  pr.style.color = prColor;
+
+  document.getElementById("r-motivasi").innerHTML = motivasi;
+
+  const confettiBox = document.getElementById("confetti-box");
+  confettiBox.innerHTML = "";
+  if (pct >= 75) {
+    const colors = ["#22c55e", "#f59e0b", "#ea580c", "#f43f5e", "#3b82f6", "#a855f7", "#ec4899", "#f97316"];
+    for (let c = 0; c < 50; c++) {
+      const el = document.createElement("div");
+      el.className = "confetti";
+      el.style.left = Math.random() * 100 + "%";
+      el.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+      el.style.animationDelay = (Math.random() * 2) + "s";
+      el.style.animationDuration = (2 + Math.random() * 2.5) + "s";
+      const size = 6 + Math.random() * 6;
+      el.style.width = size + "px";
+      el.style.height = size + "px";
+      el.style.borderRadius = Math.random() > 0.5 ? "50%" : "2px";
+      confettiBox.appendChild(el);
+    }
+  }
+
+  document.getElementById("result-overlay").classList.add("show");
+}
+
+function closeResult() {
+  document.getElementById("result-overlay").classList.remove("show");
+  document.getElementById("btn-show-result").style.display = "block";
+}
+
+function restart() {
+  scoreCorrect = 0;
+  scoreWrong = 0;
+  document.getElementById("inp-nama").value = "";
+  document.getElementById("inp-kelas").value = "";
+  document.getElementById("result-overlay").classList.remove("show");
+  document.getElementById("btn-show-result").style.display = "none";
+
+  shuffleNoAdjacent(questions);
+  answered = new Array(questions.length).fill(false);
+
+  updateProgress();
+  renderAll();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+// ═══════════════════════════════════════════════════════
+// INISIALISASI
+// ═══════════════════════════════════════════════════════
+shuffleNoAdjacent(questions);
+answered = new Array(questions.length).fill(false);
+renderAll();
+updateProgress();
+</script>
+
+  <footer class="main-footer">
+    <div class="footer-container">
+        <div class="footer-left">
+            <select onchange="location = this.value;">
+                <option value="">Pindah ke...</option>
+                <option value="index.html">🏠 Beranda Utama</option>
+                <option value="bab1.html">Bab 1</option>
+                <option value="bab2.html">Bab 2</option>
+                <option value="bab3.html">Bab 3</option>
+                <option value="bab4.html">Bab 4</option>
+                <option value="bab5.html">Bab 5</option>
+                <option value="bab6.html">Bab 6</option>
+                <option value="bab7.html">Bab 7</option>
+                <option value="bab8.html">Bab 8</option>
+                <option value="bab9.html">Bab 9</option>
+                <option value="bab10.html">Bab 10</option>
+            </select>
+        </div>
+        <div class="footer-right">
+            <p>Copyright 2026 by @just.muhammad</p>
+        </div>
+    </div>
+</footer>
+</body>
+</html>
+
