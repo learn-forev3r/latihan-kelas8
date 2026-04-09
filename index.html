@@ -3,66 +3,515 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>E-Learning PAI Kelas 8</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Menu Latihan Soal PAI Kelas VIII</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --primary: #3b82f6;
+            --primary-hover: #2563eb;
+            --card-bg: #ffffff;
+            --footer-bg: #1e293b;
+            --footer-text: #e2e8f0;
+            --footer-muted: #94a3b8;
+            --footer-border: #334155;
+            --footer-select-bg: #334155;
+            --footer-select-hover: #3b82f6;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* ==================== MAIN CONTENT ==================== */
+        .main-content {
+            flex: 1;
+            padding: 24px 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        /* ==================== HERO ==================== */
+        .hero {
+            background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
+            color: white;
+            padding: 44px 28px;
+            border-radius: 24px;
+            text-align: center;
+            margin-bottom: 36px;
+            box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '✨';
+            position: absolute;
+            font-size: 4rem;
+            opacity: 0.1;
+            top: -10px;
+            left: 20px;
+        }
+
+        .hero::after {
+            content: '📚';
+            position: absolute;
+            font-size: 5rem;
+            opacity: 0.1;
+            bottom: -20px;
+            right: 10px;
+            transform: rotate(15deg);
+        }
+
+        .hero h1 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+            letter-spacing: -0.5px;
+        }
+
+        .hero p {
+            font-size: 1.05rem;
+            font-weight: 400;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* ==================== GRID MENU ==================== */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        /* ==================== CARD ==================== */
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: inherit;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 20px -5px rgba(0, 0, 0, 0.1);
+            border-color: var(--primary);
+        }
+
+        .card-icon {
+            font-size: 2.5rem;
+            margin-right: 16px;
+            background: #eff6ff;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            flex-shrink: 0;
+        }
+
+        .card-content {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--text-main);
+            margin-bottom: 4px;
+        }
+
+        .card-subtitle {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .card-arrow {
+            margin-left: auto;
+            color: #cbd5e1;
+            font-size: 1.5rem;
+            transition: transform 0.3s, color 0.3s;
+            flex-shrink: 0;
+        }
+
+        .card:hover .card-arrow {
+            transform: translateX(5px);
+            color: var(--primary);
+        }
+
+        /* Warna ikon per bab */
+        .card:nth-child(1)  .card-icon { background: #ccfbf1; }
+        .card:nth-child(2)  .card-icon { background: #e0e7ff; }
+        .card:nth-child(3)  .card-icon { background: #fef3c7; }
+        .card:nth-child(4)  .card-icon { background: #ffe4e6; }
+        .card:nth-child(5)  .card-icon { background: #dcfce7; }
+        .card:nth-child(6)  .card-icon { background: #fae8ff; }
+        .card:nth-child(7)  .card-icon { background: #e0f2fe; }
+        .card:nth-child(8)  .card-icon { background: #ffedd5; }
+        .card:nth-child(9)  .card-icon { background: #f3e8ff; }
+        .card:nth-child(10) .card-icon { background: #f1f5f9; }
+
+        /* ==================== FOOTER ==================== */
+        .main-footer {
+            background-color: var(--footer-bg);
+            color: var(--footer-text);
+            padding: 20px;
+            margin-top: 48px;
+            border-top: 3px solid #3b82f6;
+        }
+
+        .footer-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .footer-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .footer-left label {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--footer-muted);
+            white-space: nowrap;
+        }
+
+        .footer-left select {
+            background-color: var(--footer-select-bg);
+            color: var(--footer-text);
+            border: 1px solid var(--footer-border);
+            border-radius: 8px;
+            padding: 8px 12px;
+            font-size: 0.9rem;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            outline: none;
+            transition: border-color 0.2s, background-color 0.2s;
+            appearance: none;
+            -webkit-appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2394a3b8' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+            padding-right: 32px;
+        }
+
+        .footer-left select:focus,
+        .footer-left select:hover {
+            border-color: #3b82f6;
+            background-color: #253347;
+        }
+
+        .footer-right {
+            font-size: 0.85rem;
+            color: var(--footer-muted);
+            font-weight: 600;
+            text-align: right;
+        }
+
+        .footer-right span {
+            color: #3b82f6;
+        }
+
+        /* ==================== RESPONSIVE ==================== */
+
+        /* Tablet (481px – 768px) */
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 20px 16px;
+            }
+
+            .hero {
+                padding: 36px 20px;
+                border-radius: 18px;
+                margin-bottom: 28px;
+            }
+
+            .hero h1 {
+                font-size: 1.9rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .menu-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 14px;
+            }
+
+            .card {
+                padding: 16px;
+            }
+
+            .card-icon {
+                width: 50px;
+                height: 50px;
+                font-size: 2rem;
+                margin-right: 12px;
+            }
+
+            .card-title {
+                font-size: 1.1rem;
+            }
+
+            .card-subtitle {
+                font-size: 0.85rem;
+            }
+
+            .footer-container {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+
+            .footer-right {
+                text-align: left;
+                width: 100%;
+            }
+        }
+
+        /* HP (max 480px) */
+        @media (max-width: 480px) {
+            .main-content {
+                padding: 16px 12px;
+            }
+
+            .hero {
+                padding: 28px 16px;
+                border-radius: 14px;
+                margin-bottom: 20px;
+            }
+
+            .hero h1 {
+                font-size: 1.55rem;
+            }
+
+            .hero p {
+                font-size: 0.95rem;
+            }
+
+            .menu-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+
+            .card {
+                padding: 14px 16px;
+                border-radius: 12px;
+            }
+
+            .card-icon {
+                width: 48px;
+                height: 48px;
+                font-size: 1.8rem;
+                margin-right: 12px;
+                border-radius: 10px;
+            }
+
+            .card-title {
+                font-size: 1.05rem;
+            }
+
+            .card-subtitle {
+                font-size: 0.82rem;
+            }
+
+            .card-arrow {
+                font-size: 1.2rem;
+            }
+
+            .main-footer {
+                padding: 16px 12px;
+                margin-top: 32px;
+            }
+
+            .footer-left select {
+                font-size: 0.85rem;
+                padding: 7px 32px 7px 10px;
+                width: 100%;
+            }
+
+            .footer-left {
+                flex-direction: column;
+                align-items: flex-start;
+                width: 100%;
+            }
+
+            .footer-left label {
+                font-size: 0.8rem;
+            }
+
+            .footer-right {
+                font-size: 0.8rem;
+            }
+        }
+    </style>
 </head>
 <body>
 
-<header>
-    <h1>Pusat Latihan PAI VIII</h1>
-    <p>Pilih materi dan uji kemampuanmu sekarang!</p>
-</header>
+<!-- ==================== KONTEN UTAMA ==================== -->
+<div class="main-content">
+    <div class="container">
 
-<div class="container">
-    <div class="grid-menu">
-        <a href="bab1.html" class="card">
-            <h3>📖 Bab 1</h3>
-            <p>Inspirasi Al-Qur’an: Melestarikan Alam</p>
-        </a>
-        <a href="bab2.html" class="card">
-            <h3>⚖️ Bab 2</h3>
-            <p>Meyakini Kitab-Kitab Allah</p>
-        </a>
-        <a href="bab3.html" class="card">
-            <h3>🛡️ Bab 3</h3>
-            <p>Etika Berperilaku di Media Sosial</p>
-        </a>
-        <a href="bab4.html" class="card">
-            <h3>🕌 Bab 4</h3>
-            <p>Ibadah Salat Gerhana & Jenazah</p>
-        </a>
-        <a href="bab5.html" class="card">
-            <h3>📚 Bab 5</h3>
-            <p>Kejayaan Bani Umayyah di Damaskus</p>
-        </a>
-        <a href="bab6.html" class="card"><h3>🌟 Bab 6</h3><p>Materi Bab 6</p></a>
-        <a href="bab7.html" class="card"><h3>🌙 Bab 7</h3><p>Materi Bab 7</p></a>
-        <a href="bab8.html" class="card"><h3>✨ Bab 8</h3><p>Materi Bab 8</p></a>
-        <a href="bab9.html" class="card"><h3>🧭 Bab 9</h3><p>Materi Bab 9</p></a>
-        <a href="bab10.html" class="card"><h3>🎯 Bab 10</h3><p>Materi Bab 10</p></a>
+        <div class="hero">
+            <h1>Halo, Siswa Hebat! 👋</h1>
+            <p>Selamat datang di Portal Belajar PAI Kelas VIII. Mari persiapkan dirimu untuk menghadapi ujian dengan berlatih soal-soal per bab di bawah ini. Pilih bab yang ingin kamu pelajari!</p>
+        </div>
+
+        <div class="menu-grid">
+
+            <a href="https://learn-forev3r.github.io/latihan-kelas8/bab1.html" target="_blank" class="card">
+                <div class="card-icon">📖</div>
+                <div class="card-content">
+                    <div class="card-title">Bab 1</div>
+                    <div class="card-subtitle">Latihan Soal</div>
+                </div>
+                <div class="card-arrow">➔</div>
+            </a>
+
+            <a href="https://learn-forev3r.github.io/latihan-kelas8/bab2.html" target="_blank" class="card">
+                <div class="card-icon">🕋</div>
+                <div class="card-content">
+                    <div class="card-title">Bab 2</div>
+                    <div class="card-subtitle">Latihan Soal</div>
+                </div>
+                <div class="card-arrow">➔</div>
+            </a>
+
+            <a href="https://learn-forev3r.github.io/latihan-kelas8/bab3.html" target="_blank" class="card">
+                <div class="card-icon">🤝</div>
+                <div class="card-content">
+                    <div class="card-title">Bab 3</div>
+                    <div class="card-subtitle">Latihan Soal</div>
+                </div>
+                <div class="card-arrow">➔</div>
+            </a>
+
+            <a href="https://learn-forev3r.github.io/latihan-kelas8/bab4.html" target="_blank" class="card">
+                <div class="card-icon">🕌</div>
+                <div class="card-content">
+                    <div class="card-title">Bab 4</div>
+                    <div class="card-subtitle">Latihan Soal</div>
+                </div>
+                <div class="card-arrow">➔</div>
+            </a>
+
+            <a href="https://learn-forev3r.github.io/latihan-kelas8/bab5.html" target="_blank" class="card">
+                <div class="card-icon">⚖️</div>
+                <div class="card-content">
+                    <div class="card-title">Bab 5</div>
+                    <div class="card-subtitle">Latihan Soal</div>
+                </div>
+                <div class="card-arrow">➔</div>
+            </a>
+
+            <a href="https://learn-forev3r.github.io/latihan-kelas8/bab6.html" target="_blank" class="card">
+                <div class="card-icon">📜</div>
+                <div class="card-content">
+                    <div class="card-title">Bab 6</div>
+                    <div class="card-subtitle">Latihan Soal</div>
+                </div>
+                <div class="card-arrow">➔</div>
+            </a>
+
+            <a href="https://learn-forev3r.github.io/latihan-kelas8/bab7.html" target="_blank" class="card">
+                <div class="card-icon">🤲</div>
+                <div class="card-content">
+                    <div class="card-title">Bab 7</div>
+                    <div class="card-subtitle">Latihan Soal</div>
+                </div>
+                <div class="card-arrow">➔</div>
+            </a>
+
+            <a href="https://learn-forev3r.github.io/latihan-kelas8/bab8.html" target="_blank" class="card">
+                <div class="card-icon">🌍</div>
+                <div class="card-content">
+                    <div class="card-title">Bab 8</div>
+                    <div class="card-subtitle">Latihan Soal</div>
+                </div>
+                <div class="card-arrow">➔</div>
+            </a>
+
+            <a href="https://learn-forev3r.github.io/latihan-kelas8/bab9.html" target="_blank" class="card">
+                <div class="card-icon">💡</div>
+                <div class="card-content">
+                    <div class="card-title">Bab 9</div>
+                    <div class="card-subtitle">Latihan Soal</div>
+                </div>
+                <div class="card-arrow">➔</div>
+            </a>
+
+            <a href="https://learn-forev3r.github.io/latihan-kelas8/bab10.html" target="_blank" class="card">
+                <div class="card-icon">🏆</div>
+                <div class="card-content">
+                    <div class="card-title">Bab 10</div>
+                    <div class="card-subtitle">Latihan Soal</div>
+                </div>
+                <div class="card-arrow">➔</div>
+            </a>
+
+        </div>
     </div>
 </div>
 
+<!-- ==================== FOOTER ==================== -->
 <footer class="main-footer">
     <div class="footer-container">
         <div class="footer-left">
-            <select onchange="location = this.value;">
-                <option value="">Pilih Page...</option>
-                <option value="index.html">🏠 Homepage</option>
-                <option value="bab1.html">Bab 1</option>
-                <option value="bab2.html">Bab 2</option>
-                <option value="bab3.html">Bab 3</option>
-                <option value="bab4.html">Bab 4</option>
-                <option value="bab5.html">Bab 5</option>
-                <option value="bab6.html">Bab 6</option>
-                <option value="bab7.html">Bab 7</option>
-                <option value="bab8.html">Bab 8</option>
-                <option value="bab9.html">Bab 9</option>
-                <option value="bab10.html">Bab 10</option>
+            <label for="nav-select">🔀 Navigasi Cepat:</label>
+            <select id="nav-select" onchange="if(this.value) window.open(this.value, '_blank'); this.value='';">
+                <option value="">Pilih Bab...</option>
+                <option value="https://learn-forev3r.github.io/latihan-kelas8/bab1.html">📖 Bab 1</option>
+                <option value="https://learn-forev3r.github.io/latihan-kelas8/bab2.html">🕋 Bab 2</option>
+                <option value="https://learn-forev3r.github.io/latihan-kelas8/bab3.html">🤝 Bab 3</option>
+                <option value="https://learn-forev3r.github.io/latihan-kelas8/bab4.html">🕌 Bab 4</option>
+                <option value="https://learn-forev3r.github.io/latihan-kelas8/bab5.html">⚖️ Bab 5</option>
+                <option value="https://learn-forev3r.github.io/latihan-kelas8/bab6.html">📜 Bab 6</option>
+                <option value="https://learn-forev3r.github.io/latihan-kelas8/bab7.html">🤲 Bab 7</option>
+                <option value="https://learn-forev3r.github.io/latihan-kelas8/bab8.html">🌍 Bab 8</option>
+                <option value="https://learn-forev3r.github.io/latihan-kelas8/bab9.html">💡 Bab 9</option>
+                <option value="https://learn-forev3r.github.io/latihan-kelas8/bab10.html">🏆 Bab 10</option>
             </select>
         </div>
         <div class="footer-right">
-            <p>Copyright 2026 by @just.muhammad</p>
+            Copyright 2026 by <span>@just.muhammad</span>
         </div>
     </div>
 </footer>
