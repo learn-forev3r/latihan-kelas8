@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Latihan Soal – Bab 6 PAI Kelas VIII</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --em:       #059669;
+    --em-dk:    #047857;
+    --em-lt:    #ecfdf5;
+    --gold:     #f59e0b;
+    --rose:     #f43f5e;
+    --green:    #22c55e;
+    --ink:      #1c1917;
+    --muted:    #6b7280;
+    --card:     #ffffff;
+    --bg:       #f0fdf4;
+    --radius:   16px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;}
+
+  header{
+    background:linear-gradient(135deg,#064e3b 0%,#059669 60%,#10b981 100%);
+    color:#fff;padding:28px 24px 24px;text-align:center;
+    position:relative;overflow:hidden;
+  }
+  header::before{
+    content:'';position:absolute;inset:0;
+    background:url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M0 0h40v40H0zm40 40h40v40H40z'/%3E%3C/g%3E%3C/svg%3E");
+  }
+  .badge{
+    display:inline-block;background:rgba(255,255,255,.18);
+    border:1px solid rgba(255,255,255,.35);border-radius:99px;
+    font-size:12px;font-weight:700;letter-spacing:1px;
+    text-transform:uppercase;padding:4px 14px;margin-bottom:10px;
+  }
+  header h1{font-size:clamp(17px,3.8vw,25px);font-weight:900;line-height:1.3;position:relative;}
+  header p{font-size:14px;opacity:.82;margin-top:6px;position:relative;}
+  .shuffle-note{font-size:11px;opacity:.6;margin-top:2px;font-style:italic;}
+
+  .container{max-width:760px;margin:0 auto;padding:0 16px 40px;}
+
+  .identity-card{
+    background:var(--card);border-radius:var(--radius);
+    box-shadow:0 4px 24px rgba(0,0,0,.08);
+    padding:24px;margin-top:-20px;position:relative;z-index:2;
+  }
+  .identity-card h2{font-size:18px;font-weight:900;color:var(--em-dk);margin-bottom:4px;}
+  .identity-card .sub{font-size:13px;color:var(--muted);margin-bottom:16px;}
+  .input-row{display:flex;gap:12px;flex-wrap:wrap;}
+  .input-group{flex:1;min-width:200px;}
+  .input-group label{
+    display:block;font-size:12px;font-weight:800;
+    color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;
+  }
+  .input-group input{
+    width:100%;padding:11px 14px;border:2px solid #e2e8f0;
+    border-radius:10px;font-family:'Nunito',sans-serif;
+    font-size:15px;font-weight:600;color:var(--ink);
+    transition:border-color .2s;background:#f8fafc;
+  }
+  .input-group input:focus{
+    outline:none;border-color:var(--em);background:#fff;
+    box-shadow:0 0 0 3px rgba(5,150,105,.12);
+  }
+  .input-group input::placeholder{color:#94a3b8;font-weight:600;}
+
+  .progress-sticky{
+    position:sticky;top:0;z-index:10;
+    background:rgba(240,253,244,.92);backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+    padding:14px 0 10px;margin-top:20px;
+    border-bottom:1px solid rgba(5,150,105,.1);
+  }
+  .prog-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+  .prog-label{font-size:13px;font-weight:800;color:var(--muted);}
+  .prog-chips{display:flex;gap:6px;}
+  .prog-chip{font-size:12px;font-weight:800;padding:3px 10px;border-radius:99px;}
+  .prog-chip.cg{background:#f0fdf4;color:var(--green);}
+  .prog-chip.cr{background:#fff1f2;color:var(--rose);}
+  .prog-bar{height:8px;background:#a7f3d0;border-radius:99px;overflow:hidden;}
+  .prog-fill{
+    height:100%;border-radius:99px;
+    background:linear-gradient(90deg,var(--em),#10b981);
+    transition:width .5s cubic-bezier(.4,0,.2,1);
+  }
+  .show-result-btn{
+    display:none;margin-top:8px;
+    padding:8px 16px;border-radius:8px;
+    background:var(--em);color:#fff;
+    font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;
+    border:none;cursor:pointer;transition:all .2s;
+  }
+  .show-result-btn:hover{background:var(--em-dk);}
+
+  .q-card{
+    background:var(--card);border-radius:var(--radius);
+    box-shadow:0 2px 16px rgba(0,0,0,.06);
+    margin-top:16px;padding:22px 24px;
+    border-left:4px solid var(--em);
+  }
+  .q-card[data-type="Pemahaman"]{border-left-color:#0284c7;}
+  .q-card[data-type="Penerapan & Analisis"]{border-left-color:var(--gold);}
+  .q-card.answered-correct{border-left-color:var(--green);}
+  .q-card.answered-wrong{border-left-color:var(--rose);}
+
+  .q-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-wrap:wrap;gap:6px;}
+  .q-type-badge{
+    font-size:10px;font-weight:800;letter-spacing:.8px;
+    text-transform:uppercase;padding:3px 10px;border-radius:6px;
+  }
+  .q-type-badge.t-hafalan{background:var(--em-lt);color:var(--em-dk);}
+  .q-type-badge.t-pemahaman{background:#e0f2fe;color:#0369a1;}
+  .q-type-badge.t-penerapan{background:#fef3c7;color:#92400e;}
+  .q-num{font-size:12px;font-weight:700;color:var(--muted);}
+  .q-text{font-size:15px;font-weight:700;line-height:1.65;white-space:pre-line;margin-bottom:16px;}
+  .q-arabic{
+    font-size:22px;direction:rtl;text-align:right;
+    line-height:2.2;color:var(--em-dk);background:var(--em-lt);
+    border-radius:10px;padding:12px 18px;margin-bottom:16px;
+  }
+
+  .q-options{display:flex;flex-direction:column;gap:8px;}
+  .opt-btn{
+    display:flex;align-items:flex-start;gap:12px;
+    background:#f8fafc;border:2px solid #e2e8f0;border-radius:10px;
+    padding:11px 14px;cursor:pointer;
+    font-family:'Nunito',sans-serif;font-size:14px;font-weight:600;
+    text-align:left;transition:all .2s;width:100%;
+  }
+  .opt-btn:hover:not(:disabled){border-color:var(--em);background:var(--em-lt);transform:translateX(3px);}
+  .opt-label{
+    min-width:26px;height:26px;background:#e2e8f0;border-radius:7px;
+    display:flex;align-items:center;justify-content:center;
+    font-size:12px;font-weight:800;color:var(--muted);flex-shrink:0;transition:all .2s;
+  }
+  .opt-btn.correct{border-color:var(--green);background:#f0fdf4;}
+  .opt-btn.correct .opt-label{background:var(--green);color:#fff;}
+  .opt-btn.wrong{border-color:var(--rose);background:#fff1f2;}
+  .opt-btn.wrong .opt-label{background:var(--rose);color:#fff;}
+  .opt-btn.dimmed{opacity:.5;}
+  .opt-btn:disabled{cursor:default;}
+
+  .q-feedback{
+    display:none;margin-top:14px;border-radius:10px;
+    padding:12px 16px;font-size:13px;line-height:1.65;
+  }
+  .q-feedback.show{display:block;animation:slideUp .3s ease;}
+  .q-feedback.fb-correct{background:#f0fdf4;border-left:4px solid var(--green);}
+  .q-feedback.fb-wrong{background:#fff1f2;border-left:4px solid var(--rose);}
+  .q-feedback strong{display:block;font-size:14px;margin-bottom:3px;}
+  @keyframes slideUp{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
+
+  .result-overlay{
+    display:none;position:fixed;inset:0;z-index:100;
+    background:rgba(15,23,42,.6);backdrop-filter:blur(6px);
+    -webkit-backdrop-filter:blur(6px);
+    justify-content:center;align-items:center;padding:20px;
+  }
+  .result-overlay.show{display:flex;animation:fadeIn .4s ease;}
+  @keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+
+  .result-modal{
+    background:var(--card);border-radius:20px;
+    box-shadow:0 24px 64px rgba(0,0,0,.2);
+    max-width:480px;width:100%;padding:36px 28px;
+    text-align:center;position:relative;overflow:hidden;
+    animation:modalPop .4s cubic-bezier(.2,.8,.3,1.2);
+  }
+  @keyframes modalPop{from{opacity:0;transform:scale(.85) translateY(30px);}to{opacity:1;transform:none;}}
+
+  .result-modal .confetti-container{position:absolute;inset:0;pointer-events:none;overflow:hidden;}
+  .confetti{position:absolute;top:-10px;opacity:0;animation:confettiFall linear forwards;}
+  @keyframes confettiFall{
+    0%{opacity:1;transform:translateY(0) rotate(0deg) scale(1);}
+    80%{opacity:1;}
+    100%{opacity:0;transform:translateY(420px) rotate(720deg) scale(.5);}
+  }
+
+  .r-emoji{font-size:56px;position:relative;}
+  .r-greeting{font-size:14px;color:var(--muted);margin-top:12px;font-weight:700;}
+  .r-name{font-size:24px;font-weight:900;color:var(--ink);margin:4px 0 0;}
+  .r-class{font-size:13px;color:var(--em);font-weight:700;margin-bottom:20px;}
+  .r-score-wrap{background:var(--bg);border-radius:14px;padding:20px;margin-bottom:20px;}
+  .r-score-label{font-size:12px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;}
+  .r-score{font-size:52px;font-weight:900;color:var(--em);line-height:1.1;}
+  .r-score span{font-size:20px;font-weight:700;color:var(--muted);}
+  .r-stats{display:flex;gap:10px;justify-content:center;margin-top:14px;}
+  .r-stat{background:#fff;border-radius:10px;padding:10px 16px;font-size:12px;font-weight:700;color:var(--muted);}
+  .r-stat b{display:block;font-size:20px;font-weight:900;}
+  .r-stat.sg b{color:var(--green);}
+  .r-stat.sr b{color:var(--rose);}
+
+  .r-predikat{display:inline-block;padding:6px 20px;border-radius:99px;font-weight:800;font-size:14px;margin-bottom:16px;}
+  .r-motivasi{
+    font-size:14px;line-height:1.7;color:var(--muted);
+    background:#f8fafc;border-radius:12px;padding:14px 18px;
+    margin-bottom:24px;text-align:left;
+  }
+  .r-motivasi strong{color:var(--ink);}
+
+  .r-btns{display:flex;flex-direction:column;gap:10px;}
+  .btn{
+    padding:13px 24px;border-radius:12px;font-family:'Nunito',sans-serif;
+    font-size:15px;font-weight:800;border:none;cursor:pointer;transition:all .2s;
+  }
+  .btn-primary{background:var(--em);color:#fff;box-shadow:0 4px 12px rgba(5,150,105,.3);}
+  .btn-primary:hover{background:var(--em-dk);transform:translateY(-2px);}
+  .btn-outline{background:transparent;color:var(--muted);border:2px solid #e2e8f0;}
+  .btn-outline:hover{border-color:var(--em);color:var(--em);}
+
+  .dist-bar{
+    display:flex;height:6px;border-radius:99px;overflow:hidden;
+    margin-top:24px;gap:2px;
+  }
+  .dist-bar div{height:100%;border-radius:99px;transition:width .4s;}
+  .dist-legend{
+    display:flex;justify-content:center;gap:16px;margin-top:6px;
+    font-size:11px;font-weight:800;color:var(--muted);
+  }
+  .dist-legend span{display:flex;align-items:center;gap:3px;}
+  .dist-legend i{width:8px;height:8px;border-radius:50%;display:inline-block;}
+
+  @media(max-width:500px){
+    .q-card{padding:16px 14px;}
+    .opt-btn{padding:10px 12px;font-size:13px;}
+    .result-modal{padding:28px 20px;}
+    .r-score{font-size:42px;}
+    .identity-card{padding:18px 16px;}
+  }
+
+  /* --- PERBAIKAN FOOTER BY MENTOR --- */
+.main-footer {
+    background-color: #1e293b !important; /* Warna gelap modern */
+    color: white !important;
+    padding: 12px 0 !important;
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    z-index: 9999 !important; /* Supaya tidak tertutup elemen soal */
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.2);
+    font-family: 'Nunito', sans-serif;
+}
+
+.footer-container {
+    display: flex !important;
+    /* Baris di bawah ini adalah kuncinya! */
+    justify-content: space-between !important; 
+    align-items: center !important;
+    max-width: 1000px;
+    margin: 0 auto !important;
+    padding: 0 20px !important;
+}
+
+.footer-left select {
+    padding: 6px 10px !important;
+    border-radius: 8px !important;
+    border: 1px solid #475569 !important;
+    background: #334155 !important;
+    color: white !important;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.footer-right p {
+    margin: 0 !important;
+    font-size: 13px !important;
+    text-align: right !important; /* Memastikan teks rata kanan */
+    white-space: nowrap; /* Mencegah teks turun ke bawah/terpotong */
+}
+
+/* Supaya konten soal paling bawah tidak tertutup footer */
+body {
+    padding-bottom: 70px !important;
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="badge">PAI & Budi Pekerti · SMP Kelas VIII</div>
+  <h1>🕊️ Latihan Soal Bab 6<br>Inspirasi Al-Qur'an: Indahnya Beragama Secara Moderat</h1>
+  <p>25 soal pilihan ganda · 4 pilihan jawaban</p>
+  <p class="shuffle-note">🔄 Urutan soal diacak setiap kali membuka halaman</p>
+</header>
+
+<div class="container">
+  <section class="identity-card">
+    <h2>📝 Data Peserta</h2>
+    <p class="sub">Isi nama dan kelas sebelum mengerjakan soal</p>
+    <div class="input-row">
+      <div class="input-group">
+        <label for="inp-nama">Nama Lengkap</label>
+        <input type="text" id="inp-nama" placeholder="Masukkan nama lengkap...">
+      </div>
+      <div class="input-group">
+        <label for="inp-kelas">Kelas</label>
+        <input type="text" id="inp-kelas" placeholder="Contoh: VIII-A">
+      </div>
+    </div>
+  </section>
+
+  <div class="progress-sticky">
+    <div class="prog-top">
+      <span class="prog-label" id="prog-label">0 dari 25 soal dijawab</span>
+      <div class="prog-chips">
+        <span class="prog-chip cg" id="chip-g">✅ 0</span>
+        <span class="prog-chip cr" id="chip-r">❌ 0</span>
+      </div>
+    </div>
+    <div class="prog-bar"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
+    <button class="show-result-btn" id="btn-show-result" onclick="openResult()">🎉 Lihat Hasil</button>
+  </div>
+
+  <div id="questions-container"></div>
+
+  <div style="margin-top:24px;">
+    <div class="dist-bar" id="dist-bar"></div>
+    <div class="dist-legend">
+      <span><i style="background:var(--em)"></i>A</span>
+      <span><i style="background:#0284c7"></i>B</span>
+      <span><i style="background:var(--gold)"></i>C</span>
+      <span><i style="background:var(--rose)"></i>D</span>
+    </div>
+  </div>
+</div>
+
+<div class="result-overlay" id="result-overlay">
+  <div class="result-modal">
+    <div class="confetti-container" id="confetti-box"></div>
+    <div class="r-emoji" id="r-emoji"></div>
+    <div class="r-greeting">Selamat!</div>
+    <div class="r-name" id="r-name"></div>
+    <div class="r-class" id="r-class"></div>
+    <div class="r-score-wrap">
+      <div class="r-score-label">Skor Kamu</div>
+      <div class="r-score"><span id="r-score"></span><span>/100</span></div>
+      <div class="r-stats">
+        <div class="r-stat sg"><b id="r-correct">0</b>Benar</div>
+        <div class="r-stat sr"><b id="r-wrong">0</b>Salah</div>
+      </div>
+    </div>
+    <div class="r-predikat" id="r-predikat"></div>
+    <div class="r-motivasi" id="r-motivasi"></div>
+    <div class="r-btns">
+      <button class="btn btn-outline" onclick="closeResult()">Tinjau Jawaban Saya</button>
+      <button class="btn btn-primary" onclick="restart()">🔁 Ulangi Latihan</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════
+// DATA SOAL — kunci jawaban diseimbangkan:
+// Pola: A=7, B=6, C=6, D=6
+// Tidak ada dua soal berurutan jawabannya sama (setelah acak)
+// ═══════════════════════════════════════════════════════
+const questions = [
+  // ── Soal 1 → Jawaban A ──
+  {
+    type:"Hafalan & Ingatan",
+    text:"Titik Fokus (kata kunci) Bab 6 adalah...",
+    options:["Islam Moderat, Toleransi, dan Moderasi Beragama","Ummatan Wasaṭan, Adil, dan Proporsional","Q.S. al-Baqarah/2:143, Tajwid, dan Pancasila","Sekuler, Guluw, dan Islam Wasatiyah"],
+    answer:0,
+    explanation:"Titik Fokus (Kata Kunci) Bab 6 adalah 'Islam Moderat, Toleransi, dan Moderasi Beragama.' Ketiganya merangkum isi bab yang membahas makna ummatan wasaṭan dalam Q.S. al-Baqarah/2:143, dimensi adil dan moderat, serta kaitannya dengan sejarah Pancasila dan kehidupan berbangsa."
+  },
+  // ── Soal 2 → Jawaban B ──
+  {
+    type:"Hafalan & Ingatan",
+    text:"Surah dan ayat yang menjadi landasan utama pembahasan moderasi beragama di Bab 6 adalah...",
+    options:["Q.S. al-Hujurat/49:13","Q.S. al-Baqarah/2:143","Q.S. Ali Imran/3:110","Q.S. al-Kafirun/109:6"],
+    answer:1,
+    explanation:"Landasan utama Bab 6 adalah Q.S. al-Baqarah/2:143 yang memuat kalimat 'ummatan wasaṭan' (umat pertengahan). Terjemahnya: 'Dan demikian pula Kami telah menjadikan kamu (umat Islam) umat pertengahan agar kamu menjadi saksi atas (perbuatan) manusia...'"
+  },
+  // ── Soal 3 → Jawaban B ──
+  {
+    type:"Hafalan & Ingatan",
+    text:"Arti dari 'ummatan wasaṭan' dalam Q.S. al-Baqarah/2:143 adalah...",
+    options:["Umat yang paling baik","Umat pertengahan","Umat yang paling banyak","Umat yang paling kuat"],
+    answer:1,
+    explanation:"Kata kunci dalam Q.S. al-Baqarah/2:143 adalah 'ummatan wasaṭan' yang berarti 'umat pertengahan.' Ayat ini menunjukkan bahwa ajaran Islam bersifat wasaṭ (moderat), sehingga umat yang mengamalkan ajaran Islam adalah umat moderat."
+  },
+  // ── Soal 4 → Jawaban C ──
+  {
+    type:"Hafalan & Ingatan",
+    text:"Hukum bacaan nun mati/tanwin apabila bertemu dengan huruf Ba (ب) adalah...",
+    options:["Iẓhar — dibaca jelas","Idgam — dimasukkan ke huruf berikutnya","Iqlāb — diubah menjadi mim dengan dengung","Ikhfā' — dibaca samar"],
+    answer:2,
+    explanation:"Iqlāb berarti mengubah bentuk sesuatu dari asalnya. Nun mati atau tanwin dibaca iqlāb apabila bertemu dengan huruf Ba (ب). Cara membacanya: mengubah nun mati/tanwin menjadi mim (م) dengan disertai dengung."
+  },
+  // ── Soal 5 → Jawaban A ──
+  {
+    type:"Hafalan & Ingatan",
+    text:"Hukum bacaan nun mati/tanwin yang dibaca jelas disebut iẓhar halqi. Keenam huruf halqi adalah...",
+    options:["Hamzah (ء), Ha (ه), Ain (ع), Gain (غ), Ha (ح), Kha (خ)","Ya (ي), Nun (ن), Mim (م), Waw (و), Lam (ل), Ra (ر)","Ta (ت), Jim (ج), Dal (د), Zai (ز), Sin (س), Syin (ش)","Ba (ب), Fa (ف), Qof (ق), Kaf (ك), Ṭa (ط), Ẓa (ظ)"],
+    answer:0,
+    explanation:"Iẓhar halqi terjadi apabila nun mati/tanwin bertemu dengan enam huruf halqi: Hamzah (ء), Ha (ه), Ain (ع), Gain (غ), Ha (ح), dan Kha (خ). Jika bertemu salah satu huruf ini, nun mati/tanwin dibaca jelas. Pilihan B adalah huruf-huruf idgam."
+  },
+  // ── Soal 6 → Jawaban C ──
+  {
+    type:"Hafalan & Ingatan",
+    text:"Berlebih-lebihan dalam menjalankan agama disebut dengan istilah...",
+    options:["Sekuler","Liberal","Guluw","Wasatiyah"],
+    answer:2,
+    explanation:"Guluw adalah istilah yang berarti berlebih-lebihan atau melampaui batas dalam menjalankan agama. Lawan dari guluw adalah sekuler — memisahkan hal duniawi dari agama. Keduanya (sekuler dan guluw) sama-sama berada pada sikap ekstrem, tidak sesuai dengan semangat ummatan wasaṭan."
+  },
+  // ── Soal 7 → Jawaban C ──
+  {
+    type:"Hafalan & Ingatan",
+    text:"Hukum bacaan mim mati yang terjadi ketika mim mati bertemu dengan huruf Ba (ب) disebut...",
+    options:["Iẓhār syafawi","Idgam miṡlain","Ikhfā' syafawi","Ikhfā' hakiki"],
+    answer:2,
+    explanation:"Ikhfā' syafawi terjadi apabila ada huruf mim mati bertemu dengan huruf Ba (ب). Kata 'syafawi' berarti bibir. Cara membaca: huruf mim mati disembunyikan/dibaca samar antara jelas dan berdengung. Berbeda dengan idgam miṡlain (mim bertemu mim) dan iẓhār syafawi (mim bertemu selain ba dan mim)."
+  },
+  // ── Soal 8 → Jawaban B ──
+  {
+    type:"Hafalan & Ingatan",
+    text:"Hadis H.R. Bukhari dari Abu Hurairah r.a. yang dikutip dalam Bab 6 mengajarkan umat Islam agar...",
+    options:["Selalu beribadah tanpa henti agar amalnya menyelamatkannya","Memperbaiki amal tapi jangan berlebihan, dan berjalan di jalan pertengahan agar mencapai tujuan","Mendahulukan ibadah malam daripada aktivitas siang hari","Memisahkan urusan dunia dan akhirat agar keduanya berjalan sempurna"],
+    answer:1,
+    explanation:"Hadis H.R. Bukhari dari Abu Hurairah r.a.: 'Maka perbaikilah, tetapi jangan berlebihan, bersegeralah di pagi dan siang hari. Bantulah itu dengan akhir-akhir waktu malam. Berjalanlah pertengahan, berjalanlah pertengahan agar kalian mencapai tujuan.' Hadis ini mengajarkan sikap moderat dalam segala hal."
+  },
+  // ── Soal 9 → Jawaban B ──
+  {
+    type:"Pemahaman",
+    text:"Menurut Tafsir Kemenag, ada dua sifat yang melekat pada 'ummatan wasaṭan'. Dua sifat tersebut adalah...",
+    options:["Umat yang paling banyak jumlahnya dan paling kuat militernya","Umat yang berlaku adil dan umat yang berada di posisi tengah antara yang mementingkan dunia saja dan akhirat saja","Umat yang rajin beribadah dan umat yang aktif berdakwah","Umat yang beriman dan umat yang bertakwa kepada Allah Swt."],
+    answer:1,
+    explanation:"Menurut Tafsir Lengkap Kemenag, dua sifat ummatan wasaṭan: Pertama, umat yang berlaku adil — menegakkan keadilan dan kebenaran. Kedua, umat yang berada di posisi tengah antara orang-orang yang mementingkan keduniaan dalam kehidupannya dan orang-orang yang mementingkan akhirat saja."
+  },
+  // ── Soal 10 → Jawaban B ──
+  {
+    type:"Pemahaman",
+    text:"Tiga dimensi makna 'adil' menurut Bab 6 adalah...",
+    options:["Jujur, bertanggung jawab, dan disiplin","Kesamaan, keseimbangan, dan proporsional","Moderat, toleran, dan terbuka","Merata, seimbang, dan bijaksana"],
+    answer:1,
+    explanation:"Adil memiliki tiga dimensi: (1) Kesamaan — perlakuan sama kepada semua orang tanpa membedakan latar belakang; (2) Keseimbangan — memberi fasilitas khusus agar terjadi keseimbangan (misal: jalur kursi roda untuk difabel); (3) Proporsional — menempatkan segala sesuatu pada tempatnya / memberikan hak kepada pemiliknya."
+  },
+  // ── Soal 11 → Jawaban C ──
+  {
+    type:"Pemahaman",
+    text:"Sikap seorang muslim yang moderat dalam menyeimbangkan dunia dan akhirat adalah...",
+    options:["Meninggalkan urusan dunia sepenuhnya untuk fokus beribadah","Mengutamakan kesenangan dunia karena akhirat adalah urusan Allah","Tidak ekstrem pada dunia (sekuler) juga tidak ekstrem pada akhirat saja (guluw), melainkan menyeimbangkan keduanya","Bergantian antara hari fokus dunia dan hari fokus akhirat"],
+    answer:2,
+    explanation:"Dengan bersikap moderat, seorang muslim tidak akan sekuler (hanya mengejar dunia) dan tidak guluw (berlebihan dalam agama hingga melepas kenikmatan duniawi). Seorang muslim moderat berada di jalan tengah dengan menyeimbangkan keduanya."
+  },
+  // ── Soal 12 → Jawaban C ──
+  {
+    type:"Pemahaman",
+    text:"Hukum bacaan mim mati yang terjadi ketika mim mati bertemu dengan huruf selain Ba (ب) dan Mim (م) disebut...",
+    options:["Ikhfā' syafawi — dibaca samar","Idgam miṡlain — dimasukkan ke mim berikutnya","Iẓhār syafawi — dibaca jelas","Idgam bi gunnah — dibaca dengung"],
+    answer:2,
+    explanation:"Iẓhār syafawi terjadi apabila ada huruf mim mati bertemu dengan huruf selain Ba (ب) dan Mim (م). Cara membacanya: huruf mim mati dibaca jelas. Tiga hukum mim mati: (1) Ikhfā' syafawi → bertemu Ba; (2) Idgam miṡlain → bertemu Mim; (3) Iẓhār syafawi → bertemu selain keduanya."
+  },
+  // ── Soal 13 → Jawaban C ──
+  {
+    type:"Pemahaman",
+    text:"Hubungan antara sikap adil dan moderat menurut Bab 6 adalah...",
+    options:["Adil dan moderat adalah dua sikap yang berdiri sendiri dan tidak saling berkaitan","Moderat hanya berlaku dalam urusan agama, sedangkan adil hanya dalam hukum","Keduanya sangat erat: orang moderat akan mampu berlaku adil, dan seseorang bisa berlaku adil apabila ia memiliki sikap moderat","Adil adalah fondasi, sedangkan moderat adalah hasil akhirnya"],
+    answer:2,
+    explanation:"Adil dan moderat memiliki keterkaitan makna yang sangat erat. Orang yang moderat akan mampu berlaku adil — ia menempatkan urusan dunia dan akhirat secara seimbang dan proporsional. Sebaliknya, seseorang bisa berlaku adil apabila ia memiliki sikap moderat — tetap berlaku adil meski berbeda pandangan."
+  },
+  // ── Soal 14 → Jawaban A ──
+  {
+    type:"Pemahaman",
+    text:"Istilah 'sekuler' dalam konteks Bab 6 berarti...",
+    options:["Memisahkan sesuatu yang bersifat duniawi atau kebendaan dari agama","Berlebih-lebihan dalam menjalankan agama","Bersikap moderat dalam segala hal","Menolak semua nilai-nilai agama dalam kehidupan"],
+    answer:0,
+    explanation:"Sekuler adalah sikap memisahkan sesuatu yang bersifat duniawi atau kebendaan dari agama. Ini adalah salah satu kutub ekstrem — berlawanan dengan guluw (berlebihan dalam agama). Keduanya (sekuler dan guluw) sama-sama tidak sesuai dengan semangat ummatan wasaṭan yang mengajarkan jalan tengah."
+  },
+  // ── Soal 15 → Jawaban A ──
+  {
+    type:"Pemahaman",
+    text:"Isi poin pertama Piagam Jakarta yang menjadi kompromi antara kelompok Islam dan kelompok sekular dalam sidang BPUPKI adalah...",
+    options:["'Ketuhanan dengan kewajiban menjalankan syariat Islam bagi pemeluk-pemeluknya'","'Ketuhanan Yang Maha Esa'","'Kebangsaan Indonesia yang berdasarkan pada nilai-nilai agama'","'Persatuan Indonesia berdasarkan keimanan kepada Tuhan'"],
+    answer:0,
+    explanation:"Piagam Jakarta ditawarkan sebagai jalan tengah. Poin pertamanya: 'Ketuhanan dengan kewajiban menjalankan syariat Islam bagi pemeluk-pemeluknya.' Dengan ini Indonesia bukan negara sekuler (ada unsur agama) dan bukan negara agama penuh (non-muslim tidak diwajibkan hukum Islam). Kemudian berubah menjadi 'Ketuhanan Yang Maha Esa' setelah ada aspirasi dari wilayah timur Indonesia."
+  },
+  // ── Soal 16 → Jawaban B ──
+  {
+    type:"Pemahaman",
+    text:"Para pemimpin umat Islam yang menyetujui penghapusan tujuh kata sila pertama Pancasila demi persatuan Indonesia adalah...",
+    options:["Soekarno, Mohammad Hatta, dan Ki Hajar Dewantara","Ki Bagoes Hadikoesoemo, Wachid Hasyim, Kasman Singodimedjo, dan Teuku Hasan","Agus Salim, Abdul Kahar Muzakkir, dan Abikusno Tjokrosujoso","Mohammad Yamin, Soepomo, dan H. Agus Salim"],
+    answer:1,
+    explanation:"Aspirasi keberatan dari wilayah timur Indonesia disampaikan Muhammad Hatta kepada para pemimpin umat Islam: Ki Bagoes Hadikoesoemo, Wachid Hasyim, Kasman Singodimedjo, dan Teuku Hasan. Demi persatuan bangsa, mereka menyetujui penggantian tujuh kata tersebut menjadi 'Yang Maha Esa' sehingga berbunyi 'Ketuhanan Yang Maha Esa.'"
+  },
+  // ── Soal 17 → Jawaban A ──
+  {
+    type:"Pemahaman",
+    text:"Huruf idgam bi gunnah berjumlah 4. Keempat huruf tersebut adalah...",
+    options:["Ya (ي), Nun (ن), Mim (م), Waw (و)","Ya (ي), Nun (ن), Mim (م), Waw (و), Lam (ل), Ra (ر)","Lam (ل) dan Ra (ر) saja","15 huruf: Ta, Jim, Dal, Żal, Zai, Sin, Syin, Ṣad, Ḍad, Ṭa, Ẓa, Fa, Qof, Kaf, Ṡa"],
+    answer:0,
+    explanation:"Huruf idgam bi gunnah ada 4: Ya (ي), Nun (ن), Mim (م), dan Waw (و). Cara membaca: nun mati/tanwin dimasukkan ke huruf-huruf tersebut DISERTAI dengung. Sedangkan huruf idgam bi lā gunnah ada 2: Lam (ل) dan Ra (ر) — dibaca tanpa dengung. Pilihan D (15 huruf) adalah huruf-huruf ikhfā'."
+  },
+  // ── Soal 18 → Jawaban A ──
+  {
+    type:"Pemahaman",
+    text:"Kisah Rasulullah mencoret 7 kata dalam Perjanjian Hudaibiyah dibandingkan dengan kisah penghapusan 7 kata dalam Piagam Jakarta. Persamaan nilai yang terkandung adalah...",
+    options:["Keduanya menunjukkan sikap moderat — mengambil jalan tengah demi tujuan lebih besar tanpa mengorbankan prinsip utama","Keduanya menunjukkan kelemahan umat Islam dalam menghadapi non-muslim","Keduanya adalah bentuk pengkhianatan terhadap nilai-nilai Islam","Keduanya membuktikan bahwa simbol agama tidak penting dalam urusan politik"],
+    answer:0,
+    explanation:"Kisah Rasulullah mencoret 7 kata di Hudaibiyah (demi menghindari peperangan) dan para pemimpin Islam mencoret 7 kata di Piagam Jakarta (demi persatuan bangsa) memiliki persamaan nilai: keduanya mencerminkan sikap moderat — mengambil jalan tengah demi tujuan yang lebih besar, tanpa mengorbankan prinsip utama."
+  },
+  // ── Soal 19 → Jawaban D ──
+  {
+    type:"Pemahaman",
+    text:"Dari sikap moderat dan perilaku adil, menurut Bab 6, akan muncul...",
+    options:["Kemakmuran ekonomi dan kesejahteraan masyarakat","Kekuatan militer dan kedaulatan bangsa","Kemajuan ilmu pengetahuan dan teknologi","Toleransi antar sesama dan sikap saling menghargai perbedaan"],
+    answer:3,
+    explanation:"Bab 6 menjelaskan: berawal dari sikap moderat dan perilaku adil akan muncul toleransi antar sesama. Sikap moderat melahirkan sikap saling menghargai perbedaan. Seorang moderat akan memberikan penghormatan terhadap orang yang berbeda — baik perbedaan pandangan, suku, agama, ras, maupun golongan."
+  },
+  // ── Soal 20 → Jawaban D ──
+  {
+    type:"Penerapan & Analisis",
+    text:"Fatimah membagi tugas kerja bakti: siswa laki-laki mengeluarkan dan memasukkan meja-kursi, siswa perempuan menyapu dan mengepel lantai. Penilaian yang tepat adalah...",
+    options:["Tidak adil karena membedakan tugas berdasarkan jenis kelamin","Tidak adil karena laki-laki mendapat pekerjaan yang lebih berat","Adil dalam dimensi kesamaan karena semua mendapat tugas membersihkan kelas","Adil dalam dimensi keseimbangan — mempertimbangkan kemampuan fisik laki-laki dan perempuan agar pekerjaan selesai secara proporsional"],
+    answer:3,
+    explanation:"Tindakan Fatimah mencerminkan adil dalam dimensi keseimbangan — memberikan tugas berbeda agar terjadi keseimbangan antara kemampuan fisik laki-laki (mengangkat meja-kursi) dan perempuan (menyapu dan mengepel) sehingga pekerjaan selesai optimal. Ini bukan diskriminasi, melainkan pertimbangan proporsional."
+  },
+  // ── Soal 21 → Jawaban D ──
+  {
+    type:"Penerapan & Analisis",
+    text:"Saat pelajaran berlangsung, azan Zuhur terdengar. Yanto meminta izin keluar kelas untuk segera salat Zuhur karena menganggap salat di awal waktu adalah sunah. Penilaian yang paling tepat menurut nilai Bab 6 adalah...",
+    options:["Tepat, karena mengikuti sunah Rasulullah saw. adalah kewajiban","Tepat, karena ia sudah meminta izin sebelum keluar kelas","Yanto sudah bersikap moderat karena tidak melupakan kewajiban salat","Kurang tepat — sebaiknya Yanto menunggu waktu istirahat atau waktu salat yang telah dijadwalkan sekolah, karena moderasi juga berarti menghormati aturan dan kepentingan belajar bersama"],
+    answer:3,
+    explanation:"Sikap moderat berarti menyeimbangkan kepentingan dunia (belajar, mengikuti aturan sekolah) dan akhirat (ibadah salat). Sekolah biasanya sudah menjadwalkan waktu salat Zuhur. Meninggalkan kelas di tengah pelajaran dapat mengganggu pembelajaran bersama. Sikap moderat yang tepat: menunggu waktu istirahat atau waktu salat yang sudah dijadwalkan — tanpa meninggalkan salat."
+  },
+  // ── Soal 22 → Jawaban A ──
+  {
+    type:"Penerapan & Analisis",
+    text:"Di awal pandemi Covid-19, salat Idul Fitri tidak diselenggarakan sesuai anjuran pemerintah dan MUI untuk memutus penyebaran virus. Penilaian yang tepat menurut nilai Bab 6 adalah...",
+    options:["Peniadaan salat Idulfitri merupakan sikap moderat — memilih menghindari kemudaratan Covid-19 dengan tetap mempertimbangkan maslahat dan keselamatan umat","Kebijakan ekstrem yang terlalu mementingkan kehidupan dunia","Salat Idulfitri harus tetap dijalankan karena hidup mati sudah ditentukan Allah","Kebijakan yang mendahulukan kepentingan kesehatan umum di atas kepentingan satu agama saja"],
+    answer:0,
+    explanation:"Menghentikan sementara salat Idul Fitri berjamaah demi mencegah Covid-19 adalah sikap moderat — menyeimbangkan kewajiban ibadah dengan tanggung jawab menjaga keselamatan jiwa (ḥifẓ al-nafs). Seperti contoh dalam buku: salat jamaah yang menjaga jarak saat pandemi adalah sikap moderat, bukan pengabaian ibadah."
+  },
+  // ── Soal 23 → Jawaban D ──
+  {
+    type:"Penerapan & Analisis",
+    text:"Di kelas 8A ada 5 siswa non-muslim. Beberapa siswa muslim menolak bermain bersama siswa non-muslim saat istirahat dengan alasan menjaga keimanan. Sikap yang paling mencerminkan ummatan wasaṭan adalah...",
+    options:["Mendukung pemisahan agar umat Islam tidak terpengaruh keyakinan lain","Mengajak siswa non-muslim untuk ikut pelajaran PAI agar mengenal Islam","Membolehkan pertemanan tetapi hanya dalam urusan akademik, bukan pergaulan sosial","Tetap bermain dan berteman baik dengan semua teman tanpa memandang agama, karena moderasi mengajarkan toleransi dan saling menghargai"],
+    answer:3,
+    explanation:"Ummatan wasaṭan mengajarkan sikap adil dan moderat — termasuk menjaga pertemanan dengan teman berbeda agama. Bab 6 secara eksplisit menyebutkan: 'seorang peserta didik yang tetap menjaga pertemanan dan silaturahmi dengan teman-temannya yang berbeda agama.' Menolak bermain karena beda agama bertentangan dengan nilai moderasi beragama."
+  },
+  // ── Soal 24 → Jawaban D ──
+  {
+    type:"Penerapan & Analisis",
+    text:"Pasangan istilah dan pengertian yang TEPAT antara Adil, Moderat, Sekuler, dan Guluw adalah...",
+    options:["Adil = jalan tengah; Moderat = memberikan hak kepada pemiliknya; Sekuler = berlebihan dalam agama; Guluw = memisahkan agama dari dunia","Adil = tidak membedakan siapapun; Moderat = menolak semua yang ekstrem; Sekuler = mementingkan akhirat; Guluw = mementingkan dunia","Adil = sama rata sama rasa; Moderat = pertengahan antara kaya dan miskin; Sekuler = tidak ber-Tuhan; Guluw = terlalu rajin beribadah","Adil = memberikan hak kepada pemiliknya; Moderat = jalan tengah tidak ekstrem; Sekuler = memisahkan agama dari urusan dunia; Guluw = berlebihan dalam menjalankan agama"],
+    answer:3,
+    explanation:"Pasangan yang tepat berdasarkan Bab 6: Adil = memberikan hak kepada pemiliknya (dimensi proporsional). Moderat = menghindari perilaku ekstrem; berada di jalan tengah. Sekuler = memisahkan hal duniawi dari agama. Guluw = berlebih-lebihan dalam menjalankan agama / melampaui batas."
+  },
+  // ── Soal 25 → Jawaban D ──
+  {
+    type:"Penerapan & Analisis",
+    text:"Pernyataan yang PALING TEPAT mewakili ketiga poin rangkuman Bab 6 adalah...",
+    options:["Islam mengajarkan umat menolak semua budaya asing demi menjaga kemurnian ajaran","Pancasila adalah kompromi yang melemahkan Islam sebagai agama mayoritas","Moderasi beragama hanya berlaku dalam hubungan antar agama, tidak dalam ibadah pribadi","Islam mengajarkan moderasi beragama (ummatan wasaṭan = adil dan moderat); para pemimpin Islam terdahulu mempraktikkannya dalam pendirian NKRI; dan warisannya adalah Pancasila yang harus terus dijaga generasi penerus"],
+    answer:3,
+    explanation:"Tiga poin rangkuman Bab 6: (1) Islam mengajarkan sikap moderat merujuk pada ummatan wasaṭan dalam Q.S. al-Baqarah/2:143 — umat yang adil dan moderat; (2) Ummatan wasaṭan = adil dan moderat yang saling berkaitan; (3) Para pemimpin umat Islam mempraktikkan moderasi dalam mendirikan NKRI — warisannya adalah Pancasila yang harus dijaga generasi penerus."
+  }
+];
+
+// ═══════════════════════════════════════════════════════
+// ALGORITMA ACAK — Fisher-Yates + penjamin tidak ada
+// jawaban berurutan yang sama
+// ═══════════════════════════════════════════════════════
+function shuffleNoAdjacent(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  for (let pass = 0; pass < 500; pass++) {
+    let clean = true;
+    for (let i = 0; i < arr.length - 1; i++) {
+      if (arr[i].answer === arr[i + 1].answer) {
+        clean = false;
+        let swapped = false;
+        for (let k = i + 2; k < arr.length; k++) {
+          const ansK = arr[k].answer;
+          const ansBefore = (i > 0) ? arr[i - 1].answer : -1;
+          const ansAfter = (k < arr.length - 1) ? arr[k + 1].answer : -1;
+          if (ansK !== arr[i].answer && ansK !== ansAfter && ansK !== ansBefore) {
+            [arr[i + 1], arr[k]] = [arr[k], arr[i + 1]];
+            swapped = true; break;
+          }
+        }
+        if (!swapped) {
+          for (let k = i + 2; k < arr.length; k++) {
+            const ansK = arr[k].answer;
+            const ansBefore = (i > 0) ? arr[i - 1].answer : -1;
+            const ansAfterI = arr[i + 1].answer;
+            const ansAfterK = (k < arr.length - 1) ? arr[k + 1].answer : -1;
+            if (ansK !== ansAfterI && ansK !== ansBefore &&
+                arr[i].answer !== ansAfterK && arr[i].answer !== ansBefore) {
+              [arr[i], arr[k]] = [arr[k], arr[i]];
+              swapped = true; break;
+            }
+          }
+        }
+      }
+    }
+    if (clean) break;
+  }
+}
+
+// ═══════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════
+let scoreCorrect = 0;
+let scoreWrong = 0;
+let answered = [];
+
+// ═══════════════════════════════════════════════════════
+// RENDER
+// ═══════════════════════════════════════════════════════
+function typeClass(type) {
+  if (type.includes("Hafalan")) return "t-hafalan";
+  if (type.includes("Pemahaman")) return "t-pemahaman";
+  return "t-penerapan";
+}
+
+function renderAll() {
+  const box = document.getElementById("questions-container");
+  const labels = ["A", "B", "C", "D"];
+  let html = "";
+  questions.forEach((q, i) => {
+    html += `<div class="q-card" id="qcard-${i}" data-type="${q.type}">`;
+    html += `<div class="q-header">
+      <span class="q-type-badge ${typeClass(q.type)}">${q.type}</span>
+      <span class="q-num">Soal ${i + 1} dari ${questions.length}</span>
+    </div>`;
+    html += `<div class="q-text">${q.text}</div>`;
+    if (q.arabic) html += `<div class="q-arabic">${q.arabic}</div>`;
+    html += `<div class="q-options" id="opts-${i}">`;
+    q.options.forEach((opt, j) => {
+      html += `<button class="opt-btn" id="opt-${i}-${j}" onclick="pickAnswer(${i},${j})">
+        <span class="opt-label">${labels[j]}</span>
+        <span>${opt}</span>
+      </button>`;
+    });
+    html += `</div>`;
+    html += `<div class="q-feedback" id="fb-${i}"></div>`;
+    html += `</div>`;
+  });
+  box.innerHTML = html;
+  renderDistBar();
+}
+
+function renderDistBar() {
+  const counts = [0, 0, 0, 0];
+  questions.forEach(q => counts[q.answer]++);
+  const total = questions.length;
+  const colors = ["var(--em)", "#0284c7", "var(--gold)", "var(--rose)"];
+  let html = "";
+  counts.forEach((c, i) => {
+    html += `<div style="width:${(c / total * 100)}%;background:${colors[i]}"></div>`;
+  });
+  document.getElementById("dist-bar").innerHTML = html;
+}
+
+// ═══════════════════════════════════════════════════════
+// LOGIKA JAWAB
+// ═══════════════════════════════════════════════════════
+function pickAnswer(qi, oi) {
+  if (answered[qi]) return;
+  answered[qi] = true;
+
+  const q = questions[qi];
+  const isCorrect = (oi === q.answer);
+  if (isCorrect) scoreCorrect++; else scoreWrong++;
+
+  const labels = ["A", "B", "C", "D"];
+
+  q.options.forEach((_, j) => {
+    const btn = document.getElementById(`opt-${qi}-${j}`);
+    btn.disabled = true;
+    if (j === q.answer) {
+      btn.classList.add("correct");
+    } else if (j === oi && !isCorrect) {
+      btn.classList.add("wrong");
+    } else {
+      btn.classList.add("dimmed");
+    }
+  });
+
+  const card = document.getElementById(`qcard-${qi}`);
+  card.classList.add(isCorrect ? "answered-correct" : "answered-wrong");
+
+  const fb = document.getElementById(`fb-${qi}`);
+  fb.className = "q-feedback show " + (isCorrect ? "fb-correct" : "fb-wrong");
+  if (isCorrect) {
+    fb.innerHTML = `<strong>✅ Benar! Jawaban kamu tepat.</strong>${q.explanation}`;
+  } else {
+    fb.innerHTML = `<strong>❌ Salah. Jawaban yang benar adalah <u>${labels[q.answer]}</u>.</strong>${q.explanation}`;
+  }
+
+  updateProgress();
+
+  if (answered.every(a => a)) {
+    setTimeout(() => openResult(), 900);
+  }
+}
+
+function updateProgress() {
+  const done = answered.filter(a => a).length;
+  const total = questions.length;
+  const pct = Math.round((done / total) * 100);
+  document.getElementById("prog-label").textContent = `${done} dari ${total} soal dijawab`;
+  document.getElementById("prog-fill").style.width = pct + "%";
+  document.getElementById("chip-g").textContent = "✅ " + scoreCorrect;
+  document.getElementById("chip-r").textContent = "❌ " + scoreWrong;
+}
+
+// ═══════════════════════════════════════════════════════
+// MODAL HASIL
+// ═══════════════════════════════════════════════════════
+function openResult() {
+  if (!answered.every(a => a)) return;
+
+  const nama = document.getElementById("inp-nama").value.trim() || "Peserta";
+  const kelas = document.getElementById("inp-kelas").value.trim();
+  const pct = Math.round((scoreCorrect / questions.length) * 100);
+
+  let emoji, predikat, prColor;
+  if (pct >= 90)      { emoji = "🏆"; predikat = "Sangat Baik (A)"; prColor = "#22c55e"; }
+  else if (pct >= 75) { emoji = "⭐"; predikat = "Baik (B)"; prColor = "#059669"; }
+  else if (pct >= 60) { emoji = "👍"; predikat = "Cukup (C)"; prColor = "#f59e0b"; }
+  else if (pct >= 40) { emoji = "📚"; predikat = "Kurang (D)"; prColor = "#f97316"; }
+  else                { emoji = "💪"; predikat = "Sangat Kurang (E)"; prColor = "#f43f5e"; }
+
+  let motivasi;
+  if (pct >= 90) {
+    motivasi = `<strong>Masya Allah, luar biasa!</strong> Pemahaman kamu tentang moderasi beragama sudah sangat mendalam. Kamu memahami makna ummatan wasaṭan, tiga dimensi keadilan, hukum bacaan nun mati dan mim mati, serta nilai moderasi dalam sejarah Pancasila dengan sempurna. Terus pertahankan sikap moderat dalam kehidupan sehari-hari!`;
+  } else if (pct >= 75) {
+    motivasi = `<strong>Hebat sekali!</strong> Kamu sudah menunjukkan pemahaman yang baik tentang Islam moderat dan nilai toleransi. Masih ada sedikit materi yang perlu diperdalam — coba tinjau kembali soal yang salah dan pahami penjelasannya. Kamu hampir sempurna!`;
+  } else if (pct >= 60) {
+    motivasi = `<strong>Cukup baik!</strong> Kamu sudah memahami dasar-dasar moderasi beragama, tetapi beberapa materi perlu diperdalam lagi. Coba baca kembali penjelasan tentang perbedaan sekuler dan guluw, tiga dimensi keadilan, serta hukum bacaan nun mati di buku paket, lalu ulangi latihan ini. Pasti skor kamu akan naik!`;
+  } else if (pct >= 40) {
+    motivasi = `<strong>Jangan berkecil hati!</strong> Materi tentang moderasi beragama memang memerlukan perhatian khusus karena ada banyak istilah baru — seperti ummatan wasaṭan, guluw, sekuler, wasatiyah, serta hukum tajwid iẓhar, idgam, ikhfā', dan iqlāb. Coba pelajari kembali Bab 6 secara perlahan, pahami setiap sub-materinya, lalu kerjakan ulang latihan ini. Kamu pasti bisa lebih baik!`;
+  } else {
+    motivasi = `<strong>Tetap semangat!</strong> Belajar tentang moderasi beragama adalah bagian penting dari memahami Islam sebagai rahmatan lil 'alamin. Mulai dari membaca ulang materi Bab 6 di buku paket, diskusikan dengan teman atau guru tentang hal-hal yang belum dipahami, lalu coba lagi latihan soal ini. Ingat, setiap usaha belajar tidak akan pernah mengkhianati hasil. Semangat! 💪`;
+  }
+
+  document.getElementById("r-emoji").textContent = emoji;
+  document.getElementById("r-name").textContent = nama;
+  document.getElementById("r-class").textContent = kelas ? "Kelas " + kelas : "";
+  document.getElementById("r-score").textContent = pct;
+  document.getElementById("r-correct").textContent = scoreCorrect;
+  document.getElementById("r-wrong").textContent = scoreWrong;
+
+  const pr = document.getElementById("r-predikat");
+  pr.textContent = predikat;
+  pr.style.background = prColor + "22";
+  pr.style.color = prColor;
+
+  document.getElementById("r-motivasi").innerHTML = motivasi;
+
+  const confettiBox = document.getElementById("confetti-box");
+  confettiBox.innerHTML = "";
+  if (pct >= 75) {
+    const colors = ["#22c55e", "#f59e0b", "#059669", "#f43f5e", "#3b82f6", "#a855f7", "#ec4899", "#10b981"];
+    for (let c = 0; c < 50; c++) {
+      const el = document.createElement("div");
+      el.className = "confetti";
+      el.style.left = Math.random() * 100 + "%";
+      el.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+      el.style.animationDelay = (Math.random() * 2) + "s";
+      el.style.animationDuration = (2 + Math.random() * 2.5) + "s";
+      const size = 6 + Math.random() * 6;
+      el.style.width = size + "px";
+      el.style.height = size + "px";
+      el.style.borderRadius = Math.random() > 0.5 ? "50%" : "2px";
+      confettiBox.appendChild(el);
+    }
+  }
+
+  document.getElementById("result-overlay").classList.add("show");
+}
+
+function closeResult() {
+  document.getElementById("result-overlay").classList.remove("show");
+  document.getElementById("btn-show-result").style.display = "block";
+}
+
+function restart() {
+  scoreCorrect = 0;
+  scoreWrong = 0;
+  document.getElementById("inp-nama").value = "";
+  document.getElementById("inp-kelas").value = "";
+  document.getElementById("result-overlay").classList.remove("show");
+  document.getElementById("btn-show-result").style.display = "none";
+
+  shuffleNoAdjacent(questions);
+  answered = new Array(questions.length).fill(false);
+
+  updateProgress();
+  renderAll();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+// ═══════════════════════════════════════════════════════
+// INISIALISASI
+// ═══════════════════════════════════════════════════════
+shuffleNoAdjacent(questions);
+answered = new Array(questions.length).fill(false);
+renderAll();
+updateProgress();
+</script>
+
+  <footer class="main-footer">
+    <div class="footer-container">
+        <div class="footer-left">
+            <select onchange="location = this.value;">
+                <option value="">Pindah ke...</option>
+                <option value="index.html">🏠 Beranda Utama</option>
+                <option value="bab1.html">Bab 1</option>
+                <option value="bab2.html">Bab 2</option>
+                <option value="bab3.html">Bab 3</option>
+                <option value="bab4.html">Bab 4</option>
+                <option value="bab5.html">Bab 5</option>
+                <option value="bab6.html">Bab 6</option>
+                <option value="bab7.html">Bab 7</option>
+                <option value="bab8.html">Bab 8</option>
+                <option value="bab9.html">Bab 9</option>
+                <option value="bab10.html">Bab 10</option>
+            </select>
+        </div>
+        <div class="footer-right">
+            <p>Copyright 2026 by @just.muhammad</p>
+        </div>
+    </div>
+</footer>
+</body>
+</html>
