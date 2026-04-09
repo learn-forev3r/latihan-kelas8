@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Latihan Soal – Bab 3 PAI Kelas VIII</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --amber:    #d97706;
+    --amber-dk: #b45309;
+    --amber-lt: #fef3c7;
+    --rose:     #f43f5e;
+    --green:    #22c55e;
+    --ink:      #1c1917;
+    --muted:    #78716c;
+    --card:     #ffffff;
+    --bg:       #fffbeb;
+    --radius:   16px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;}
+
+  header{
+    background:linear-gradient(135deg,#78350f 0%,#d97706 60%,#f59e0b 100%);
+    color:#fff;padding:28px 24px 24px;text-align:center;
+    position:relative;overflow:hidden;
+  }
+  header::before{
+    content:'';position:absolute;inset:0;
+    background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='20'/%3E%3C/g%3E%3C/svg%3E");
+  }
+  .badge{
+    display:inline-block;background:rgba(255,255,255,.18);
+    border:1px solid rgba(255,255,255,.35);border-radius:99px;
+    font-size:12px;font-weight:700;letter-spacing:1px;
+    text-transform:uppercase;padding:4px 14px;margin-bottom:10px;
+  }
+  header h1{font-size:clamp(16px,4vw,24px);font-weight:900;line-height:1.3;position:relative;}
+  header p{font-size:14px;opacity:.82;margin-top:6px;position:relative;}
+  .shuffle-note{font-size:11px;opacity:.6;margin-top:2px;font-style:italic;}
+
+  .container{max-width:760px;margin:0 auto;padding:0 16px 40px;}
+
+  .identity-card{
+    background:var(--card);border-radius:var(--radius);
+    box-shadow:0 4px 24px rgba(0,0,0,.07);
+    padding:24px;margin-top:-20px;position:relative;z-index:2;
+  }
+  .identity-card h2{font-size:18px;font-weight:900;color:var(--amber-dk);margin-bottom:4px;}
+  .identity-card .sub{font-size:13px;color:var(--muted);margin-bottom:16px;}
+  .input-row{display:flex;gap:12px;flex-wrap:wrap;}
+  .input-group{flex:1;min-width:200px;}
+  .input-group label{
+    display:block;font-size:12px;font-weight:800;
+    color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;
+  }
+  .input-group input{
+    width:100%;padding:11px 14px;border:2px solid #e7e5e4;
+    border-radius:10px;font-family:'Nunito',sans-serif;
+    font-size:15px;font-weight:600;color:var(--ink);
+    transition:border-color .2s;background:#fafaf9;
+  }
+  .input-group input:focus{
+    outline:none;border-color:var(--amber);background:#fff;
+    box-shadow:0 0 0 3px rgba(217,119,6,.12);
+  }
+  .input-group input::placeholder{color:#a8a29e;font-weight:600;}
+
+  .progress-sticky{
+    position:sticky;top:0;z-index:10;
+    background:rgba(255,251,235,.92);backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+    padding:14px 0 10px;margin-top:20px;
+    border-bottom:1px solid rgba(217,119,6,.1);
+  }
+  .prog-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+  .prog-label{font-size:13px;font-weight:800;color:var(--muted);}
+  .prog-chips{display:flex;gap:6px;}
+  .prog-chip{font-size:12px;font-weight:800;padding:3px 10px;border-radius:99px;}
+  .prog-chip.cg{background:#f0fdf4;color:var(--green);}
+  .prog-chip.cr{background:#fff1f2;color:var(--rose);}
+  .prog-bar{height:8px;background:#fde68a;border-radius:99px;overflow:hidden;}
+  .prog-fill{
+    height:100%;border-radius:99px;
+    background:linear-gradient(90deg,var(--amber),#f59e0b);
+    transition:width .5s cubic-bezier(.4,0,.2,1);
+  }
+  .show-result-btn{
+    display:none;margin-top:8px;
+    padding:8px 16px;border-radius:8px;
+    background:var(--amber);color:#fff;
+    font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;
+    border:none;cursor:pointer;transition:all .2s;
+  }
+  .show-result-btn:hover{background:var(--amber-dk);}
+
+  .q-card{
+    background:var(--card);border-radius:var(--radius);
+    box-shadow:0 2px 16px rgba(0,0,0,.06);
+    margin-top:16px;padding:22px 24px;
+    border-left:4px solid var(--amber);
+  }
+  .q-card[data-type="Pemahaman"]{border-left-color:#0284c7;}
+  .q-card[data-type="Penerapan & Analisis"]{border-left-color:var(--gold);}
+  .q-card.answered-correct{border-left-color:var(--green);}
+  .q-card.answered-wrong{border-left-color:var(--rose);}
+
+  .q-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-wrap:wrap;gap:6px;}
+  .q-type-badge{
+    font-size:10px;font-weight:800;letter-spacing:.8px;
+    text-transform:uppercase;padding:3px 10px;border-radius:6px;
+  }
+  .q-type-badge.t-hafalan{background:var(--amber-lt);color:var(--amber-dk);}
+  .q-type-badge.t-pemahaman{background:#e0f2fe;color:#0369a1;}
+  .q-type-badge.t-penerapan{background:#fef3c7;color:#92400e;}
+  .q-num{font-size:12px;font-weight:700;color:var(--muted);}
+  .q-text{font-size:15px;font-weight:700;line-height:1.65;white-space:pre-line;margin-bottom:16px;}
+  .q-arabic{
+    font-family:'Nunito',serif;font-size:20px;text-align:right;
+    line-height:2;color:var(--amber-dk);background:var(--amber-lt);
+    border-radius:10px;padding:12px 18px;margin-bottom:16px;
+  }
+
+  .q-options{display:flex;flex-direction:column;gap:8px;}
+  .opt-btn{
+    display:flex;align-items:flex-start;gap:12px;
+    background:#fafaf9;border:2px solid #e7e5e4;border-radius:10px;
+    padding:11px 14px;cursor:pointer;
+    font-family:'Nunito',sans-serif;font-size:14px;font-weight:600;
+    text-align:left;transition:all .2s;width:100%;
+  }
+  .opt-btn:hover:not(:disabled){border-color:var(--amber);background:var(--amber-lt);transform:translateX(3px);}
+  .opt-label{
+    min-width:26px;height:26px;background:#e7e5e4;border-radius:7px;
+    display:flex;align-items:center;justify-content:center;
+    font-size:12px;font-weight:800;color:var(--muted);flex-shrink:0;transition:all .2s;
+  }
+  .opt-btn.correct{border-color:var(--green);background:#f0fdf4;}
+  .opt-btn.correct .opt-label{background:var(--green);color:#fff;}
+  .opt-btn.wrong{border-color:var(--rose);background:#fff1f2;}
+  .opt-btn.wrong .opt-label{background:var(--rose);color:#fff;}
+  .opt-btn.dimmed{opacity:.5;}
+  .opt-btn:disabled{cursor:default;}
+
+  .q-feedback{
+    display:none;margin-top:14px;border-radius:10px;
+    padding:12px 16px;font-size:13px;line-height:1.65;
+  }
+  .q-feedback.show{display:block;animation:slideUp .3s ease;}
+  .q-feedback.fb-correct{background:#f0fdf4;border-left:4px solid var(--green);}
+  .q-feedback.fb-wrong{background:#fff1f2;border-left:4px solid var(--rose);}
+  .q-feedback strong{display:block;font-size:14px;margin-bottom:3px;}
+  @keyframes slideUp{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
+
+  .result-overlay{
+    display:none;position:fixed;inset:0;z-index:100;
+    background:rgba(15,23,42,.6);backdrop-filter:blur(6px);
+    -webkit-backdrop-filter:blur(6px);
+    justify-content:center;align-items:center;padding:20px;
+  }
+  .result-overlay.show{display:flex;animation:fadeIn .4s ease;}
+  @keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+
+  .result-modal{
+    background:var(--card);border-radius:20px;
+    box-shadow:0 24px 64px rgba(0,0,0,.2);
+    max-width:480px;width:100%;padding:36px 28px;
+    text-align:center;position:relative;overflow:hidden;
+    animation:modalPop .4s cubic-bezier(.2,.8,.3,1.2);
+  }
+  @keyframes modalPop{from{opacity:0;transform:scale(.85) translateY(30px);}to{opacity:1;transform:none;}}
+
+  .result-modal .confetti-container{position:absolute;inset:0;pointer-events:none;overflow:hidden;}
+  .confetti{position:absolute;top:-10px;opacity:0;animation:confettiFall linear forwards;}
+  @keyframes confettiFall{
+    0%{opacity:1;transform:translateY(0) rotate(0deg) scale(1);}
+    80%{opacity:1;}
+    100%{opacity:0;transform:translateY(420px) rotate(720deg) scale(.5);}
+  }
+
+  .r-emoji{font-size:56px;position:relative;}
+  .r-greeting{font-size:14px;color:var(--muted);margin-top:12px;font-weight:700;}
+  .r-name{font-size:24px;font-weight:900;color:var(--ink);margin:4px 0 0;}
+  .r-class{font-size:13px;color:var(--amber);font-weight:700;margin-bottom:20px;}
+  .r-score-wrap{background:var(--bg);border-radius:14px;padding:20px;margin-bottom:20px;}
+  .r-score-label{font-size:12px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;}
+  .r-score{font-size:52px;font-weight:900;color:var(--amber);line-height:1.1;}
+  .r-score span{font-size:20px;font-weight:700;color:var(--muted);}
+  .r-stats{display:flex;gap:10px;justify-content:center;margin-top:14px;}
+  .r-stat{background:#fff;border-radius:10px;padding:10px 16px;font-size:12px;font-weight:700;color:var(--muted);}
+  .r-stat b{display:block;font-size:20px;font-weight:900;}
+  .r-stat.sg b{color:var(--green);}
+  .r-stat.sr b{color:var(--rose);}
+
+  .r-predikat{display:inline-block;padding:6px 20px;border-radius:99px;font-weight:800;font-size:14px;margin-bottom:16px;}
+  .r-motivasi{
+    font-size:14px;line-height:1.7;color:var(--muted);
+    background:#fafaf9;border-radius:12px;padding:14px 18px;
+    margin-bottom:24px;text-align:left;
+  }
+  .r-motivasi strong{color:var(--ink);}
+
+  .r-btns{display:flex;flex-direction:column;gap:10px;}
+  .btn{
+    padding:13px 24px;border-radius:12px;font-family:'Nunito',sans-serif;
+    font-size:15px;font-weight:800;border:none;cursor:pointer;transition:all .2s;
+  }
+  .btn-primary{background:var(--amber);color:#fff;box-shadow:0 4px 12px rgba(217,119,6,.3);}
+  .btn-primary:hover{background:var(--amber-dk);transform:translateY(-2px);}
+  .btn-outline{background:transparent;color:var(--muted);border:2px solid #e7e5e4;}
+  .btn-outline:hover{border-color:var(--amber);color:var(--amber);}
+
+  .dist-bar{
+    display:flex;height:6px;border-radius:99px;overflow:hidden;
+    margin-top:20px;gap:2px;
+  }
+  .dist-bar div{height:100%;border-radius:99px;transition:width .4s;}
+  .dist-legend{
+    display:flex;justify-content:center;gap:16px;margin-top:6px;
+    font-size:11px;font-weight:800;color:var(--muted);
+  }
+  .dist-legend span{display:flex;align-items:center;gap:3px;}
+  .dist-legend i{width:8px;height:8px;border-radius:50%;display:inline-block;}
+
+  @media(max-width:500px){
+    .q-card{padding:16px 14px;}
+    .opt-btn{padding:10px 12px;font-size:13px;}
+    .result-modal{padding:28px 20px;}
+    .r-score{font-size:42px;}
+    .identity-card{padding:18px 16px;}
+  }
+
+  /* --- PERBAIKAN FOOTER BY MENTOR --- */
+.main-footer {
+    background-color: #1e293b !important; /* Warna gelap modern */
+    color: white !important;
+    padding: 12px 0 !important;
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    z-index: 9999 !important; /* Supaya tidak tertutup elemen soal */
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.2);
+    font-family: 'Nunito', sans-serif;
+}
+
+.footer-container {
+    display: flex !important;
+    /* Baris di bawah ini adalah kuncinya! */
+    justify-content: space-between !important; 
+    align-items: center !important;
+    max-width: 1000px;
+    margin: 0 auto !important;
+    padding: 0 20px !important;
+}
+
+.footer-left select {
+    padding: 6px 10px !important;
+    border-radius: 8px !important;
+    border: 1px solid #475569 !important;
+    background: #334155 !important;
+    color: white !important;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.footer-right p {
+    margin: 0 !important;
+    font-size: 13px !important;
+    text-align: right !important; /* Memastikan teks rata kanan */
+    white-space: nowrap; /* Mencegah teks turun ke bawah/terpotong */
+}
+
+/* Supaya konten soal paling bawah tidak tertutup footer */
+body {
+    padding-bottom: 70px !important;
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="badge">PAI & Budi Pekerti · SMP Kelas VIII</div>
+  <h1>🤝 Latihan Soal Bab 3<br>Menjadi Pribadi Berintegritas dengan Sifat Amanah dan Jujur</h1>
+  <p>25 soal pilihan ganda · 4 pilihan jawaban</p>
+  <p class="shuffle-note">🔄 Urutan soal diacak setiap kali membuka halaman</p>
+</header>
+
+<div class="container">
+  <section class="identity-card">
+    <h2>📝 Data Peserta</h2>
+    <p class="sub">Isi nama dan kelas sebelum mengerjakan soal</p>
+    <div class="input-row">
+      <div class="input-group">
+        <label for="inp-nama">Nama Lengkap</label>
+        <input type="text" id="inp-nama" placeholder="Masukkan nama lengkap...">
+      </div>
+      <div class="input-group">
+        <label for="inp-kelas">Kelas</label>
+        <input type="text" id="inp-kelas" placeholder="Contoh: VIII-A">
+      </div>
+    </div>
+  </section>
+
+  <div class="progress-sticky">
+    <div class="prog-top">
+      <span class="prog-label" id="prog-label">0 dari 25 soal dijawab</span>
+      <div class="prog-chips">
+        <span class="prog-chip cg" id="chip-g">✅ 0</span>
+        <span class="prog-chip cr" id="chip-r">❌ 0</span>
+      </div>
+    </div>
+    <div class="prog-bar"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
+    <button class="show-result-btn" id="btn-show-result" onclick="openResult()">🎉 Lihat Hasil</button>
+  </div>
+
+  <div id="questions-container"></div>
+
+  <div style="margin-top:24px;">
+    <div class="dist-bar" id="dist-bar"></div>
+    <div class="dist-legend">
+      <span><i style="background:var(--amber)"></i>A</span>
+      <span><i style="background:#0284c7"></i>B</span>
+      <span><i style="background:var(--gold)"></i>C</span>
+      <span><i style="background:var(--rose)"></i>D</span>
+    </div>
+  </div>
+</div>
+
+<div class="result-overlay" id="result-overlay">
+  <div class="result-modal">
+    <div class="confetti-container" id="confetti-box"></div>
+    <div class="r-emoji" id="r-emoji"></div>
+    <div class="r-greeting">Selamat!</div>
+    <div class="r-name" id="r-name"></div>
+    <div class="r-class" id="r-class"></div>
+    <div class="r-score-wrap">
+      <div class="r-score-label">Skor Kamu</div>
+      <div class="r-score"><span id="r-score"></span><span>/100</span></div>
+      <div class="r-stats">
+        <div class="r-stat sg"><b id="r-correct">0</b>Benar</div>
+        <div class="r-stat sr"><b id="r-wrong">0</b>Salah</div>
+      </div>
+    </div>
+    <div class="r-predikat" id="r-predikat"></div>
+    <div class="r-motivasi" id="r-motivasi"></div>
+    <div class="r-btns">
+      <button class="btn btn-outline" onclick="closeResult()">Tinjau Jawaban Saya</button>
+      <button class="btn btn-primary" onclick="restart()">🔁 Ulangi Latihan</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════
+// DATA SOAL — kunci jawaban diseimbangkan:
+// Pola berulang A,B,C,D → A=7, B=6, C=6, D=6
+// Tidak ada dua soal berurutan jawabannya sama
+// ═══════════════════════════════════════════════════════
+const questions = [
+  // ── Soal 1 → Jawaban A ──
+  {
+    type:"Hafalan & Ingatan",
+    text:"Kata kunci (tema utama) Bab 3 adalah...",
+    options:["Pribadi Berintegritas, Amanah, dan Jujur","Kejujuran, Keadilan, dan Tanggung Jawab","Disiplin, Amanah, dan Kerja Keras","Takwa, Ikhlas, dan Sabar"],
+    answer:0,
+    explanation:"Kata kunci Bab 3 adalah 'Pribadi Berintegritas, Amanah, dan Jujur.' Ketiga kata kunci ini merangkum seluruh materi bab, mulai dari pengertian, cara berperilaku, hingga hikmah dari sifat amanah dan jujur dalam membentuk pribadi yang berintegritas."
+  },
+  // ── Soal 2 → Jawaban B ──
+  {
+    type:"Hafalan & Ingatan",
+    text:"Secara bahasa, kata 'amanah' berasal dari bahasa Arab 'amānatan' yang berarti...",
+    options:["Berani, kuat, dan teguh pendirian","Aman, tenteram, tenang, dan hilang rasa takut","Taat, patuh, dan bertanggung jawab","Setia, jujur, dan dapat dipercaya"],
+    answer:1,
+    explanation:"Secara bahasa, amanah berasal dari kata dalam bahasa Arab 'amānatan' yang berarti aman, tenteram, tenang, dan hilang rasa takut. Dalam bahasa Indonesia, amanah diartikan sebagai sesuatu yang dititipkan kepada orang lain, keamanan dan ketenteraman, serta dapat dipercaya."
+  },
+  // ── Soal 3 → Jawaban C ──
+  {
+    type:"Hafalan & Ingatan",
+    text:"Secara istilah, amanah berarti...",
+    options:["Berkata benar sesuai dengan kenyataan dalam segala situasi","Menjaga titipan orang lain agar tidak rusak atau berkurang","Pemenuhan hak-hak oleh manusia, baik terhadap Allah Swt., orang lain, maupun dirinya sendiri, serta bertanggung jawab terhadap kepercayaan yang diterimanya","Menjalankan perintah Allah dan menjauhi larangan-Nya dengan ikhlas"],
+    answer:2,
+    explanation:"Secara istilah, amanah berarti pemenuhan hak-hak oleh manusia, baik terhadap Allah Swt., orang lain, maupun dirinya sendiri, dan bertanggung jawab terhadap kepercayaan yang diterimanya untuk dilaksanakan dengan sebaik-baiknya."
+  },
+  // ── Soal 4 → Jawaban D ──
+  {
+    type:"Hafalan & Ingatan",
+    text:"Ayat Al-Qur'an yang membahas tentang amanah dan menetapkan hukum dengan adil terdapat dalam surah...",
+    options:["Q.S. al-Baqarah/2:177","Q.S. al-Maidah/5:8","Q.S. at-Taubah/9:119","Q.S. an-Nisa'/4:58"],
+    answer:3,
+    explanation:"Q.S. an-Nisa'/4:58 berisi firman Allah: 'Sungguh, Allah menyuruhmu menyampaikan amanat kepada yang berhak menerimanya, dan apabila kamu menetapkan hukum di antara manusia hendaknya kamu menetapkannya dengan adil.'"
+  },
+  // ── Soal 5 → Jawaban A ──
+  {
+    type:"Hafalan & Ingatan",
+    text:"Secara istilah, jujur adalah...",
+    options:["Kesesuaian antara lahir dan batin, ucapan dan perbuatan, serta berita dan fakta","Menepati janji dalam setiap keadaan tanpa terkecuali","Berkata baik atau diam apabila tidak ada hal positif yang bisa dikatakan","Menyampaikan kebenaran kepada siapapun meskipun menyakitkan"],
+    answer:0,
+    explanation:"Secara istilah, jujur adalah kesesuaian antara lahir dan batin, ucapan dan perbuatan, serta berita dan fakta. Jujur mencakup tiga dimensi: jujur dalam pikiran (hati), jujur dalam perkataan, dan jujur dalam perbuatan."
+  },
+  // ── Soal 6 → Jawaban B ──
+  {
+    type:"Hafalan & Ingatan",
+    text:"Ayat Al-Qur'an tentang perintah bersama orang-orang yang jujur/benar terdapat dalam surah...",
+    options:["Q.S. al-Ahzab/33:70","Q.S. at-Taubah/9:119","Q.S. al-Hujurat/49:6","Q.S. al-Isra'/17:36"],
+    answer:1,
+    explanation:"Q.S. at-Taubah/9:119 berbunyi: 'Wahai orang-orang yang beriman! Bertakwalah kepada Allah, dan bersamalah kamu dengan orang-orang yang benar (jujur/shidiqin).'"
+  },
+  // ── Soal 7 → Jawaban C ──
+  {
+    type:"Hafalan & Ingatan",
+    text:"Hadis tentang perintah jujur yang menyatakan bahwa kejujuran membimbing kepada kebaikan dan kebaikan membimbing ke surga diriwayatkan oleh...",
+    options:["H.R. Bukhari dan Muslim dari Abu Hurairah r.a.","H.R. Abu Dawud dari Anas bin Malik r.a.","H.R. Al-Bukhari, Muslim, Al-Tirmizi, dan Ahmad bin Hanbal dari Abdullah bin Mas'ud","H.R. Nasa'i dari Umar bin Khattab r.a."],
+    answer:2,
+    explanation:"Hadis yang berbunyi 'Kalian harus berlaku jujur, karena kejujuran itu akan membimbing kepada kebaikan. Dan kebaikan itu akan membimbing ke surga' diriwayatkan dari 'Abdullah bin Mas'ud oleh H.R. Al-Bukhari, Muslim, Al-Tirmizi, dan Ahmad bin Hanbal."
+  },
+  // ── Soal 8 → Jawaban D ──
+  {
+    type:"Hafalan & Ingatan",
+    text:"Gelar 'al-Amīn' (orang yang terpercaya) diberikan kepada Nabi Muhammad saw. berkaitan dengan peristiwa...",
+    options:["Ketika beliau berhasil mendamaikan perang antar suku di Madinah","Ketika beliau berhasil mengembalikan harta temuan kepada pemiliknya","Ketika beliau memenangkan kepercayaan Siti Khadijah dalam berdagang","Ketika beliau menyelesaikan perselisihan peletakan Hajar Aswad di Ka'bah"],
+    answer:3,
+    explanation:"Gelar al-Amīn diberikan kepada Nabi Muhammad saw. karena beliau berhasil menyelesaikan perselisihan antar kabilah tentang siapa yang berhak meletakkan Hajar Aswad. Masyarakat pun berkata 'raḍīnā bi al-amīn' (kami rida dengan keputusan al-Amīn). Namun gelar itu sejatinya sudah melekat sejak beliau remaja."
+  },
+  // ── Soal 9 → Jawaban A ──
+  {
+    type:"Pemahaman",
+    text:"Tiga cakupan amanah berdasarkan pengertian istilahnya adalah amanah kepada...",
+    options:["Allah Swt., sesama manusia, dan diri sendiri","Orang tua, guru, dan teman","Negara, masyarakat, dan keluarga","Pemimpin, bawahan, dan rekan kerja"],
+    answer:0,
+    explanation:"Tiga cakupan amanah: (1) Amanah kepada Allah Swt. — tugas-tugas keagamaan (ibadah); (2) Amanah kepada sesama manusia — titipan materi maupun non-materi; (3) Amanah kepada diri sendiri — tanggung jawab terhadap nikmat dalam diri."
+  },
+  // ── Soal 10 → Jawaban B ──
+  {
+    type:"Pemahaman",
+    text:"Amanah terhadap Allah Swt. berupa tugas-tugas keagamaan. Tugas ini berhubungan dengan tujuan diciptakannya manusia, yaitu...",
+    options:["Menjadi khalifah yang memakmurkan bumi","Beribadah kepada Allah Swt., baik ibadah mahdah maupun gairu mahdah","Menjaga keseimbangan alam semesta","Meneruskan ajaran para nabi dan rasul"],
+    answer:1,
+    explanation:"Amanah terhadap Allah Swt. adalah tugas-tugas keagamaan yang berhubungan dengan tujuan diciptakannya manusia, yaitu untuk beribadah kepada Allah Swt. Ibadah bisa dalam bentuk ibadah khusus (mahdah) maupun ibadah umum (gairu mahdah)."
+  },
+  // ── Soal 11 → Jawaban C ──
+  {
+    type:"Pemahaman",
+    text:"Contoh amanah kepada sesama manusia yang bersifat non-materi adalah...",
+    options:["Mengembalikan uang pinjaman tepat waktu","Menjaga barang titipan teman agar tidak rusak","Menjalankan tugas dan tanggung jawab sebagai ketua kelas dengan baik","Membayar hutang sesuai jumlah yang dipinjam"],
+    answer:2,
+    explanation:"Amanah non-materi dari sesama manusia adalah jabatan atau kepercayaan yang diberikan orang lain, misalnya amanah sebagai ketua kelas. Seorang ketua kelas harus memimpin, menyampaikan aspirasi, dan membagi tugas kebersihan."
+  },
+  // ── Soal 12 → Jawaban D ──
+  {
+    type:"Pemahaman",
+    text:"Menjaga protokol kesehatan (memakai masker, menjaga jarak, mencuci tangan) di masa pandemi Covid-19 merupakan contoh amanah kepada...",
+    options:["Allah Swt., karena patuh pada aturan pemerintah yang diberi mandat Allah","Sesama manusia, karena melindungi orang lain dari penularan","Negara, karena mematuhi kebijakan nasional","Diri sendiri, karena menjaga kesehatan sebagai nikmat titipan Allah"],
+    answer:3,
+    explanation:"Menjaga kesehatan dengan menjalankan protokol kesehatan adalah contoh amanah terhadap diri sendiri. Kesehatan adalah amanah yang diberikan Allah Swt. kepada diri seseorang dan harus dijaga."
+  },
+  // ── Soal 13 → Jawaban A ──
+  {
+    type:"Pemahaman",
+    text:"Jujur dalam bermedia sosial, menurut Bab 3, berarti...",
+    options:["Cermat dalam menyebarkan berita, yaitu hanya menyebarkan berita yang sudah terkonfirmasi kebenarannya","Hanya memposting konten islami dan menghindari konten hiburan","Selalu memberikan identitas asli saat membuat akun media sosial","Tidak menggunakan media sosial kecuali untuk keperluan belajar"],
+    answer:0,
+    explanation:"Menurut Bab 3, seseorang disebut jujur dalam bermedia sosial apabila ia cermat dalam menyebarkan berita — yaitu dengan hanya menyebarkan berita yang sudah terkonfirmasi kebenarannya."
+  },
+  // ── Soal 14 → Jawaban B ──
+  {
+    type:"Pemahaman",
+    text:"Hubungan antara amanah dan kejujuran menurut Bab 3 adalah...",
+    options:["Amanah dan jujur adalah dua hal yang berdiri sendiri dan tidak saling berkaitan","Amanah adalah kepercayaan yang diberikan orang lain; kepercayaan itu hanya bisa diraih melalui kejujuran — hanya orang jujur yang mendapat amanah dari orang lain","Amanah lahir dari ketakwaan, sedangkan jujur lahir dari keberanian","Jujur adalah syarat mendapat amanah dari Allah, sedangkan amanah dari manusia tidak memerlukan kejujuran"],
+    answer:1,
+    explanation:"Amanah dan jujur memiliki hubungan yang sangat erat. Amanah adalah kepercayaan yang diberikan oleh pihak lain. Kepercayaan itu tidak muncul begitu saja — ada sesuatu dalam diri seseorang yang membuat orang lain percaya, yaitu kejujuran."
+  },
+  // ── Soal 15 → Jawaban C ──
+  {
+    type:"Pemahaman",
+    text:"Manfaat bersifat vertikal dari sikap amanah dan jujur adalah...",
+    options:["Mendapat kepercayaan dari banyak orang di sekitar kita","Memperoleh keuntungan materi dan penghargaan dari masyarakat","Meningkatnya keimanan kepada Allah Swt. dan terhindar dari sifat munafik","Dipromosikan ke jabatan yang lebih tinggi di tempat kerja"],
+    answer:2,
+    explanation:"Manfaat vertikal (berhubungan dengan Allah Swt.) dari sikap amanah dan jujur adalah: meningkatnya keimanan kepada Allah Swt. dan terhindar dari sifat munafik. Orang yang menjaga amanah dan kejujuran menunjukkan bahwa dirinya meyakini Allah Maha Mengetahui, Maha Melihat, dan Maha Mendengar."
+  },
+  // ── Soal 16 → Jawaban D ──
+  {
+    type:"Pemahaman",
+    text:"Cara berperilaku jujur yang disebutkan dalam Bab 3 meliputi hal-hal berikut, KECUALI...",
+    options:["Meyakini bahwa Allah Maha Melihat dan Maha Mendengar semua yang dipikirkan, dikatakan, dan dilakukan","Meyakini bahwa kejujuran akan membawa kebaikan dunia dan akhirat","Menghindari perkataan bohong, walaupun hanya sebagai candaan","Berkata jujur hanya kepada orang-orang yang dipercaya saja, bukan kepada semua orang"],
+    answer:3,
+    explanation:"Cara berperilaku jujur menurut Bab 3 mencakup: meyakini Allah Maha Mengetahui, meyakini kejujuran memunculkan kepercayaan, meyakini kejujuran membawa kebaikan, terbiasa berkata benar, dan menghindari bohong walau hanya candaan. Jujur hanya kepada orang tertentu BUKAN bagian dari cara berperilaku jujur."
+  },
+  // ── Soal 17 → Jawaban A ──
+  {
+    type:"Pemahaman",
+    text:"Lima manfaat yang bisa diperoleh orang yang berlaku amanah dan jujur menurut Bab 3 adalah...",
+    options:["Meningkatkan keimanan, terhindar dari sifat munafik, mendapat kepercayaan banyak orang, memperoleh kebaikan dunia, dan merasakan ketenangan serta kebahagiaan","Meningkatkan kekayaan, jabatan, popularitas, kesehatan, dan umur panjang","Mendapat pujian, hadiah, promosi jabatan, teman yang banyak, dan hidup sejahtera","Masuk surga, dijauhkan dari neraka, diberi rezeki berlimpah, dimuliakan malaikat, dan dipanjangkan umurnya"],
+    answer:0,
+    explanation:"Lima manfaat berlaku amanah dan jujur: (1) Meningkatkan keimanan; (2) Terhindar dari sifat munafik; (3) Mendapat kepercayaan dari banyak orang; (4) Memperoleh kebaikan dunia; (5) Merasakan ketenangan dan kebahagiaan."
+  },
+  // ── Soal 18 → Jawaban B ──
+  {
+    type:"Pemahaman",
+    text:"Kisah 'Umar dan Penggembala Kambing' dalam rubrik Inspirasiku mengajarkan pelajaran utama bahwa...",
+    options:["Pemimpin harus selalu menguji kejujuran bawahannya","Kejujuran harus dijaga meskipun tidak ada manusia yang melihat, karena Allah Swt. selalu mengetahui segala perbuatan","Anak-anak lebih jujur daripada orang dewasa","Bekerja sebagai penggembala adalah pekerjaan yang mulia"],
+    answer:1,
+    explanation:"Kisah penggembala kambing yang menolak menjual kambing majikannya meski diimingi uang karena berkata 'Meskipun majikan saya tidak tahu, tetapi Allah Swt. mengetahui yang saya lakukan.' Kisah ini mengajarkan bahwa kejujuran harus dijaga karena Allah Maha Mengetahui segalanya."
+  },
+  // ── Soal 19 → Jawaban C ──
+  {
+    type:"Penerapan & Analisis",
+    text:"Mujenih adalah petugas kebersihan KRL yang menemukan uang Rp500 juta di dalam gerbong kereta dan segera melaporkannya. Tindakan Mujenih ini paling tepat dikategorikan sebagai amanah kepada...",
+    options:["Allah Swt., karena menjalankan perintah agama","Diri sendiri, karena menjaga nama baik dirinya sendiri","Sesama manusia, karena mengembalikan hak orang lain yang dititipkan secara tidak langsung kepadanya","Negara, karena melaporkan temuan kepada instansi yang berwenang"],
+    answer:2,
+    explanation:"Mujenih menemukan uang yang bukan miliknya dan mengembalikannya. Ini adalah bentuk amanah kepada sesama manusia — ia menjaga dan mengembalikan sesuatu (materi) yang bukan haknya kepada pemiliknya."
+  },
+  // ── Soal 20 → Jawaban D ──
+  {
+    type:"Penerapan & Analisis",
+    text:"Seorang siswa rajin salat lima waktu, berpuasa Ramadan, dan aktif dalam kegiatan keagamaan di sekolah. Perilaku ini merupakan contoh amanah kepada...",
+    options:["Diri sendiri, karena menjaga kesehatan rohaninya","Sesama manusia, karena memberi teladan kepada teman-temannya","Orang tua, karena mematuhi didikan dan harapan mereka","Allah Swt., karena menjalankan tugas-tugas keagamaan sebagai hamba-Nya"],
+    answer:3,
+    explanation:"Melaksanakan salat, puasa, dan kegiatan keagamaan adalah contoh amanah kepada Allah Swt. Amanah kepada Allah berupa tugas-tugas keagamaan yang menjadi tanggung jawab manusia — yaitu beribadah kepada Allah Swt."
+  },
+  // ── Soal 21 → Jawaban A ──
+  {
+    type:"Penerapan & Analisis",
+    text:"Reza mendapat kepercayaan dari teman-temannya untuk menjadi bendahara kelas. Ia menggunakan uang kas kelas untuk kepentingan pribadinya, meski jumlahnya sedikit. Berdasarkan materi Bab 3, tindakan Reza tersebut...",
+    options:["Melanggar amanah kepada sesama manusia, karena jabatan adalah kepercayaan yang harus dipertanggungjawabkan di dunia dan di akhirat","Dibolehkan selama jumlahnya kecil dan ia menggantinya kemudian","Tidak masalah selama teman-temannya tidak mengetahuinya","Hanya dosa kecil yang bisa dihapus dengan meminta maaf"],
+    answer:0,
+    explanation:"Jabatan bendahara kelas adalah amanah (kepercayaan) non-materi dari sesama manusia. Menggunakan uang kas untuk kepentingan pribadi adalah pengkhianatan terhadap amanah tersebut. Bab 3 menegaskan bahwa jabatan berkewajiban dipertanggungjawabkan di dunia maupun di akhirat."
+  },
+  // ── Soal 22 → Jawaban B ──
+  {
+    type:"Penerapan & Analisis",
+    text:"Dalam ujian, Dina merasa tidak bisa menjawab satu soal. Temannya menawarkan contekan. Sikap Dina yang paling mencerminkan nilai Bab 3 adalah...",
+    options:["Menerima contekan karena tidak ada yang melihat dan hasilnya untuk kebaikan bersama","Menolak contekan dan mengerjakan semaksimal kemampuannya sendiri, karena Allah Maha Mengetahui dan kejujuran membawa kebaikan","Menolak contekan hanya jika pengawas sedang memperhatikan","Menerima contekan asal hanya dipakai sebagai 'referensi', bukan disalin langsung"],
+    answer:1,
+    explanation:"Peserta didik yang jujur akan mengerjakan penilaian dengan jujur — tidak menyontek maupun meminta jawaban kepada temannya. Bab 3 menegaskan: meyakini bahwa Allah Maha Mengetahui segalanya. Kejujuran akan membawa kebaikan dunia dan akhirat."
+  },
+  // ── Soal 23 → Jawaban C ──
+  {
+    type:"Penerapan & Analisis",
+    text:"Sebuah toko daring mendapat rating bintang 5 dari pelanggannya karena produk yang dikirim selalu sesuai foto, pengiriman tepat waktu, dan penjual responsif. Ilustrasi ini paling mencerminkan...",
+    options:["Pentingnya teknologi digital dalam meningkatkan penjualan","Keunggulan sistem rating dalam mengawasi perilaku penjual online","Kepercayaan (amanah) dari pelanggan diraih melalui kejujuran dan pelayanan yang bertanggung jawab secara konsisten","Pentingnya promosi dan iklan untuk menarik pembeli"],
+    answer:2,
+    explanation:"Bab 3 menggunakan ilustrasi toko daring dengan rating bintang sebagai analogi amanah dan kejujuran. Kepercayaan (amanah) tidak datang secara instan — ia harus dibangun melalui kejujuran dan tanggung jawab yang konsisten dalam jangka panjang."
+  },
+  // ── Soal 24 → Jawaban D ──
+  {
+    type:"Penerapan & Analisis",
+    text:"Perhatikan pernyataan berikut!\n(1) Iman meningkat\n(2) Terhindar dari sifat munafik\n(3) Dipercaya banyak orang\n(4) Hidup tenang dan bahagia\n(5) Di akhirat masuk surga\n\nPernyataan di atas merupakan bagian dari manfaat bersikap amanah dan jujur. Manakah yang termasuk manfaat yang bersifat HORIZONTAL (hubungan dengan sesama)?",
+    options:["(1) dan (2)","(2) dan (5)","(1) dan (5)","(3) dan (4)"],
+    answer:3,
+    explanation:"Manfaat horizontal (hubungan dengan sesama) dari sikap amanah dan jujur adalah: (3) Dipercaya banyak orang dan (4) Hidup tenang dan bahagia. Sedangkan (1) iman meningkat, (2) terhindar dari munafik, dan (5) masuk surga bersifat vertikal (hubungan dengan Allah Swt.)."
+  },
+  // ── Soal 25 → Jawaban A ──
+  {
+    type:"Penerapan & Analisis",
+    text:"Rangkuman Bab 3 menyatakan bahwa kepercayaan dari orang lain tidak bisa didapatkan secara instan. Penerapan pernyataan ini dalam kehidupan sehari-hari yang paling tepat adalah...",
+    options:["Membiasakan diri bersikap amanah dan jujur sejak dini, secara konsisten, dan dalam berbagai situasi, karena kepercayaan dibangun dari rekam jejak jangka panjang","Cukup bersikap jujur dan amanah satu atau dua kali di depan orang yang kita inginkan kepercayaannya","Bersikap jujur dan amanah hanya dalam urusan-urusan penting saja","Menunjukkan kejujuran hanya kepada atasan atau orang yang berpengaruh agar cepat dipercaya"],
+    answer:0,
+    explanation:"Bab 3 menegaskan bahwa kepercayaan tidak bisa didapatkan secara instan. Sikap amanah dan jujur harus dimiliki dalam jangka yang cukup lama dan teruji dalam berbagai situasi, sebagaimana Nabi Muhammad saw. yang sudah dikenal jujur sejak remaja."
+  }
+];
+
+// ═══════════════════════════════════════════════════════
+// ALGORITMA ACAK — Fisher-Yates + penjamin tidak ada
+// jawaban berurutan yang sama
+// ═══════════════════════════════════════════════════════
+function shuffleNoAdjacent(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  for (let pass = 0; pass < 500; pass++) {
+    let clean = true;
+    for (let i = 0; i < arr.length - 1; i++) {
+      if (arr[i].answer === arr[i + 1].answer) {
+        clean = false;
+        let swapped = false;
+        for (let k = i + 2; k < arr.length; k++) {
+          const ansK = arr[k].answer;
+          const ansBefore = (i > 0) ? arr[i - 1].answer : -1;
+          const ansAfter = (k < arr.length - 1) ? arr[k + 1].answer : -1;
+          if (ansK !== arr[i].answer && ansK !== ansAfter && ansK !== ansBefore) {
+            [arr[i + 1], arr[k]] = [arr[k], arr[i + 1]];
+            swapped = true; break;
+          }
+        }
+        if (!swapped) {
+          for (let k = i + 2; k < arr.length; k++) {
+            const ansK = arr[k].answer;
+            const ansBefore = (i > 0) ? arr[i - 1].answer : -1;
+            const ansAfterI = arr[i + 1].answer;
+            const ansAfterK = (k < arr.length - 1) ? arr[k + 1].answer : -1;
+            if (ansK !== ansAfterI && ansK !== ansBefore &&
+                arr[i].answer !== ansAfterK && arr[i].answer !== ansBefore) {
+              [arr[i], arr[k]] = [arr[k], arr[i]];
+              swapped = true; break;
+            }
+          }
+        }
+      }
+    }
+    if (clean) break;
+  }
+}
+
+// ═══════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════
+let scoreCorrect = 0;
+let scoreWrong = 0;
+let answered = [];
+
+// ═══════════════════════════════════════════════════════
+// RENDER
+// ═══════════════════════════════════════════════════════
+function typeClass(type) {
+  if (type.includes("Hafalan")) return "t-hafalan";
+  if (type.includes("Pemahaman")) return "t-pemahaman";
+  return "t-penerapan";
+}
+
+function renderAll() {
+  const box = document.getElementById("questions-container");
+  const labels = ["A", "B", "C", "D"];
+  let html = "";
+  questions.forEach((q, i) => {
+    html += `<div class="q-card" id="qcard-${i}" data-type="${q.type}">`;
+    html += `<div class="q-header">
+      <span class="q-type-badge ${typeClass(q.type)}">${q.type}</span>
+      <span class="q-num">Soal ${i + 1} dari ${questions.length}</span>
+    </div>`;
+    html += `<div class="q-text">${q.text}</div>`;
+    if (q.arabic) html += `<div class="q-arabic">${q.arabic}</div>`;
+    html += `<div class="q-options" id="opts-${i}">`;
+    q.options.forEach((opt, j) => {
+      html += `<button class="opt-btn" id="opt-${i}-${j}" onclick="pickAnswer(${i},${j})">
+        <span class="opt-label">${labels[j]}</span>
+        <span>${opt}</span>
+      </button>`;
+    });
+    html += `</div>`;
+    html += `<div class="q-feedback" id="fb-${i}"></div>`;
+    html += `</div>`;
+  });
+  box.innerHTML = html;
+  renderDistBar();
+}
+
+function renderDistBar() {
+  const counts = [0, 0, 0, 0];
+  questions.forEach(q => counts[q.answer]++);
+  const total = questions.length;
+  const colors = ["var(--amber)", "#0284c7", "var(--gold)", "var(--rose)"];
+  let html = "";
+  counts.forEach((c, i) => {
+    html += `<div style="width:${(c / total * 100)}%;background:${colors[i]}"></div>`;
+  });
+  document.getElementById("dist-bar").innerHTML = html;
+}
+
+// ═══════════════════════════════════════════════════════
+// LOGIKA JAWAB
+// ═══════════════════════════════════════════════════════
+function pickAnswer(qi, oi) {
+  if (answered[qi]) return;
+  answered[qi] = true;
+
+  const q = questions[qi];
+  const isCorrect = (oi === q.answer);
+  if (isCorrect) scoreCorrect++; else scoreWrong++;
+
+  const labels = ["A", "B", "C", "D"];
+
+  q.options.forEach((_, j) => {
+    const btn = document.getElementById(`opt-${qi}-${j}`);
+    btn.disabled = true;
+    if (j === q.answer) {
+      btn.classList.add("correct");
+    } else if (j === oi && !isCorrect) {
+      btn.classList.add("wrong");
+    } else {
+      btn.classList.add("dimmed");
+    }
+  });
+
+  const card = document.getElementById(`qcard-${qi}`);
+  card.classList.add(isCorrect ? "answered-correct" : "answered-wrong");
+
+  const fb = document.getElementById(`fb-${qi}`);
+  fb.className = "q-feedback show " + (isCorrect ? "fb-correct" : "fb-wrong");
+  if (isCorrect) {
+    fb.innerHTML = `<strong>✅ Benar! Jawaban kamu tepat.</strong>${q.explanation}`;
+  } else {
+    fb.innerHTML = `<strong>❌ Salah. Jawaban yang benar adalah <u>${labels[q.answer]}</u>.</strong>${q.explanation}`;
+  }
+
+  updateProgress();
+
+  if (answered.every(a => a)) {
+    setTimeout(() => openResult(), 900);
+  }
+}
+
+function updateProgress() {
+  const done = answered.filter(a => a).length;
+  const total = questions.length;
+  const pct = Math.round((done / total) * 100);
+  document.getElementById("prog-label").textContent = `${done} dari ${total} soal dijawab`;
+  document.getElementById("prog-fill").style.width = pct + "%";
+  document.getElementById("chip-g").textContent = "✅ " + scoreCorrect;
+  document.getElementById("chip-r").textContent = "❌ " + scoreWrong;
+}
+
+// ═══════════════════════════════════════════════════════
+// MODAL HASIL
+// ═══════════════════════════════════════════════════════
+function openResult() {
+  if (!answered.every(a => a)) return;
+
+  const nama = document.getElementById("inp-nama").value.trim() || "Peserta";
+  const kelas = document.getElementById("inp-kelas").value.trim();
+  const pct = Math.round((scoreCorrect / questions.length) * 100);
+
+  let emoji, predikat, prColor;
+  if (pct >= 90)      { emoji = "🏆"; predikat = "Sangat Baik (A)"; prColor = "#22c55e"; }
+  else if (pct >= 75) { emoji = "⭐"; predikat = "Baik (B)"; prColor = "#d97706"; }
+  else if (pct >= 60) { emoji = "👍"; predikat = "Cukup (C)"; prColor = "#f59e0b"; }
+  else if (pct >= 40) { emoji = "📚"; predikat = "Kurang (D)"; prColor = "#f97316"; }
+  else                { emoji = "💪"; predikat = "Sangat Kurang (E)"; prColor = "#f43f5e"; }
+
+  let motivasi;
+  if (pct >= 90) {
+    motivasi = `<strong>Masya Allah, luar biasa!</strong> Kamu sudah memahami materi amanah dan kejujuran dengan sangat baik. Kamu mampu membedakan cakupan amanah (kepada Allah, sesama, dan diri sendiri), memahami hubungan amanah dan kejujuran, serta menerapkannya dalam berbagai kasus. Jadilah pribadi berintegritas yang selalu amanah dan jujur — seperti Nabi Muhammad saw. yang bergelar al-Amīn!`;
+  } else if (pct >= 75) {
+    motivasi = `<strong>Hebat sekali!</strong> Pemahaman kamu tentang sifat amanah dan jujur sudah sangat baik. Kamu sudah memahami perbedaan manfaat vertikal dan horizontal, serta mampu menganalisis kasus-kasus penerapan amanah. Masih ada sedikit yang bisa diperbaiki — tinjau kembali soal yang salah dan pahami penjelasannya. Kamu hampir sempurna!`;
+  } else if (pct >= 60) {
+    motivasi = `<strong>Cukup baik!</strong> Kamu sudah memahami dasar-dasar amanah dan kejujuran, tetapi beberapa materi perlu diperdalam. Coba baca kembali penjelasan tentang tiga cakupan amanah, perbedaan manfaat vertikal dan horizontal, serta cara berperilaku jujur di buku paket. Lalu ulangi latihan ini — pasti skor kamu akan naik!`;
+  } else if (pct >= 40) {
+    motivasi = `<strong>Jangan berkecil hati!</strong> Materi Bab 3 memang cukup kompleks karena membahas tiga cakupan amanah sekaligus, dimensi kejujuran, serta manfaat vertikal vs horizontal. Coba pelajari kembali secara perlahan, buat ringkasan sendiri tentang poin-poin penting, lalu kerjakan ulang latihan ini. Kamu pasti bisa lebih baik!`;
+  } else {
+    motivasi = `<strong>Tetap semangat!</strong> Membangun pribadi berintegritas dimulai dari memahami konsep amanah dan kejujuran. Mulai dari membaca ulang materi Bab 3 di buku paket, pahami pengertian amanah secara bahasa dan istilah, pelajari kisah Nabi Muhammad saw. sebagai al-Amīn dan kisah penggembala kambing, lalu coba lagi latihan soal ini. Ingat, kejujuran dalam belajar juga bagian dari amanah kepada diri sendiri! Semangat! 💪`;
+  }
+
+  document.getElementById("r-emoji").textContent = emoji;
+  document.getElementById("r-name").textContent = nama;
+  document.getElementById("r-class").textContent = kelas ? "Kelas " + kelas : "";
+  document.getElementById("r-score").textContent = pct;
+  document.getElementById("r-correct").textContent = scoreCorrect;
+  document.getElementById("r-wrong").textContent = scoreWrong;
+
+  const pr = document.getElementById("r-predikat");
+  pr.textContent = predikat;
+  pr.style.background = prColor + "22";
+  pr.style.color = prColor;
+
+  document.getElementById("r-motivasi").innerHTML = motivasi;
+
+  const confettiBox = document.getElementById("confetti-box");
+  confettiBox.innerHTML = "";
+  if (pct >= 75) {
+    const colors = ["#22c55e", "#f59e0b", "#d97706", "#f43f5e", "#3b82f6", "#a855f7", "#ec4899", "#78350f"];
+    for (let c = 0; c < 50; c++) {
+      const el = document.createElement("div");
+      el.className = "confetti";
+      el.style.left = Math.random() * 100 + "%";
+      el.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+      el.style.animationDelay = (Math.random() * 2) + "s";
+      el.style.animationDuration = (2 + Math.random() * 2.5) + "s";
+      const size = 6 + Math.random() * 6;
+      el.style.width = size + "px";
+      el.style.height = size + "px";
+      el.style.borderRadius = Math.random() > 0.5 ? "50%" : "2px";
+      confettiBox.appendChild(el);
+    }
+  }
+
+  document.getElementById("result-overlay").classList.add("show");
+}
+
+function closeResult() {
+  document.getElementById("result-overlay").classList.remove("show");
+  document.getElementById("btn-show-result").style.display = "block";
+}
+
+function restart() {
+  scoreCorrect = 0;
+  scoreWrong = 0;
+  document.getElementById("inp-nama").value = "";
+  document.getElementById("inp-kelas").value = "";
+  document.getElementById("result-overlay").classList.remove("show");
+  document.getElementById("btn-show-result").style.display = "none";
+
+  shuffleNoAdjacent(questions);
+  answered = new Array(questions.length).fill(false);
+
+  updateProgress();
+  renderAll();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+// ═══════════════════════════════════════════════════════
+// INISIALISASI
+// ═══════════════════════════════════════════════════════
+shuffleNoAdjacent(questions);
+answered = new Array(questions.length).fill(false);
+renderAll();
+updateProgress();
+</script>
+
+  <footer class="main-footer">
+    <div class="footer-container">
+        <div class="footer-left">
+            <select onchange="location = this.value;">
+                <option value="">Pindah ke...</option>
+                <option value="index.html">🏠 Beranda Utama</option>
+                <option value="bab1.html">Bab 1</option>
+                <option value="bab2.html">Bab 2</option>
+                <option value="bab3.html">Bab 3</option>
+                <option value="bab4.html">Bab 4</option>
+                <option value="bab5.html">Bab 5</option>
+                <option value="bab6.html">Bab 6</option>
+                <option value="bab7.html">Bab 7</option>
+                <option value="bab8.html">Bab 8</option>
+                <option value="bab9.html">Bab 9</option>
+                <option value="bab10.html">Bab 10</option>
+            </select>
+        </div>
+        <div class="footer-right">
+            <p>Copyright 2026 by @just.muhammad</p>
+        </div>
+    </div>
+</footer>
+</body>
+</html>
+
