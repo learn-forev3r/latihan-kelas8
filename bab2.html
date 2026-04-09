@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Latihan Soal – Bab 2 PAI Kelas VIII</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --indigo:    #4f46e5;
+    --indigo-dk: #3730a3;
+    --indigo-lt: #eef2ff;
+    --gold:      #f59e0b;
+    --rose:      #f43f5e;
+    --green:     #22c55e;
+    --ink:       #1e293b;
+    --muted:     #64748b;
+    --card:      #ffffff;
+    --bg:        #f5f3ff;
+    --radius:    16px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;}
+
+  header{
+    background:linear-gradient(135deg,#312e81 0%,#4f46e5 60%,#7c3aed 100%);
+    color:#fff;padding:28px 24px 24px;text-align:center;
+    position:relative;overflow:hidden;
+  }
+  header::before{
+    content:'';position:absolute;inset:0;
+    background:url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M0 0h40v40H0zm40 40h40v40H40z'/%3E%3C/g%3E%3C/svg%3E");
+  }
+  .badge{
+    display:inline-block;background:rgba(255,255,255,.15);
+    border:1px solid rgba(255,255,255,.3);border-radius:99px;
+    font-size:12px;font-weight:700;letter-spacing:1px;
+    text-transform:uppercase;padding:4px 14px;margin-bottom:10px;
+  }
+  header h1{font-size:clamp(16px,4vw,24px);font-weight:900;line-height:1.3;position:relative;}
+  header p{font-size:14px;opacity:.8;margin-top:6px;position:relative;}
+  .shuffle-note{font-size:11px;opacity:.6;margin-top:2px;font-style:italic;}
+
+  .container{max-width:760px;margin:0 auto;padding:0 16px 40px;}
+
+  .identity-card{
+    background:var(--card);border-radius:var(--radius);
+    box-shadow:0 4px 24px rgba(0,0,0,.08);
+    padding:24px;margin-top:-20px;position:relative;z-index:2;
+  }
+  .identity-card h2{font-size:18px;font-weight:900;color:var(--indigo-dk);margin-bottom:4px;}
+  .identity-card .sub{font-size:13px;color:var(--muted);margin-bottom:16px;}
+  .input-row{display:flex;gap:12px;flex-wrap:wrap;}
+  .input-group{flex:1;min-width:200px;}
+  .input-group label{
+    display:block;font-size:12px;font-weight:800;
+    color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;
+  }
+  .input-group input{
+    width:100%;padding:11px 14px;border:2px solid #e2e8f0;
+    border-radius:10px;font-family:'Nunito',sans-serif;
+    font-size:15px;font-weight:600;color:var(--ink);
+    transition:border-color .2s;background:#f8fafc;
+  }
+  .input-group input:focus{
+    outline:none;border-color:var(--indigo);background:#fff;
+    box-shadow:0 0 0 3px rgba(79,70,229,.12);
+  }
+  .input-group input::placeholder{color:#94a3b8;font-weight:600;}
+
+  .progress-sticky{
+    position:sticky;top:0;z-index:10;
+    background:rgba(245,243,255,.92);backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+    padding:14px 0 10px;margin-top:20px;
+    border-bottom:1px solid rgba(79,70,229,.1);
+  }
+  .prog-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+  .prog-label{font-size:13px;font-weight:800;color:var(--muted);}
+  .prog-chips{display:flex;gap:6px;}
+  .prog-chip{font-size:12px;font-weight:800;padding:3px 10px;border-radius:99px;}
+  .prog-chip.cg{background:#f0fdf4;color:var(--green);}
+  .prog-chip.cr{background:#fff1f2;color:var(--rose);}
+  .prog-bar{height:8px;background:#ddd6fe;border-radius:99px;overflow:hidden;}
+  .prog-fill{
+    height:100%;border-radius:99px;
+    background:linear-gradient(90deg,var(--indigo),var(--gold));
+    transition:width .5s cubic-bezier(.4,0,.2,1);
+  }
+  .show-result-btn{
+    display:none;margin-top:8px;
+    padding:8px 16px;border-radius:8px;
+    background:var(--indigo);color:#fff;
+    font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;
+    border:none;cursor:pointer;transition:all .2s;
+  }
+  .show-result-btn:hover{background:var(--indigo-dk);}
+
+  .q-card{
+    background:var(--card);border-radius:var(--radius);
+    box-shadow:0 2px 16px rgba(0,0,0,.06);
+    margin-top:16px;padding:22px 24px;
+    border-left:4px solid var(--indigo);
+  }
+  .q-card[data-type="Pemahaman"]{border-left-color:#0284c7;}
+  .q-card[data-type="Penerapan & Analisis"]{border-left-color:var(--gold);}
+  .q-card.answered-correct{border-left-color:var(--green);}
+  .q-card.answered-wrong{border-left-color:var(--rose);}
+
+  .q-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-wrap:wrap;gap:6px;}
+  .q-type-badge{
+    font-size:10px;font-weight:800;letter-spacing:.8px;
+    text-transform:uppercase;padding:3px 10px;border-radius:6px;
+  }
+  .q-type-badge.t-hafalan{background:var(--indigo-lt);color:var(--indigo-dk);}
+  .q-type-badge.t-pemahaman{background:#e0f2fe;color:#0369a1;}
+  .q-type-badge.t-penerapan{background:#fef3c7;color:#92400e;}
+  .q-num{font-size:12px;font-weight:700;color:var(--muted);}
+  .q-text{font-size:15px;font-weight:700;line-height:1.65;white-space:pre-line;margin-bottom:16px;}
+  .q-arabic{
+    font-family:'Amiri',serif;font-size:22px;direction:rtl;text-align:right;
+    line-height:2.2;color:var(--indigo-dk);background:var(--indigo-lt);
+    border-radius:10px;padding:12px 18px;margin-bottom:16px;
+  }
+
+  .q-options{display:flex;flex-direction:column;gap:8px;}
+  .opt-btn{
+    display:flex;align-items:flex-start;gap:12px;
+    background:#f8fafc;border:2px solid #e2e8f0;border-radius:10px;
+    padding:11px 14px;cursor:pointer;
+    font-family:'Nunito',sans-serif;font-size:14px;font-weight:600;
+    text-align:left;transition:all .2s;width:100%;
+  }
+  .opt-btn:hover:not(:disabled){border-color:var(--indigo);background:var(--indigo-lt);transform:translateX(3px);}
+  .opt-label{
+    min-width:26px;height:26px;background:#e2e8f0;border-radius:7px;
+    display:flex;align-items:center;justify-content:center;
+    font-size:12px;font-weight:800;color:var(--muted);flex-shrink:0;transition:all .2s;
+  }
+  .opt-btn.correct{border-color:var(--green);background:#f0fdf4;}
+  .opt-btn.correct .opt-label{background:var(--green);color:#fff;}
+  .opt-btn.wrong{border-color:var(--rose);background:#fff1f2;}
+  .opt-btn.wrong .opt-label{background:var(--rose);color:#fff;}
+  .opt-btn.dimmed{opacity:.5;}
+  .opt-btn:disabled{cursor:default;}
+
+  .q-feedback{
+    display:none;margin-top:14px;border-radius:10px;
+    padding:12px 16px;font-size:13px;line-height:1.65;
+  }
+  .q-feedback.show{display:block;animation:slideUp .3s ease;}
+  .q-feedback.fb-correct{background:#f0fdf4;border-left:4px solid var(--green);}
+  .q-feedback.fb-wrong{background:#fff1f2;border-left:4px solid var(--rose);}
+  .q-feedback strong{display:block;font-size:14px;margin-bottom:3px;}
+  @keyframes slideUp{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
+
+  .result-overlay{
+    display:none;position:fixed;inset:0;z-index:100;
+    background:rgba(15,23,42,.6);backdrop-filter:blur(6px);
+    -webkit-backdrop-filter:blur(6px);
+    justify-content:center;align-items:center;padding:20px;
+  }
+  .result-overlay.show{display:flex;animation:fadeIn .4s ease;}
+  @keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+
+  .result-modal{
+    background:var(--card);border-radius:20px;
+    box-shadow:0 24px 64px rgba(0,0,0,.2);
+    max-width:480px;width:100%;padding:36px 28px;
+    text-align:center;position:relative;overflow:hidden;
+    animation:modalPop .4s cubic-bezier(.2,.8,.3,1.2);
+  }
+  @keyframes modalPop{from{opacity:0;transform:scale(.85) translateY(30px);}to{opacity:1;transform:none;}}
+
+  .result-modal .confetti-container{position:absolute;inset:0;pointer-events:none;overflow:hidden;}
+  .confetti{position:absolute;top:-10px;opacity:0;animation:confettiFall linear forwards;}
+  @keyframes confettiFall{
+    0%{opacity:1;transform:translateY(0) rotate(0deg) scale(1);}
+    80%{opacity:1;}
+    100%{opacity:0;transform:translateY(420px) rotate(720deg) scale(.5);}
+  }
+
+  .r-emoji{font-size:56px;position:relative;}
+  .r-greeting{font-size:14px;color:var(--muted);margin-top:12px;font-weight:700;}
+  .r-name{font-size:24px;font-weight:900;color:var(--ink);margin:4px 0 0;}
+  .r-class{font-size:13px;color:var(--indigo);font-weight:700;margin-bottom:20px;}
+  .r-score-wrap{background:var(--bg);border-radius:14px;padding:20px;margin-bottom:20px;}
+  .r-score-label{font-size:12px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;}
+  .r-score{font-size:52px;font-weight:900;color:var(--indigo);line-height:1.1;}
+  .r-score span{font-size:20px;font-weight:700;color:var(--muted);}
+  .r-stats{display:flex;gap:10px;justify-content:center;margin-top:14px;}
+  .r-stat{background:#fff;border-radius:10px;padding:10px 16px;font-size:12px;font-weight:700;color:var(--muted);}
+  .r-stat b{display:block;font-size:20px;font-weight:900;}
+  .r-stat.sg b{color:var(--green);}
+  .r-stat.sr b{color:var(--rose);}
+
+  .r-predikat{display:inline-block;padding:6px 20px;border-radius:99px;font-weight:800;font-size:14px;margin-bottom:16px;}
+  .r-motivasi{
+    font-size:14px;line-height:1.7;color:var(--muted);
+    background:#f8fafc;border-radius:12px;padding:14px 18px;
+    margin-bottom:24px;text-align:left;
+  }
+  .r-motivasi strong{color:var(--ink);}
+
+  .r-btns{display:flex;flex-direction:column;gap:10px;}
+  .btn{
+    padding:13px 24px;border-radius:12px;font-family:'Nunito',sans-serif;
+    font-size:15px;font-weight:800;border:none;cursor:pointer;transition:all .2s;
+  }
+  .btn-primary{background:var(--indigo);color:#fff;box-shadow:0 4px 12px rgba(79,70,229,.3);}
+  .btn-primary:hover{background:var(--indigo-dk);transform:translateY(-2px);}
+  .btn-outline{background:transparent;color:var(--muted);border:2px solid #e2e8f0;}
+  .btn-outline:hover{border-color:var(--indigo);color:var(--indigo);}
+
+  .dist-bar{
+    display:flex;height:6px;border-radius:99px;overflow:hidden;
+    margin-top:20px;gap:2px;
+  }
+  .dist-bar div{height:100%;border-radius:99px;transition:width .4s;}
+  .dist-legend{
+    display:flex;justify-content:center;gap:16px;margin-top:6px;
+    font-size:11px;font-weight:800;color:var(--muted);
+  }
+  .dist-legend span{display:flex;align-items:center;gap:3px;}
+  .dist-legend i{width:8px;height:8px;border-radius:50%;display:inline-block;}
+
+  @media(max-width:500px){
+    .q-card{padding:16px 14px;}
+    .opt-btn{padding:10px 12px;font-size:13px;}
+    .result-modal{padding:28px 20px;}
+    .r-score{font-size:42px;}
+    .identity-card{padding:18px 16px;}
+  }
+
+  /* --- PERBAIKAN FOOTER BY MENTOR --- */
+.main-footer {
+    background-color: #1e293b !important; /* Warna gelap modern */
+    color: white !important;
+    padding: 12px 0 !important;
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    z-index: 9999 !important; /* Supaya tidak tertutup elemen soal */
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.2);
+    font-family: 'Nunito', sans-serif;
+}
+
+.footer-container {
+    display: flex !important;
+    /* Baris di bawah ini adalah kuncinya! */
+    justify-content: space-between !important; 
+    align-items: center !important;
+    max-width: 1000px;
+    margin: 0 auto !important;
+    padding: 0 20px !important;
+}
+
+.footer-left select {
+    padding: 6px 10px !important;
+    border-radius: 8px !important;
+    border: 1px solid #475569 !important;
+    background: #334155 !important;
+    color: white !important;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.footer-right p {
+    margin: 0 !important;
+    font-size: 13px !important;
+    text-align: right !important; /* Memastikan teks rata kanan */
+    white-space: nowrap; /* Mencegah teks turun ke bawah/terpotong */
+}
+
+/* Supaya konten soal paling bawah tidak tertutup footer */
+body {
+    padding-bottom: 70px !important;
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="badge">PAI & Budi Pekerti · SMP Kelas VIII</div>
+  <h1>📚 Latihan Soal Bab 2<br>Meyakini Kitab-Kitab Allah: Menjadi Generasi Pecinta Al-Qur'an yang Toleran</h1>
+  <p>25 soal pilihan ganda · 4 pilihan jawaban</p>
+  <p class="shuffle-note">🔄 Urutan soal diacak setiap kali membuka halaman</p>
+</header>
+
+<div class="container">
+  <section class="identity-card">
+    <h2>📝 Data Peserta</h2>
+    <p class="sub">Isi nama dan kelas sebelum mengerjakan soal</p>
+    <div class="input-row">
+      <div class="input-group">
+        <label for="inp-nama">Nama Lengkap</label>
+        <input type="text" id="inp-nama" placeholder="Masukkan nama lengkap...">
+      </div>
+      <div class="input-group">
+        <label for="inp-kelas">Kelas</label>
+        <input type="text" id="inp-kelas" placeholder="Contoh: VIII-A">
+      </div>
+    </div>
+  </section>
+
+  <div class="progress-sticky">
+    <div class="prog-top">
+      <span class="prog-label" id="prog-label">0 dari 25 soal dijawab</span>
+      <div class="prog-chips">
+        <span class="prog-chip cg" id="chip-g">✅ 0</span>
+        <span class="prog-chip cr" id="chip-r">❌ 0</span>
+      </div>
+    </div>
+    <div class="prog-bar"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
+    <button class="show-result-btn" id="btn-show-result" onclick="openResult()">🎉 Lihat Hasil</button>
+  </div>
+
+  <div id="questions-container"></div>
+
+  <div style="margin-top:24px;">
+    <div class="dist-bar" id="dist-bar"></div>
+    <div class="dist-legend">
+      <span><i style="background:var(--indigo)"></i>A</span>
+      <span><i style="background:#0284c7"></i>B</span>
+      <span><i style="background:var(--gold)"></i>C</span>
+      <span><i style="background:var(--rose)"></i>D</span>
+    </div>
+  </div>
+</div>
+
+<div class="result-overlay" id="result-overlay">
+  <div class="result-modal">
+    <div class="confetti-container" id="confetti-box"></div>
+    <div class="r-emoji" id="r-emoji"></div>
+    <div class="r-greeting">Selamat!</div>
+    <div class="r-name" id="r-name"></div>
+    <div class="r-class" id="r-class"></div>
+    <div class="r-score-wrap">
+      <div class="r-score-label">Skor Kamu</div>
+      <div class="r-score"><span id="r-score"></span><span>/100</span></div>
+      <div class="r-stats">
+        <div class="r-stat sg"><b id="r-correct">0</b>Benar</div>
+        <div class="r-stat sr"><b id="r-wrong">0</b>Salah</div>
+      </div>
+    </div>
+    <div class="r-predikat" id="r-predikat"></div>
+    <div class="r-motivasi" id="r-motivasi"></div>
+    <div class="r-btns">
+      <button class="btn btn-outline" onclick="closeResult()">Tinjau Jawaban Saya</button>
+      <button class="btn btn-primary" onclick="restart()">🔁 Ulangi Latihan</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════
+// DATA SOAL — kunci jawaban diseimbangkan:
+// Pola berulang A,B,C,D → A=7, B=6, C=6, D=6
+// Tidak ada dua soal berurutan jawabannya sama
+// ═══════════════════════════════════════════════════════
+const questions = [
+  // ── Soal 1 → Jawaban A ──
+  {
+    type:"Hafalan & Ingatan",
+    text:"Iman kepada kitab-kitab Allah termasuk rukun iman yang ke...",
+    options:["Ketiga","Kedua","Keempat","Kelima"],
+    answer:0,
+    explanation:"Iman kepada kitab-kitab Allah adalah rukun iman yang ketiga dari enam rukun iman. Urutan enam rukun iman: (1) Iman kepada Allah, (2) Malaikat, (3) Kitab-kitab Allah, (4) Rasul, (5) Hari Akhir, (6) Qada dan Qadar."
+  },
+  // ── Soal 2 → Jawaban B ──
+  {
+    type:"Hafalan & Ingatan",
+    text:"Kitab Taurat diturunkan oleh Allah Swt. kepada nabi...",
+    options:["Nabi Daud a.s.","Nabi Musa a.s.","Nabi Isa a.s.","Nabi Ibrahim a.s."],
+    answer:1,
+    explanation:"Kitab Taurat diturunkan oleh Allah Swt. kepada Nabi Musa a.s. Allah berfirman di dalam Q.S. al-Maidah/5:44 bahwa kitab Taurat merupakan petunjuk bagi Nabi Musa a.s. dan nabi-nabi dari Bani Israil sesudahnya."
+  },
+  // ── Soal 3 → Jawaban C ──
+  {
+    type:"Hafalan & Ingatan",
+    text:"Kitab Zabur diturunkan kepada Nabi Daud a.s. Menurut Imam Qurtubi, kitab Zabur terdiri dari 150 surah yang berisi...",
+    options:["Hukum-hukum perkara dan syariat baru","Kabar gembira tentang kedatangan nabi terakhir","Nasihat, hikmah, pujian, dan sanjungan kepada Allah Swt.","Peraturan tentang hari Sabat dan ibadah"],
+    answer:2,
+    explanation:"Menurut Imam Qurtubi (dikutip dalam Tafsir Quran Kemenag), kitab Zabur tidak berisi hukum-hukum perkara seperti Taurat. Kitab Zabur terdiri dari 150 surah yang berisi nasihat-nasihat, hikmah, pujian, dan sanjungan kepada Allah Swt."
+  },
+  // ── Soal 4 → Jawaban D ──
+  {
+    type:"Hafalan & Ingatan",
+    text:"Kitab Injil diturunkan kepada Nabi Isa a.s. dengan tujuan utama untuk...",
+    options:["Menggantikan seluruh syariat Taurat secara total","Memberikan syariat baru yang berlaku sepanjang masa bagi semua umat","Mengatur tata cara ibadah umat Nasrani secara khusus","Menyempurnakan isi Taurat dan memberitakan kedatangan nabi terakhir"],
+    answer:3,
+    explanation:"Kitab Injil diturunkan kepada Nabi Isa a.s. untuk menyempurnakan isi Taurat yang telah berakhir masa berlakunya, serta membenarkan Taurat. Kitab Injil juga berisi pengajaran baru, di antaranya berita tentang akan munculnya nabi penutup dan rasul terakhir, yaitu Nabi Muhammad saw."
+  },
+  // ── Soal 5 → Jawaban A ──
+  {
+    type:"Hafalan & Ingatan",
+    text:"Perbedaan antara 'kitab' dan 'suhuf' dalam ajaran Islam adalah...",
+    options:["Kitab adalah wahyu yang dibukukan menjadi satu kumpulan utuh, suhuf berbentuk lembaran terpisah","Kitab diturunkan lewat Malaikat Jibril, suhuf langsung dari Allah tanpa perantara","Kitab berisi hukum syariat, suhuf hanya berisi doa dan pujian","Kitab hanya untuk nabi rasul, suhuf untuk nabi yang bukan rasul"],
+    answer:0,
+    explanation:"Kitab adalah wahyu Allah yang disampaikan kepada para rasul dan dibukukan dalam satu kumpulan utuh. Sementara suhuf adalah wahyu Allah yang disampaikan kepada para rasul tetapi masih berbentuk lembaran-lembaran yang terpisah. Contoh suhuf: Suhuf Musa dan Suhuf Ibrahim."
+  },
+  // ── Soal 6 → Jawaban B ──
+  {
+    type:"Hafalan & Ingatan",
+    text:"Suhuf yang disebutkan dalam Al-Qur'an dan hadis adalah suhuf yang diturunkan kepada...",
+    options:["Nabi Adam a.s. dan Nabi Nuh a.s.","Nabi Ibrahim a.s. dan Nabi Musa a.s.","Nabi Idris a.s. dan Nabi Yunus a.s.","Nabi Ismail a.s. dan Nabi Yakub a.s."],
+    answer:1,
+    explanation:"Suhuf yang disebutkan dalam Al-Qur'an dan hadis adalah Suhuf Ibrahim dan Suhuf Musa. Lembaran-lembaran suhuf ini sudah hilang dan tidak diketahui isinya secara lengkap. Namun sebagian isinya ada yang diceritakan di dalam Al-Qur'an, misalnya di Q.S. an-Najm/53:36-41."
+  },
+  // ── Soal 7 → Jawaban C ──
+  {
+    type:"Hafalan & Ingatan",
+    text:"Kata kunci (tema utama) Bab 2 yang menjadi fokus pembelajaran adalah...",
+    options:["Tauhid, Syariat, dan Akhlak","Membaca, Menghafal, dan Mengamalkan Al-Qur'an","Iman kepada Kitab, Generasi Pecinta Al-Qur'an, dan Generasi Toleran","Al-Qur'an, Hadis, dan Ijtihad"],
+    answer:2,
+    explanation:"Kata kunci (Titik Fokus) Bab 2 adalah 'Iman kepada Kitab, Generasi Pecinta Al-Qur'an, dan Generasi Toleran.' Ketiganya merangkum tiga sub-materi utama bab ini: pengertian iman kepada kitab, cara mencintai Al-Qur'an, dan membangun hubungan baik dengan penganut kitab lain."
+  },
+  // ── Soal 8 → Jawaban D ──
+  {
+    type:"Hafalan & Ingatan",
+    text:"Tangga tertinggi dalam mencintai Al-Qur'an menurut buku ini adalah...",
+    options:["Membaca Al-Qur'an dengan fasih dan tartil setiap hari","Menghafal Al-Qur'an sebanyak-banyaknya","Menadaburi (merenungkan) makna Al-Qur'an","Mengamalkan isi kandungan Al-Qur'an dalam kehidupan sehari-hari"],
+    answer:3,
+    explanation:"Buku ini menggambarkan empat tangga mencintai Al-Qur'an (dari bawah ke atas): Membaca → Memahami → Menadaburi → Mengamalkan. Tangga tertinggi (puncak cinta Al-Qur'an) adalah mengamalkan isi kandungannya dalam kehidupan sehari-hari, yang akan melahirkan akhlak mulia."
+  },
+  // ── Soal 9 → Jawaban A ──
+  {
+    type:"Pemahaman",
+    text:"Secara istilah, pengertian iman kepada kitab Allah yang paling tepat adalah...",
+    options:["Membenarkan dengan hati, mengikrarkan dengan lisan, dan membuktikan dengan perbuatan bahwa Allah mempunyai kitab-kitab yang diturunkan kepada para rasul-Nya","Membaca dan menghafal semua kitab suci yang ada di dunia","Meyakini bahwa hanya Al-Qur'an yang benar dan kitab-kitab lain sudah tidak berlaku","Menghormati semua agama dan kitab sucinya tanpa perlu meyakininya"],
+    answer:0,
+    explanation:"Iman secara istilah berarti membenarkan dengan hati (al-iqrār), mengikrarkan dengan lisan, dan membuktikan dengan perbuatan. Iman kepada kitab Allah berarti membenarkan bahwa Allah Swt. mempunyai kitab-kitab yang diturunkan kepada para rasul-Nya sebagai cahaya dan petunjuk bagi manusia."
+  },
+  // ── Soal 10 → Jawaban B ──
+  {
+    type:"Pemahaman",
+    text:"Perbedaan iman secara ijmali dan iman secara tafsili terhadap kitab-kitab Allah adalah...",
+    options:["Ijmali hanya untuk orang awam, tafsili hanya untuk ulama","Ijmali berarti meyakini secara global tanpa harus tahu nama dan rasul penerimanya; tafsili berarti meyakini secara terperinci termasuk nama kitab dan rasul penerimanya","Ijmali berarti mengimani Al-Qur'an saja, tafsili mengimani semua kitab","Ijmali adalah iman yang lemah, tafsili adalah iman yang kuat"],
+    answer:1,
+    explanation:"Iman ijmali (global) artinya meyakini bahwa Allah Swt. telah menurunkan kitab-kitab kepada para rasul-Nya tanpa harus mengetahui nama kitab dan rasul penerimanya. Sedangkan iman tafsili (terperinci) adalah mengimani penjelasan Al-Qur'an dan hadis yang menyebutkan kitab-kitab Allah secara spesifik."
+  },
+  // ── Soal 11 → Jawaban C ──
+  {
+    type:"Pemahaman",
+    text:"Makna 'beriman kepada kitab terdahulu' (Taurat, Zabur, Injil) bagi seorang muslim adalah...",
+    options:["Meyakini dan mengamalkan semua isi kandungan kitab-kitab tersebut","Menolak semua isi kitab terdahulu karena sudah tidak valid","Hanya meyakini isi kandungan yang sesuai dengan Al-Qur'an, karena kandungan yang berbeda hanya berlaku pada zamannya dan sudah dihapus oleh Al-Qur'an","Menggunakan kitab terdahulu sebagai pelengkap Al-Qur'an"],
+    answer:2,
+    explanation:"Beriman kepada kitab terdahulu bukan berarti meyakini semua isi kandungannya, melainkan hanya meyakini isi kandungan yang sesuai dengan Al-Qur'an saja. Kandungan yang tidak sesuai dengan Al-Qur'an tidak berarti salah — kandungan itu tetap benar tetapi hanya berlaku pada zamannya dan sudah dihapus (mansukh) dengan diturunkannya Al-Qur'an."
+  },
+  // ── Soal 12 → Jawaban D ──
+  {
+    type:"Pemahaman",
+    text:"Al-Qur'an berbeda dari kitab-kitab sebelumnya dalam hal sejarah penulisannya. Yang tepat menggambarkan keistimewaan Al-Qur'an adalah...",
+    options:["Al-Qur'an ditulis setelah Nabi Muhammad saw. meninggal oleh para sahabat","Al-Qur'an baru dibukukan pada zaman Khalifah Utsman bin Affan dan sebelumnya tidak ada catatan tertulis","Al-Qur'an diturunkan sekaligus dalam satu malam, berbeda dengan kitab lain yang berangsur-angsur","Al-Qur'an sudah ditulis sejak awal pewahyuan dengan ketelitian sangat ketat, sehingga Al-Qur'an yang dibaca sekarang sama persis dengan yang dibaca Nabi dan para sahabat 14 abad lalu"],
+    answer:3,
+    explanation:"Al-Qur'an memiliki sejarah yang berbeda dari kitab-kitab sebelumnya. Al-Qur'an sudah ditulis sejak awal pewahyuan. Setelah Nabi Muhammad saw. meninggal, Al-Qur'an segera dibukukan dengan ketelitian yang sangat ketat. Karena itu, keaslian Al-Qur'an tetap terjaga. Al-Qur'an yang dibaca sekarang sama persis dengan yang dibaca Nabi Muhammad saw. dan para sahabatnya 14 abad yang lalu."
+  },
+  // ── Soal 13 → Jawaban A ──
+  {
+    type:"Pemahaman",
+    text:"Empat tangga mencintai Al-Qur'an yang disebutkan dalam Bab 2 secara berurutan dari dasar hingga puncak adalah...",
+    options:["Membaca → Memahami → Menadaburi → Mengamalkan","Menghafal → Membaca → Memahami → Menadaburi","Memahami → Membaca → Mengamalkan → Menadaburi","Membaca → Menghafal → Menadaburi → Mengamalkan"],
+    answer:0,
+    explanation:"Buku ini menggambarkan empat tangga mencintai Al-Qur'an secara berurutan: (1) Membaca — tangga pertama dan syarat utama; (2) Memahami — mengetahui arti dan kandungannya; (3) Menadaburi — merenungkan maknanya; (4) Mengamalkan — puncak tertinggi, yaitu mewujudkannya dalam perilaku sehari-hari."
+  },
+  // ── Soal 14 → Jawaban B ──
+  {
+    type:"Pemahaman",
+    text:"Menurut hadis yang diriwayatkan Imam Ahmad, ketika sahabat Hisyam bertanya tentang akhlak Rasulullah, Aisyah r.a. menjawab...",
+    options:["Akhlak Rasulullah adalah selalu bersedekah dan berpuasa","Akhlak Rasulullah adalah Al-Qur'an","Akhlak Rasulullah adalah ramah kepada semua manusia","Akhlak Rasulullah adalah sabar dan tawakal"],
+    answer:1,
+    explanation:"Dalam hadis yang diriwayatkan Imam Ahmad, sahabat Saad bin Hisyam bin Amir r.a. bertanya kepada Aisyah r.a. tentang akhlak Rasulullah. Aisyah menjawab: 'Bukankah engkau sering membaca Al-Qur'an?' Setelah Hisyam menjawab 'Ya', Aisyah berkata: 'Akhlak Rasulullah adalah Al-Qur'an.'"
+  },
+  // ── Soal 15 → Jawaban C ──
+  {
+    type:"Pemahaman",
+    text:"Dalam Al-Qur'an, umat yang beriman kepada kitab terdahulu (Yahudi dan Nasrani) disebut dengan istilah...",
+    options:["Ahlul Haq","Ahlul Sunnah","Ahlul Kitab","Ahlul Bayt"],
+    answer:2,
+    explanation:"Di dalam Al-Qur'an, umat yang beriman kepada kitab terdahulu disebut dengan 'ahli kitab' (ahlul kitab). Mereka disebut demikian karena keyakinan mereka terhadap kitab-kitab yang diturunkan kepada para rasul terdahulu."
+  },
+  // ── Soal 16 → Jawaban D ──
+  {
+    type:"Pemahaman",
+    text:"Piagam Madinah yang dibuat oleh Nabi Muhammad saw. mencerminkan sikap Nabi terhadap kaum Yahudi dan Nasrani, yaitu...",
+    options:["Memisahkan umat Islam dari kaum Yahudi dan Nasrani secara total","Memaksa kaum Yahudi dan Nasrani untuk masuk Islam","Mengizinkan kaum Yahudi tinggal di Madinah asal membayar jizyah","Membangun kota Madinah bersama-sama dengan memberikan hak dan kewajiban yang sama kepada semua penduduk"],
+    answer:3,
+    explanation:"Pada masa Nabi Muhammad saw., Nabi membangun hubungan baik dengan kaum ahli kitab. Nabi mengajak mereka membangun Kota Madinah bersama-sama. Bersama umat Islam dan penduduk kota lainnya, mereka menyepakati Piagam Madinah. Sebagai pemimpin, Nabi memberikan hak dan kewajiban yang sama kepada semua penduduk tanpa membedakan agama."
+  },
+  // ── Soal 17 → Jawaban A ──
+  {
+    type:"Pemahaman",
+    text:"Cara membangun hubungan harmonis dengan umat yang beriman kepada kitab terdahulu menurut buku ini adalah...",
+    options:["Mencari titik temu persamaan, saling menghargai perbedaan, saling menghormati, dan bekerjasama membangun masyarakat","Menonjolkan perbedaan agar masing-masing umat lebih waspada","Menghindari interaksi dengan penganut agama lain demi menjaga kemurnian iman","Mendebat keyakinan mereka agar mereka menyadari kebenaran Islam"],
+    answer:0,
+    explanation:"Hubungan yang harmonis dibangun atas dasar kesadaran untuk saling menghargai dan menghormati. Bukan dengan menonjolkan perbedaan, melainkan mencari titik temu persamaan. Hubungan harmonis itu terwujud dalam perilaku saling menghargai perbedaan, saling menghormati, serta saling bekerjasama dan berkolaborasi dalam membangun masyarakat."
+  },
+  // ── Soal 18 → Jawaban B ──
+  {
+    type:"Pemahaman",
+    text:"Q.S. al-Baqarah/2:2-4 yang dikutip dalam Bab 2 menjelaskan bahwa orang yang beriman kepada Al-Qur'an memiliki ciri-ciri, antara lain...",
+    options:["Selalu berpuasa, berzakat, dan berhaji ke Mekkah","Beriman kepada yang gaib, mendirikan shalat, menginfakkan rezeki, dan beriman kepada kitab-kitab yang diturunkan sebelumnya","Menghafal Al-Qur'an dan mengajarkannya kepada orang lain","Menolak semua budaya dan pengaruh yang bertentangan dengan Islam"],
+    answer:1,
+    explanation:"Q.S. al-Baqarah/2:2-4 menyebutkan ciri-ciri orang yang bertakwa dan beriman kepada Al-Qur'an: mereka beriman kepada yang gaib, mendirikan shalat, menginfakkan sebagian rezeki, beriman kepada (Al-Qur'an) yang diturunkan kepada Nabi Muhammad saw. dan (kitab-kitab) yang diturunkan sebelumnya, serta yakin akan adanya akhirat."
+  },
+  // ── Soal 19 → Jawaban C ──
+  {
+    type:"Penerapan & Analisis",
+    text:"Komunitas Laskar Berani Hijrah (LBH) di Depok mengajak anak-anak jalanan belajar mengaji dan menghafal Al-Qur'an. Dampak yang dihasilkan adalah perubahan perilaku mereka menjadi lebih baik. Kisah ini paling mencerminkan...",
+    options:["Pentingnya program pemerintah untuk mengatasi kemiskinan","Bahwa pendidikan formal lebih efektif daripada pendidikan nonformal","Kekuatan Al-Qur'an sebagai petunjuk yang mampu mengubah kehidupan seseorang menjadi lebih baik","Pentingnya menghafal Al-Qur'an untuk mendapatkan pekerjaan yang layak"],
+    answer:2,
+    explanation:"Kisah LBH Depok dalam rubrik 'Mari Bertafakur' Bab 2 menunjukkan kekuatan Al-Qur'an sebagai kitab petunjuk. Anak-anak punk yang belajar mengaji dan menghafal Al-Qur'an mengalami perubahan nyata dalam kehidupan — tampilan, perilaku, dan masa depan mereka."
+  },
+  // ── Soal 20 → Jawaban D ──
+  {
+    type:"Penerapan & Analisis",
+    text:"Amir rajin membaca Al-Qur'an setiap hari tetapi perilakunya masih sering berbohong dan tidak menghormati orang tua. Berdasarkan materi Bab 2, apa yang perlu diperbaiki Amir?",
+    options:["Amir perlu menambah jumlah bacaan Al-Qur'annya setiap hari","Amir cukup menghafal Al-Qur'an agar mendapat syafaat di akhirat","Amir tidak perlu khawatir karena membaca Al-Qur'an saja sudah cukup sebagai bukti iman","Amir perlu naik ke tangga berikutnya: dari sekadar membaca menuju memahami, menadaburi, dan mengamalkan Al-Qur'an"],
+    answer:3,
+    explanation:"Bab 2 menjelaskan bahwa membaca adalah tangga pertama mencintai Al-Qur'an, tetapi belum cukup. Seorang muslim yang beriman kepada Al-Qur'an dengan benar akan menampilkan akhlak mulia dalam kehidupan sehari-hari. Amir perlu naik ke tangga lebih tinggi: memahami, menadaburi, lalu mengamalkan isi Al-Qur'an."
+  },
+  // ── Soal 21 → Jawaban A ──
+  {
+    type:"Penerapan & Analisis",
+    text:"Budi (muslim) dan Yohanes (Kristen) adalah teman sekelas. Yohanes meminta Budi untuk menemaninya mengunjungi gereja dalam rangka liburan sekolah. Sikap Budi yang paling tepat menurut materi Bab 2 adalah...",
+    options:["Boleh menemani Yohanes sebagai bentuk persahabatan dan menghormati keyakinan temannya, selama tidak ikut beribadah","Menolak dengan tegas karena mengunjungi gereja dapat merusak akidah","Menerima ajakan itu dan ikut beribadah bersama di gereja","Meminta Yohanes untuk pindah agama sebagai syarat agar mereka bisa tetap bersahabat"],
+    answer:0,
+    explanation:"Bab 2 mengajarkan bahwa membangun hubungan harmonis dengan penganut kitab lain dilakukan dengan saling menghargai perbedaan dan menghormati. Kita tetap meyakini kebenaran Islam dan Al-Qur'an, tetapi juga menghargai keyakinan orang lain. Menemani teman tanpa ikut beribadah adalah bentuk penghargaan yang tepat."
+  },
+  // ── Soal 22 → Jawaban B ──
+  {
+    type:"Penerapan & Analisis",
+    text:"Seorang siswa berkata: 'Karena saya sudah beriman kepada Al-Qur'an, saya tidak perlu meyakini Taurat, Zabur, dan Injil lagi.' Pernyataan ini...",
+    options:["Benar, karena Al-Qur'an sudah menggantikan semua kitab sebelumnya","Keliru, karena setiap muslim wajib beriman kepada semua kitab yang diturunkan Allah, termasuk Taurat, Zabur, dan Injil — meskipun cara mengimaninya berbeda dengan mengimani Al-Qur'an","Benar, karena kitab-kitab terdahulu sudah tidak bisa dipercaya isinya","Keliru, karena muslim wajib mengamalkan isi Taurat, Zabur, dan Injil juga"],
+    answer:1,
+    explanation:"Setiap muslim wajib beriman kepada semua kitab yang diturunkan oleh Allah kepada para rasul-Nya, baik secara ijmali maupun tafsili — termasuk Taurat, Zabur, dan Injil. Namun cara mengimaninya berbeda: untuk Al-Qur'an, kita meyakini dan mengamalkan seluruh isinya. Untuk kitab terdahulu, kita meyakini isi kandungannya yang sesuai dengan Al-Qur'an saja."
+  },
+  // ── Soal 23 → Jawaban C ──
+  {
+    type:"Penerapan & Analisis",
+    text:"Di grup kelas, Andi menyebarkan informasi tentang kemurnian Al-Qur'an sekaligus menyebut kepalsuan kitab Injil. Teman sekelasnya yang beragama Kristen merasa tidak dihargai. Menurut materi Bab 2, tindakan Andi yang lebih tepat adalah...",
+    options:["Terus menyebarkan informasi tersebut karena menyampaikan kebenaran Al-Qur'an adalah kewajiban","Berhenti menyebarkan informasi agama di media sosial sama sekali","Mendalami makna kemurnian Al-Qur'an secara moderat sehingga bisa lebih menghargai kitab suci umat beragama lain dan menyampaikannya dengan bijak","Membuat grup khusus agama Islam dan menyebarkan informasi hanya di sana"],
+    answer:2,
+    explanation:"Bab 2 mengajarkan bahwa meskipun kita meyakini kebenaran Al-Qur'an, kita tetap harus menghargai keyakinan umat beragama lain terhadap kitab suci mereka. Hubungan harmonis dibangun dengan menghargai perbedaan dan tidak menonjolkan pertentangan di ruang publik."
+  },
+  // ── Soal 24 → Jawaban D ──
+  {
+    type:"Penerapan & Analisis",
+    text:"Perhatikan pernyataan-pernyataan berikut!\n(1) Meyakini kebenaran semua kitab terdahulu\n(2) Hanya meyakini isi kandungan yang sesuai dengan Al-Qur'an\n(3) Kandungan yang berbeda dari Al-Qur'an berarti salah\n(4) Kandungan kitab terdahulu yang berbeda dari Al-Qur'an hanya berlaku pada zamannya\n\nPernyataan tentang iman kepada kitab terdahulu yang BENAR adalah...",
+    options:["(1) dan (2)","(1) dan (3)","(3) dan (4)","(2) dan (4)"],
+    answer:3,
+    explanation:"Yang benar tentang iman kepada kitab terdahulu adalah: (2) Hanya meyakini isi kandungannya yang sesuai dengan Al-Qur'an saja, dan (4) Kandungan yang tidak sesuai dengan Al-Qur'an tidak berarti salah — tetapi kandungan itu hanya berlaku pada zamannya dan sudah dihapus (mansukh) dengan diturunkannya Al-Qur'an. Pernyataan (1) dan (3) keliru."
+  },
+  // ── Soal 25 → Jawaban A ──
+  {
+    type:"Penerapan & Analisis",
+    text:"Rangkuman Bab 2 menyebutkan empat poin utama. Manakah yang BUKAN merupakan bagian dari rangkuman tersebut?",
+    options:["Umat Islam wajib mengajak seluruh penganut agama lain untuk memeluk Islam","Setiap muslim wajib beriman kepada semua kitab Allah, baik secara ijmali maupun tafsili","Kitab dan suhuf Allah yang disebutkan dalam Al-Qur'an dan hadis adalah Zabur, Taurat, Injil, Al-Qur'an, serta Suhuf Musa dan Ibrahim","Muslim yang beriman kepada Al-Qur'an dengan benar akan berakhlak mulia dalam kehidupan sehari-hari"],
+    answer:0,
+    explanation:"Empat poin rangkuman Bab 2 adalah: (1) Iman kepada kitab Allah adalah wajib, baik ijmali maupun tafsili; (2) Kitab dan suhuf yang disebutkan adalah Taurat, Zabur, Injil, Al-Qur'an, serta Suhuf Musa dan Ibrahim; (3) Muslim yang beriman kepada Al-Qur'an dengan benar akan berakhlak mulia; (4) Hubungan harmonis dengan penganut kitab lain diwujudkan dengan saling menghargai, menghormati, dan bekerjasama. Poin 'mengajak semua penganut agama lain masuk Islam' bukan bagian dari rangkuman."
+  }
+];
+
+// ═══════════════════════════════════════════════════════
+// ALGORITMA ACAK — Fisher-Yates + penjamin tidak ada
+// jawaban berurutan yang sama
+// ═══════════════════════════════════════════════════════
+function shuffleNoAdjacent(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  for (let pass = 0; pass < 500; pass++) {
+    let clean = true;
+    for (let i = 0; i < arr.length - 1; i++) {
+      if (arr[i].answer === arr[i + 1].answer) {
+        clean = false;
+        let swapped = false;
+        for (let k = i + 2; k < arr.length; k++) {
+          const ansK = arr[k].answer;
+          const ansBefore = (i > 0) ? arr[i - 1].answer : -1;
+          const ansAfter = (k < arr.length - 1) ? arr[k + 1].answer : -1;
+          if (ansK !== arr[i].answer && ansK !== ansAfter && ansK !== ansBefore) {
+            [arr[i + 1], arr[k]] = [arr[k], arr[i + 1]];
+            swapped = true; break;
+          }
+        }
+        if (!swapped) {
+          for (let k = i + 2; k < arr.length; k++) {
+            const ansK = arr[k].answer;
+            const ansBefore = (i > 0) ? arr[i - 1].answer : -1;
+            const ansAfterI = arr[i + 1].answer;
+            const ansAfterK = (k < arr.length - 1) ? arr[k + 1].answer : -1;
+            if (ansK !== ansAfterI && ansK !== ansBefore &&
+                arr[i].answer !== ansAfterK && arr[i].answer !== ansBefore) {
+              [arr[i], arr[k]] = [arr[k], arr[i]];
+              swapped = true; break;
+            }
+          }
+        }
+      }
+    }
+    if (clean) break;
+  }
+}
+
+// ═══════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════
+let scoreCorrect = 0;
+let scoreWrong = 0;
+let answered = [];
+
+// ═══════════════════════════════════════════════════════
+// RENDER
+// ═══════════════════════════════════════════════════════
+function typeClass(type) {
+  if (type.includes("Hafalan")) return "t-hafalan";
+  if (type.includes("Pemahaman")) return "t-pemahaman";
+  return "t-penerapan";
+}
+
+function renderAll() {
+  const box = document.getElementById("questions-container");
+  const labels = ["A", "B", "C", "D"];
+  let html = "";
+  questions.forEach((q, i) => {
+    html += `<div class="q-card" id="qcard-${i}" data-type="${q.type}">`;
+    html += `<div class="q-header">
+      <span class="q-type-badge ${typeClass(q.type)}">${q.type}</span>
+      <span class="q-num">Soal ${i + 1} dari ${questions.length}</span>
+    </div>`;
+    html += `<div class="q-text">${q.text}</div>`;
+    if (q.arabic) html += `<div class="q-arabic">${q.arabic}</div>`;
+    html += `<div class="q-options" id="opts-${i}">`;
+    q.options.forEach((opt, j) => {
+      html += `<button class="opt-btn" id="opt-${i}-${j}" onclick="pickAnswer(${i},${j})">
+        <span class="opt-label">${labels[j]}</span>
+        <span>${opt}</span>
+      </button>`;
+    });
+    html += `</div>`;
+    html += `<div class="q-feedback" id="fb-${i}"></div>`;
+    html += `</div>`;
+  });
+  box.innerHTML = html;
+  renderDistBar();
+}
+
+function renderDistBar() {
+  const counts = [0, 0, 0, 0];
+  questions.forEach(q => counts[q.answer]++);
+  const total = questions.length;
+  const colors = ["var(--indigo)", "#0284c7", "var(--gold)", "var(--rose)"];
+  let html = "";
+  counts.forEach((c, i) => {
+    html += `<div style="width:${(c / total * 100)}%;background:${colors[i]}"></div>`;
+  });
+  document.getElementById("dist-bar").innerHTML = html;
+}
+
+// ═══════════════════════════════════════════════════════
+// LOGIKA JAWAB
+// ═══════════════════════════════════════════════════════
+function pickAnswer(qi, oi) {
+  if (answered[qi]) return;
+  answered[qi] = true;
+
+  const q = questions[qi];
+  const isCorrect = (oi === q.answer);
+  if (isCorrect) scoreCorrect++; else scoreWrong++;
+
+  const labels = ["A", "B", "C", "D"];
+
+  q.options.forEach((_, j) => {
+    const btn = document.getElementById(`opt-${qi}-${j}`);
+    btn.disabled = true;
+    if (j === q.answer) {
+      btn.classList.add("correct");
+    } else if (j === oi && !isCorrect) {
+      btn.classList.add("wrong");
+    } else {
+      btn.classList.add("dimmed");
+    }
+  });
+
+  const card = document.getElementById(`qcard-${qi}`);
+  card.classList.add(isCorrect ? "answered-correct" : "answered-wrong");
+
+  const fb = document.getElementById(`fb-${qi}`);
+  fb.className = "q-feedback show " + (isCorrect ? "fb-correct" : "fb-wrong");
+  if (isCorrect) {
+    fb.innerHTML = `<strong>✅ Benar! Jawaban kamu tepat.</strong>${q.explanation}`;
+  } else {
+    fb.innerHTML = `<strong>❌ Salah. Jawaban yang benar adalah <u>${labels[q.answer]}</u>.</strong>${q.explanation}`;
+  }
+
+  updateProgress();
+
+  if (answered.every(a => a)) {
+    setTimeout(() => openResult(), 900);
+  }
+}
+
+function updateProgress() {
+  const done = answered.filter(a => a).length;
+  const total = questions.length;
+  const pct = Math.round((done / total) * 100);
+  document.getElementById("prog-label").textContent = `${done} dari ${total} soal dijawab`;
+  document.getElementById("prog-fill").style.width = pct + "%";
+  document.getElementById("chip-g").textContent = "✅ " + scoreCorrect;
+  document.getElementById("chip-r").textContent = "❌ " + scoreWrong;
+}
+
+// ═══════════════════════════════════════════════════════
+// MODAL HASIL
+// ═══════════════════════════════════════════════════════
+function openResult() {
+  if (!answered.every(a => a)) return;
+
+  const nama = document.getElementById("inp-nama").value.trim() || "Peserta";
+  const kelas = document.getElementById("inp-kelas").value.trim();
+  const pct = Math.round((scoreCorrect / questions.length) * 100);
+
+  let emoji, predikat, prColor;
+  if (pct >= 90)      { emoji = "🏆"; predikat = "Sangat Baik (A)"; prColor = "#22c55e"; }
+  else if (pct >= 75) { emoji = "⭐"; predikat = "Baik (B)"; prColor = "#4f46e5"; }
+  else if (pct >= 60) { emoji = "👍"; predikat = "Cukup (C)"; prColor = "#f59e0b"; }
+  else if (pct >= 40) { emoji = "📚"; predikat = "Kurang (D)"; prColor = "#f97316"; }
+  else                { emoji = "💪"; predikat = "Sangat Kurang (E)"; prColor = "#f43f5e"; }
+
+  let motivasi;
+  if (pct >= 90) {
+    motivasi = `<strong>Masya Allah, luar biasa!</strong> Pemahaman kamu tentang iman kepada kitab-kitab Allah sudah sangat mendalam. Kamu memahami perbedaan kitab dan suhuf, empat tangga mencintai Al-Qur'an, serta nilai toleransi yang diajarkan dalam Bab 2 dengan sempurna. Terus pertahankan dan amalkan, ya!`;
+  } else if (pct >= 75) {
+    motivasi = `<strong>Hebat sekali!</strong> Kamu sudah menunjukkan pemahaman yang baik tentang kitab-kitab Allah dan pentingnya toleransi antarumat beragama. Masih ada sedikit materi yang perlu diperdalam — coba tinjau kembali soal yang salah dan pahami penjelasannya. Kamu hampir sempurna!`;
+  } else if (pct >= 60) {
+    motivasi = `<strong>Cukup baik!</strong> Kamu sudah memahami dasar-dasar iman kepada kitab Allah, tetapi beberapa materi perlu diperdalam lagi. Coba baca kembali penjelasan tentang perbedaan iman ijmali dan tafsili, serta empat tangga mencintai Al-Qur'an di buku paket, lalu ulangi latihan ini. Pasti skor kamu akan naik!`;
+  } else if (pct >= 40) {
+    motivasi = `<strong>Jangan berkecil hati!</strong> Materi tentang kitab-kitab Allah memang memerlukan perhatian khusus karena ada banyak istilah baru — seperti kitab vs suhuf, iman ijmali vs tafsili, dan sebagainya. Coba pelajari kembali Bab 2 secara perlahan, pahami setiap sub-materinya, lalu kerjakan ulang latihan ini. Kamu pasti bisa lebih baik!`;
+  } else {
+    motivasi = `<strong>Tetap semangat!</strong> Belajar tentang kitab-kitab Allah adalah bagian penting dari rukun iman. Mulai dari membaca ulang materi Bab 2 di buku paket, diskusikan dengan teman atau guru tentang hal-hal yang belum dipahami, lalu coba lagi latihan soal ini. Ingat, setiap usaha belajar tidak akan pernah mengkhianati hasil. Semangat! 💪`;
+  }
+
+  document.getElementById("r-emoji").textContent = emoji;
+  document.getElementById("r-name").textContent = nama;
+  document.getElementById("r-class").textContent = kelas ? "Kelas " + kelas : "";
+  document.getElementById("r-score").textContent = pct;
+  document.getElementById("r-correct").textContent = scoreCorrect;
+  document.getElementById("r-wrong").textContent = scoreWrong;
+
+  const pr = document.getElementById("r-predikat");
+  pr.textContent = predikat;
+  pr.style.background = prColor + "22";
+  pr.style.color = prColor;
+
+  document.getElementById("r-motivasi").innerHTML = motivasi;
+
+  const confettiBox = document.getElementById("confetti-box");
+  confettiBox.innerHTML = "";
+  if (pct >= 75) {
+    const colors = ["#22c55e", "#f59e0b", "#4f46e5", "#f43f5e", "#3b82f6", "#a855f7", "#ec4899", "#7c3aed"];
+    for (let c = 0; c < 50; c++) {
+      const el = document.createElement("div");
+      el.className = "confetti";
+      el.style.left = Math.random() * 100 + "%";
+      el.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+      el.style.animationDelay = (Math.random() * 2) + "s";
+      el.style.animationDuration = (2 + Math.random() * 2.5) + "s";
+      const size = 6 + Math.random() * 6;
+      el.style.width = size + "px";
+      el.style.height = size + "px";
+      el.style.borderRadius = Math.random() > 0.5 ? "50%" : "2px";
+      confettiBox.appendChild(el);
+    }
+  }
+
+  document.getElementById("result-overlay").classList.add("show");
+}
+
+function closeResult() {
+  document.getElementById("result-overlay").classList.remove("show");
+  document.getElementById("btn-show-result").style.display = "block";
+}
+
+function restart() {
+  scoreCorrect = 0;
+  scoreWrong = 0;
+  document.getElementById("inp-nama").value = "";
+  document.getElementById("inp-kelas").value = "";
+  document.getElementById("result-overlay").classList.remove("show");
+  document.getElementById("btn-show-result").style.display = "none";
+
+  shuffleNoAdjacent(questions);
+  answered = new Array(questions.length).fill(false);
+
+  updateProgress();
+  renderAll();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+// ═══════════════════════════════════════════════════════
+// INISIALISASI
+// ═══════════════════════════════════════════════════════
+shuffleNoAdjacent(questions);
+answered = new Array(questions.length).fill(false);
+renderAll();
+updateProgress();
+</script>
+
+  <footer class="main-footer">
+    <div class="footer-container">
+        <div class="footer-left">
+            <select onchange="location = this.value;">
+                <option value="">Pindah ke...</option>
+                <option value="index.html">🏠 Beranda Utama</option>
+                <option value="bab1.html">Bab 1</option>
+                <option value="bab2.html">Bab 2</option>
+                <option value="bab3.html">Bab 3</option>
+                <option value="bab4.html">Bab 4</option>
+                <option value="bab5.html">Bab 5</option>
+                <option value="bab6.html">Bab 6</option>
+                <option value="bab7.html">Bab 7</option>
+                <option value="bab8.html">Bab 8</option>
+                <option value="bab9.html">Bab 9</option>
+                <option value="bab10.html">Bab 10</option>
+            </select>
+        </div>
+        <div class="footer-right">
+            <p>Copyright 2026 by @just.muhammad</p>
+        </div>
+    </div>
+</footer>
+</body>
+</html>
+
