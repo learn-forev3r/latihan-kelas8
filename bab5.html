@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Latihan Soal – Bab 5 PAI Kelas VIII</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --teal:#0d9488; --teal-dk:#0f766e; --teal-lt:#ccfbf1;
+    --gold:#f59e0b; --rose:#f43f5e; --green:#22c55e;
+    --ink:#1e293b; --muted:#64748b; --card:#ffffff;
+    --bg:#f0fdfa; --radius:16px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;}
+
+  header{
+    background:linear-gradient(135deg,var(--teal-dk) 0%,#134e4a 100%);
+    color:#fff;padding:28px 24px 24px;text-align:center;position:relative;overflow:hidden;
+  }
+  header::before{
+    content:'';position:absolute;inset:0;
+    background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+  .badge{
+    display:inline-block;background:rgba(255,255,255,.15);
+    border:1px solid rgba(255,255,255,.3);border-radius:99px;
+    font-size:12px;font-weight:700;letter-spacing:1px;
+    text-transform:uppercase;padding:4px 14px;margin-bottom:10px;
+  }
+  header h1{font-size:clamp(16px,4vw,24px);font-weight:900;line-height:1.3;position:relative;}
+  header p{font-size:14px;opacity:.8;margin-top:6px;position:relative;}
+  .shuffle-note{font-size:11px;opacity:.6;margin-top:2px;font-style:italic;}
+
+  .container{max-width:760px;margin:0 auto;padding:0 16px 40px;}
+
+  .identity-card{
+    background:var(--card);border-radius:var(--radius);
+    box-shadow:0 4px 24px rgba(0,0,0,.08);
+    padding:24px;margin-top:-20px;position:relative;z-index:2;
+  }
+  .identity-card h2{font-size:18px;font-weight:900;color:var(--teal-dk);margin-bottom:4px;}
+  .identity-card .sub{font-size:13px;color:var(--muted);margin-bottom:16px;}
+  .input-row{display:flex;gap:12px;flex-wrap:wrap;}
+  .input-group{flex:1;min-width:200px;}
+  .input-group label{
+    display:block;font-size:12px;font-weight:800;
+    color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;
+  }
+  .input-group input{
+    width:100%;padding:11px 14px;border:2px solid #e2e8f0;
+    border-radius:10px;font-family:'Nunito',sans-serif;
+    font-size:15px;font-weight:600;color:var(--ink);
+    transition:border-color .2s;background:#f8fafc;
+  }
+  .input-group input:focus{
+    outline:none;border-color:var(--teal);background:#fff;
+    box-shadow:0 0 0 3px rgba(13,148,136,.12);
+  }
+  .input-group input::placeholder{color:#94a3b8;font-weight:600;}
+
+  .progress-sticky{
+    position:sticky;top:0;z-index:10;
+    background:rgba(240,253,250,.92);backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+    padding:14px 0 10px;margin-top:20px;
+    border-bottom:1px solid rgba(13,148,136,.1);
+  }
+  .prog-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+  .prog-label{font-size:13px;font-weight:800;color:var(--muted);}
+  .prog-chips{display:flex;gap:6px;}
+  .prog-chip{font-size:12px;font-weight:800;padding:3px 10px;border-radius:99px;}
+  .prog-chip.cg{background:#f0fdf4;color:var(--green);}
+  .prog-chip.cr{background:#fff1f2;color:var(--rose);}
+  .prog-bar{height:8px;background:#e2e8f0;border-radius:99px;overflow:hidden;}
+  .prog-fill{
+    height:100%;border-radius:99px;
+    background:linear-gradient(90deg,var(--teal),var(--gold));
+    transition:width .5s cubic-bezier(.4,0,.2,1);
+  }
+  .show-result-btn{
+    display:none;margin-top:8px;
+    padding:8px 16px;border-radius:8px;
+    background:var(--teal);color:#fff;
+    font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;
+    border:none;cursor:pointer;transition:all .2s;
+  }
+  .show-result-btn:hover{background:var(--teal-dk);}
+
+  .q-card{
+    background:var(--card);border-radius:var(--radius);
+    box-shadow:0 2px 16px rgba(0,0,0,.06);
+    margin-top:16px;padding:22px 24px;
+    border-left:4px solid var(--teal);
+  }
+  .q-card[data-type="Pemahaman"]{border-left-color:#0284c7;}
+  .q-card[data-type="Penerapan & Analisis"]{border-left-color:var(--gold);}
+  .q-card.answered-correct{border-left-color:var(--green);}
+  .q-card.answered-wrong{border-left-color:var(--rose);}
+
+  .q-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-wrap:wrap;gap:6px;}
+  .q-type-badge{
+    font-size:10px;font-weight:800;letter-spacing:.8px;
+    text-transform:uppercase;padding:3px 10px;border-radius:6px;
+  }
+  .q-type-badge.t-hafalan{background:var(--teal-lt);color:var(--teal-dk);}
+  .q-type-badge.t-pemahaman{background:#e0f2fe;color:#0369a1;}
+  .q-type-badge.t-penerapan{background:#fef3c7;color:#92400e;}
+  .q-num{font-size:12px;font-weight:700;color:var(--muted);}
+  .q-text{font-size:15px;font-weight:700;line-height:1.65;white-space:pre-line;margin-bottom:16px;}
+  
+  .q-options{display:flex;flex-direction:column;gap:8px;}
+  .opt-btn{
+    display:flex;align-items:flex-start;gap:12px;
+    background:#f8fafc;border:2px solid #e2e8f0;border-radius:10px;
+    padding:11px 14px;cursor:pointer;
+    font-family:'Nunito',sans-serif;font-size:14px;font-weight:600;
+    text-align:left;transition:all .2s;width:100%;
+  }
+  .opt-btn:hover:not(:disabled){border-color:var(--teal);background:var(--teal-lt);transform:translateX(3px);}
+  .opt-label{
+    min-width:26px;height:26px;background:#e2e8f0;border-radius:7px;
+    display:flex;align-items:center;justify-content:center;
+    font-size:12px;font-weight:800;color:var(--muted);flex-shrink:0;transition:all .2s;
+  }
+  .opt-btn.correct{border-color:var(--green);background:#f0fdf4;}
+  .opt-btn.correct .opt-label{background:var(--green);color:#fff;}
+  .opt-btn.wrong{border-color:var(--rose);background:#fff1f2;}
+  .opt-btn.wrong .opt-label{background:var(--rose);color:#fff;}
+  .opt-btn.dimmed{opacity:.5;}
+  .opt-btn:disabled{cursor:default;}
+
+  .q-feedback{
+    display:none;margin-top:14px;border-radius:10px;
+    padding:12px 16px;font-size:13px;line-height:1.65;
+  }
+  .q-feedback.show{display:block;animation:slideUp .3s ease;}
+  .q-feedback.fb-correct{background:#f0fdf4;border-left:4px solid var(--green);}
+  .q-feedback.fb-wrong{background:#fff1f2;border-left:4px solid var(--rose);}
+  .q-feedback strong{display:block;font-size:14px;margin-bottom:3px;}
+  @keyframes slideUp{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
+
+  .result-overlay{
+    display:none;position:fixed;inset:0;z-index:100;
+    background:rgba(15,23,42,.6);backdrop-filter:blur(6px);
+    -webkit-backdrop-filter:blur(6px);
+    justify-content:center;align-items:center;padding:20px;
+  }
+  .result-overlay.show{display:flex;animation:fadeIn .4s ease;}
+  @keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+
+  .result-modal{
+    background:var(--card);border-radius:20px;
+    box-shadow:0 24px 64px rgba(0,0,0,.2);
+    max-width:480px;width:100%;padding:36px 28px;
+    text-align:center;position:relative;overflow:hidden;
+    animation:modalPop .4s cubic-bezier(.2,.8,.3,1.2);
+  }
+  @keyframes modalPop{from{opacity:0;transform:scale(.85) translateY(30px);}to{opacity:1;transform:none;}}
+
+  .result-modal .confetti-container{position:absolute;inset:0;pointer-events:none;overflow:hidden;}
+  .confetti{
+    position:absolute;top:-10px;opacity:0;
+    animation:confettiFall linear forwards;
+  }
+  @keyframes confettiFall{
+    0%{opacity:1;transform:translateY(0) rotate(0deg) scale(1);}
+    80%{opacity:1;}
+    100%{opacity:0;transform:translateY(420px) rotate(720deg) scale(.5);}
+  }
+
+  .r-emoji{font-size:56px;position:relative;}
+  .r-greeting{font-size:14px;color:var(--muted);margin-top:12px;font-weight:700;}
+  .r-name{font-size:24px;font-weight:900;color:var(--ink);margin:4px 0 0;}
+  .r-class{font-size:13px;color:var(--teal);font-weight:700;margin-bottom:20px;}
+  .r-score-wrap{
+    background:var(--bg);border-radius:14px;padding:20px;margin-bottom:20px;
+  }
+  .r-score-label{font-size:12px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;}
+  .r-score{font-size:52px;font-weight:900;color:var(--teal);line-height:1.1;}
+  .r-score span{font-size:20px;font-weight:700;color:var(--muted);}
+  .r-stats{display:flex;gap:10px;justify-content:center;margin-top:14px;}
+  .r-stat{
+    background:#fff;border-radius:10px;padding:10px 16px;
+    font-size:12px;font-weight:700;color:var(--muted);
+  }
+  .r-stat b{display:block;font-size:20px;font-weight:900;}
+  .r-stat.sg b{color:var(--green);}
+  .r-stat.sr b{color:var(--rose);}
+
+  .r-predikat{
+    display:inline-block;padding:6px 20px;border-radius:99px;
+    font-weight:800;font-size:14px;margin-bottom:16px;
+  }
+  .r-motivasi{
+    font-size:14px;line-height:1.7;color:var(--muted);
+    background:#f8fafc;border-radius:12px;padding:14px 18px;
+    margin-bottom:24px;text-align:left;
+  }
+  .r-motivasi strong{color:var(--ink);}
+
+  .r-btns{display:flex;flex-direction:column;gap:10px;}
+  .btn{
+    padding:13px 24px;border-radius:12px;font-family:'Nunito',sans-serif;
+    font-size:15px;font-weight:800;border:none;cursor:pointer;transition:all .2s;
+  }
+  .btn-primary{background:var(--teal);color:#fff;box-shadow:0 4px 12px rgba(13,148,136,.3);}
+  .btn-primary:hover{background:var(--teal-dk);transform:translateY(-2px);}
+  .btn-outline{background:transparent;color:var(--muted);border:2px solid #e2e8f0;}
+  .btn-outline:hover{border-color:var(--teal);color:var(--teal);}
+
+  .dist-bar{
+    display:flex;height:6px;border-radius:99px;overflow:hidden;
+    margin-top:20px;gap:2px;
+  }
+  .dist-bar div{height:100%;border-radius:99px;transition:width .4s;}
+  .dist-legend{
+    display:flex;justify-content:center;gap:12px;margin-top:6px;
+    font-size:11px;font-weight:800;color:var(--muted);
+  }
+  .dist-legend span{display:flex;align-items:center;gap:3px;}
+  .dist-legend i{width:8px;height:8px;border-radius:50%;display:inline-block;}
+
+  @media(max-width:500px){
+    .q-card{padding:16px 14px;}
+    .opt-btn{padding:10px 12px;font-size:13px;}
+    .result-modal{padding:28px 20px;}
+    .r-score{font-size:42px;}
+    .identity-card{padding:18px 16px;}
+  }
+
+  /* --- PERBAIKAN FOOTER BY MENTOR --- */
+.main-footer {
+    background-color: #1e293b !important; /* Warna gelap modern */
+    color: white !important;
+    padding: 12px 0 !important;
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    z-index: 9999 !important; /* Supaya tidak tertutup elemen soal */
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.2);
+    font-family: 'Nunito', sans-serif;
+}
+
+.footer-container {
+    display: flex !important;
+    /* Baris di bawah ini adalah kuncinya! */
+    justify-content: space-between !important; 
+    align-items: center !important;
+    max-width: 1000px;
+    margin: 0 auto !important;
+    padding: 0 20px !important;
+}
+
+.footer-left select {
+    padding: 6px 10px !important;
+    border-radius: 8px !important;
+    border: 1px solid #475569 !important;
+    background: #334155 !important;
+    color: white !important;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.footer-right p {
+    margin: 0 !important;
+    font-size: 13px !important;
+    text-align: right !important; /* Memastikan teks rata kanan */
+    white-space: nowrap; /* Mencegah teks turun ke bawah/terpotong */
+}
+
+/* Supaya konten soal paling bawah tidak tertutup footer */
+body {
+    padding-bottom: 70px !important;
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="badge">PAI & Budi Pekerti · SMP Kelas VIII</div>
+  <h1>🏛️ Latihan Soal Bab 5<br>Meneladani Produktivitas dalam Berkarya dan Semangat Literasi<br>Masa Keemasan Islam Era Daulah Abbasiyah</h1>
+  <p>25 soal pilihan ganda · Semua soal ditampilkan sekaligus</p>
+  <p class="shuffle-note">🔄 Urutan soal diacak setiap kali membuka halaman</p>
+</header>
+
+<div class="container">
+  <section class="identity-card">
+    <h2>📝 Data Peserta</h2>
+    <p class="sub">Isi nama dan kelas sebelum mengerjakan soal</p>
+    <div class="input-row">
+      <div class="input-group">
+        <label for="inp-nama">Nama Lengkap</label>
+        <input type="text" id="inp-nama" placeholder="Masukkan nama lengkap...">
+      </div>
+      <div class="input-group">
+        <label for="inp-kelas">Kelas</label>
+        <input type="text" id="inp-kelas" placeholder="Contoh: VIII-A">
+      </div>
+    </div>
+  </section>
+
+  <div class="progress-sticky">
+    <div class="prog-top">
+      <span class="prog-label" id="prog-label">0 dari 25 soal dijawab</span>
+      <div class="prog-chips">
+        <span class="prog-chip cg" id="chip-g">✅ 0</span>
+        <span class="prog-chip cr" id="chip-r">❌ 0</span>
+      </div>
+    </div>
+    <div class="prog-bar"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
+    <button class="show-result-btn" id="btn-show-result" onclick="openResult()">🎉 Lihat Hasil</button>
+  </div>
+
+  <div id="questions-container"></div>
+
+  <div style="margin-top:24px;">
+    <div class="dist-bar" id="dist-bar"></div>
+    <div class="dist-legend">
+      <span><i style="background:var(--teal)"></i>A</span>
+      <span><i style="background:#0284c7"></i>B</span>
+      <span><i style="background:var(--gold)"></i>C</span>
+      <span><i style="background:var(--rose)"></i>D</span>
+    </div>
+  </div>
+</div>
+
+<div class="result-overlay" id="result-overlay">
+  <div class="result-modal">
+    <div class="confetti-container" id="confetti-box"></div>
+    <div class="r-emoji" id="r-emoji"></div>
+    <div class="r-greeting">Selamat!</div>
+    <div class="r-name" id="r-name"></div>
+    <div class="r-class" id="r-class"></div>
+    <div class="r-score-wrap">
+      <div class="r-score-label">Skor Kamu</div>
+      <div class="r-score"><span id="r-score"></span><span>/100</span></div>
+      <div class="r-stats">
+        <div class="r-stat sg"><b id="r-correct">0</b>Benar</div>
+        <div class="r-stat sr"><b id="r-wrong">0</b>Salah</div>
+      </div>
+    </div>
+    <div class="r-predikat" id="r-predikat"></div>
+    <div class="r-motivasi" id="r-motivasi"></div>
+    <div class="r-btns">
+      <button class="btn btn-outline" onclick="closeResult()">Tinjau Jawaban Saya</button>
+      <button class="btn btn-primary" onclick="restart()">🔁 Ulangi Latihan</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════
+// DATA SOAL BAB 5
+// Distribusi Jawaban sudah DISEIMBANGKAN: A=7, B=6, C=6, D=6
+// ═══════════════════════════════════════════════════════
+const questions = [
+  // ── Soal 1 (Target A) ──
+  {
+    type: "Hafalan & Ingatan",
+    text: "Titik Fokus (kata kunci) Bab 5 adalah...",
+    options: [
+      "Bani Abbasiyah, Bayt al-Ḥikmah, dan Baghdad", // Benar
+      "Masa Keemasan Islam, Ilmuwan Muslim, dan Peradaban Dunia",
+      "Literasi, Seni, dan Toleransi",
+      "Abu al-Abbas, Harun al-Rasyid, dan al-Makmun"
+    ],
+    answer: 0,
+    explanation: "Titik Fokus (Kata Kunci) Bab 5 adalah 'Bani Abbasiyah, Bayt al-Ḥikmah, dan Baghdad.' Ketiganya merupakan tiga pilar utama pembahasan bab ini."
+  },
+  // ── Soal 2 (Target B) ──
+  {
+    type: "Hafalan & Ingatan",
+    text: "Daulah Abbasiyah didirikan oleh...",
+    options: [
+      "Harun al-Rasyid, cucu dari al-Mansur",
+      "Abu al-Abbas As-Saffah, cicit dari Abbas bin Abdul Muthalib", // Benar
+      "Al-Makmun, khalifah ketujuh Bani Abbasiyah",
+      "Al-Mansur, saudara Abu al-Abbas yang membangun Baghdad"
+    ],
+    answer: 1,
+    explanation: "Daulah Abbasiyah didirikan oleh Abu al-Abbas As-Saffah Abdullah bin Muhammad bin Ali bin Abdullah bin Abbas bin Abdul Muthalib. Ia adalah cicit dari Abbas bin Abdul Muthalib."
+  },
+  // ── Soal 3 (Target C) ──
+  {
+    type: "Hafalan & Ingatan",
+    text: "Masa keemasan Daulah Abbasiyah terjadi pada era kepemimpinan...",
+    options: [
+      "Abu al-Abbas (750–754 M) dan al-Mansur (754–775 M)",
+      "Al-Muktasim (833–842 M) dan al-Watsiq (842–847 M)",
+      "Harun al-Rasyid (786–809 M) dan al-Makmun (813–833 M)", // Benar
+      "Al-Mutawakil (847–861 M) dan al-Amin (809–813 M)"
+    ],
+    answer: 2,
+    explanation: "Masa keemasan Daulah Abbasiyah terjadi pada era kepemimpinan Harun al-Rasyid (786–809 M) dan al-Makmun (813–833 M)."
+  },
+  // ── Soal 4 (Target D) ──
+  {
+    type: "Hafalan & Ingatan",
+    text: "Khalifah yang membangun Kota Baghdad sebagai pusat pemerintahan Bani Abbasiyah adalah...",
+    options: [
+      "Abu al-Abbas, yang sebelumnya membangun istana Hasyimiyah di Anbar",
+      "Harun al-Rasyid, pada saat ia mendirikan Bayt al-Ḥikmah",
+      "Al-Makmun, sebagai bagian dari pengembangan pusat ilmu pengetahuan",
+      "Al-Mansur, yang mulai membangun Baghdad pada tahun 762 M" // Benar
+    ],
+    answer: 3,
+    explanation: "Khalifah al-Mansur — saudara Abu al-Abbas yang menggantikannya — yang membangun Kota Baghdad. Pembangunan dimulai pada tahun 762 M."
+  },
+  // ── Soal 5 (Target A) ──
+  {
+    type: "Hafalan & Ingatan",
+    text: "Nama resmi yang diberikan al-Mansur untuk Kota Baghdad adalah...",
+    options: [
+      "Madīnat al-Salām (Kota Perdamaian)", // Benar
+      "Madīnat al-Nūr (Kota Cahaya)",
+      "Madīnat al-'Ilm (Kota Ilmu Pengetahuan)",
+      "Madīnat al-Ḥikmah (Kota Kebijaksanaan)"
+    ],
+    answer: 0,
+    explanation: "Setelah pembangunan Kota Baghdad selesai, al-Mansur memberikan nama resmi 'Madīnat al-Salām' yang berarti Kota Perdamaian."
+  },
+  // ── Soal 6 (Target B) ──
+  {
+    type: "Hafalan & Ingatan",
+    text: "Bayt al-Ḥikmah pada awalnya didirikan oleh Khalifah Harun al-Rasyid sebagai...",
+    options: [
+      "Lembaga pendidikan tinggi Islam pertama",
+      "Perpustakaan pribadi khalifah", // Benar
+      "Biro penerjemahan buku-buku dari bahasa Yunani",
+      "Observatorium astronomi kerajaan"
+    ],
+    answer: 1,
+    explanation: "Bayt al-Ḥikmah pada awalnya didirikan oleh Khalifah Harun al-Rasyid pada awal masa pemerintahannya sebagai perpustakaan pribadi."
+  },
+  // ── Soal 7 (Target C) ──
+  {
+    type: "Hafalan & Ingatan",
+    text: "Daulah Abbasiyah runtuh pada tahun 1258 M karena...",
+    options: [
+      "Terjadi pemberontakan besar-besaran dari dalam wilayah kekuasaannya",
+      "Para khalifah melarikan diri ke Mesir setelah kalah perang saudara",
+      "Baghdad ditaklukkan dan dihancurkan oleh Bangsa Mongol", // Benar
+      "Munculnya Daulah Utsmaniyah yang merebut seluruh wilayah Abbasiyah"
+    ],
+    answer: 2,
+    explanation: "Daulah Abbasiyah benar-benar runtuh pada tahun 1258 M setelah Baghdad ditaklukkan dan dikuasai oleh Bangsa Mongol."
+  },
+  // ── Soal 8 (Target D) ──
+  {
+    type: "Hafalan & Ingatan",
+    text: "Al-Khawarizmi adalah ilmuwan muslim masa Daulah Abbasiyah yang terkenal dengan karya monumentalnya di bidang matematika. Karya utamanya berjudul...",
+    options: [
+      "Al-Kimya — yang menjadi dasar pengembangan ilmu kimia",
+      "Qanun fi al-tibb — yang menjadi referensi utama ilmu kedokteran",
+      "Kulliyat fi al-tibb — yang menjadi buku wajib di fakultas kedokteran",
+      "Aljabr wal Muqābalah — yang menjadi dasar pengembangan aljabar dan algoritma" // Benar
+    ],
+    answer: 3,
+    explanation: "Al-Khawarizmi (780–850 M) adalah ahli matematika yang bekerja di Bayt al-Ḥikmah. Karya monumentalnya berjudul 'Aljabr wal Muqābalah'."
+  },
+
+  // ── Soal 9 (Target A) ──
+  {
+    type: "Pemahaman",
+    text: "Pengertian 'Daulah Abbasiyah' yang paling tepat adalah...",
+    options: [
+      "Keturunan raja-raja yang memerintah yang berasal dari keluarga (bani) Abbas, yang merupakan keturunan Abbas bin Abdul Muthalib", // Benar
+      "Kesultanan Islam yang berpusat di Mekah dan Madinah",
+      "Kekhalifahan Islam yang didirikan oleh para sahabat Nabi setelah Nabi wafat",
+      "Dinasti Islam yang berpusat di Damaskus sebelum pindah ke Baghdad"
+    ],
+    answer: 0,
+    explanation: "Daulah Abbasiyah adalah keturunan raja-raja yang memerintah yang berasal dari keluarga (bani) Abbas — yaitu keturunan Abbas bin Abdul Muthalib."
+  },
+  // ── Soal 10 (Target B) ──
+  {
+    type: "Pemahaman",
+    text: "Alasan utama Bani Abbas melakukan perlawanan terhadap Daulah Bani Umayah adalah...",
+    options: [
+      "Karena Bani Umayah menolak membagi kekuasaan dengan Bani Abbas",
+      "Karena para penguasa Bani Umayah dinilai telah berbuat sewenang-wenang terhadap kelompok yang berseberangan, khususnya para pengikut Syi'ah, dan karena Bani Abbas merasa lebih berhak memimpin karena kekerabatannya dengan Nabi", // Benar
+      "Karena Bani Abbas ingin memindahkan ibu kota dari Damaskus ke Baghdad",
+      "Karena Bani Umayah menolak mengembangkan ilmu pengetahuan dan seni"
+    ],
+    answer: 1,
+    explanation: "Bani Abbasiyah melakukan perlawanan karena dua alasan utama: (1) menilai para penguasa Bani Umayah telah berbuat sewenang-wenang; (2) merasa lebih berhak memimpin karena kedekatan garis keturunan dengan Nabi."
+  },
+  // ── Soal 11 (Target C) ──
+  {
+    type: "Pemahaman",
+    text: "Fungsi Bayt al-Ḥikmah setelah dikembangkan oleh Khalifah al-Makmun mencakup beberapa hal berikut, KECUALI...",
+    options: [
+      "Lembaga pendidikan tinggi Islam pertama",
+      "Biro penerjemahan dan perpustakaan",
+      "Pusat perdagangan internasional dan diplomasi", // Benar (Ini Bukan Fungsi Bayt al-Hikmah)
+      "Observatorium astronomi dan rumah sakit"
+    ],
+    answer: 2,
+    explanation: "Al-Makmun mengembangkan Bayt al-Ḥikmah menjadi lembaga pendidikan, biro penerjemahan, perpustakaan, observatorium, dan rumah sakit. Fungsi sebagai pusat perdagangan BUKAN bagian darinya."
+  },
+  // ── Soal 12 (Target D) ──
+  {
+    type: "Pemahaman",
+    text: "Proses penerjemahan buku pada awal era Abbasiyah berjalan dalam dua tahap. Tahapan yang benar adalah...",
+    options: [
+      "Dari bahasa Yunani langsung ke bahasa Arab oleh para ulama Baghdad",
+      "Dari bahasa Persia ke bahasa Arab, kemudian ke bahasa Yunani",
+      "Dari bahasa India ke bahasa Syria, kemudian ke bahasa Arab",
+      "Dari bahasa Yunani ke bahasa Syria terlebih dahulu, baru kemudian diterjemahkan ke bahasa Arab" // Benar
+    ],
+    answer: 3,
+    explanation: "Kegiatan penerjemahan banyak dilakukan di daerah Harran. Mereka menerjemahkan buku dari bahasa Yunani ke bahasa Syria terlebih dahulu, baru kemudian diterjemahkan kembali ke dalam bahasa Arab."
+  },
+  // ── Soal 13 (Target A) ──
+  {
+    type: "Pemahaman",
+    text: "Hunayn ibn Ishaq adalah salah satu penerjemah terkemuka di Bayt al-Ḥikmah. Yang benar tentang dirinya adalah...",
+    options: [
+      "Beragama Kristen Nestorian, mendapat gaji 500 dinar sebulan, dan mendapat emas seberat buku yang diterjemahkan", // Benar
+      "Beragama Islam dan merupakan murid langsung Khalifah al-Makmun",
+      "Berasal dari kalangan Sābi'īn (penyembah matahari) dan bekerja sebagai seniman kaligrafi",
+      "Beragama Yahudi dan ahli dalam menerjemahkan buku berbahasa Persia"
+    ],
+    answer: 0,
+    explanation: "Hunayn ibn Ishaq adalah penerjemah produktif yang beragama Kristen Nestorian. Ia mendapat fasilitas eksklusif dari penguasa: gaji 500 dinar sebulan dan emas untuk setiap buku yang diterjemahkan."
+  },
+  // ── Soal 14 (Target B) ──
+  {
+    type: "Pemahaman",
+    text: "Tiga semangat yang bisa diteladani dari masa keemasan Daulah Abbasiyah menurut Bab 5 adalah...",
+    options: [
+      "Jihad, dakwah, dan hijrah",
+      "Seni pangkal keindahan, literasi pangkal kemajuan, dan toleransi pangkal keharmonisan", // Benar
+      "Disiplin, produktivitas, dan kreativitas",
+      "Kesalehan, keilmuan, dan kepemimpinan"
+    ],
+    answer: 1,
+    explanation: "Bab 5 menyebutkan tiga semangat: (1) Seni pangkal keindahan; (2) Literasi pangkal kemajuan; (3) Toleransi pangkal keharmonisan."
+  },
+  // ── Soal 15 (Target C) ──
+  {
+    type: "Pemahaman",
+    text: "Bidang seni yang bersumber murni dari tradisi Islam dan berkembang dari ayat-ayat Al-Qur'an pada masa Daulah Abbasiyah adalah...",
+    options: [
+      "Seni arsitektur yang mengadopsi gaya Persia",
+      "Seni patung dan lukis yang dipengaruhi kultur Kristen",
+      "Seni kaligrafi yang murni berkembang dari tradisi Islam", // Benar
+      "Seni permadani dan keramik yang dipengaruhi budaya Persia"
+    ],
+    answer: 2,
+    explanation: "Seni kaligrafi murni berkembang dari tradisi Islam — bersumber dari ayat-ayat Al-Qur'an."
+  },
+  // ── Soal 16 (Target D) ──
+  {
+    type: "Pemahaman",
+    text: "Faktor yang mendorong pengembangan ilmu pengetahuan di era Daulah Abbasiyah menurut Bab 5 adalah...",
+    options: [
+      "Ancaman dari peradaban Eropa yang membuat umat Islam berlomba mengembangkan ilmu",
+      "Kebijakan khalifah yang mewajibkan semua warga negara menguasai dua bahasa asing",
+      "Persaingan dagang dengan pedagang dari Cina dan India",
+      "Dorongan agama Islam (ayat pertama Al-Qur'an memerintahkan membaca) dan tingginya kesejahteraan penduduk" // Benar
+    ],
+    answer: 3,
+    explanation: "Bab 5 menyebutkan dua faktor utama: (1) Dorongan agama; (2) Kesejahteraan penduduk yang merata."
+  },
+  // ── Soal 17 (Target A) ──
+  {
+    type: "Pemahaman",
+    text: "Keharmonisan intelektual yang terjadi di Bayt al-Ḥikmah ditunjukkan oleh...",
+    options: [
+      "Para ilmuwan dari berbagai agama (Islam, Kristen Nestorian, Sābi'īn) bekerja bersama mengembangkan ilmu tanpa memandang latar belakang agama", // Benar
+      "Semua ilmuwan di Bayt al-Ḥikmah harus masuk Islam terlebih dahulu sebelum bekerja",
+      "Hanya ilmuwan muslim yang boleh mengembangkan ilmu agama, sedangkan ilmu umum diserahkan kepada non-muslim",
+      "Para penguasa memaksa semua ilmuwan non-muslim untuk mengikuti ajaran Islam"
+    ],
+    answer: 0,
+    explanation: "Keharmonisan intelektual terlihat dari keterlibatan ilmuwan berbagai agama dalam mengembangkan ilmu bersama tanpa melihat latar belakang agama."
+  },
+  // ── Soal 18 (Target B) ──
+  {
+    type: "Pemahaman",
+    text: "Perkembangan seni patung dan lukis di Baghdad banyak melibatkan seniman dari kalangan...",
+    options: [
+      "Muslim yang mendapat pengecualian khusus dari para khalifah",
+      "Kristen, karena seniman Islam meyakini tidak diperbolehkan membuat gambar makhluk bernyawa", // Benar
+      "Persia yang ahli dalam seni dekoratif istana",
+      "India yang terkenal dengan teknik ukir dan pahat"
+    ],
+    answer: 1,
+    explanation: "Seni patung dan lukis banyak dipengaruhi oleh kultur Kristen karena seniman Islam meyakini tidak diperbolehkan membuat gambar makhluk bernyawa."
+  },
+
+  // ── Soal 19 (Target C) ──
+  {
+    type: "Penerapan & Analisis",
+    text: "Perhatikan pernyataan berikut!\n(1) Menjadi khalifah setelah merebut kekuasaan dari Bani Umayah\n(2) Nasabnya bersambung sampai Nabi Muhammad saw.\n(3) Menjadi khalifah hanya selama lima tahun (750–754 M)\n(4) Pendiri Daulah Abbasiyah\n\nFakta sejarah tentang Abu al-Abbas yang BENAR ditunjukkan nomor...",
+    options: [
+      "(1), (2), dan (3)",
+      "(1), (2), dan (4)",
+      "(2), (3), dan (4)", // Benar
+      "(1), (3), dan (4)"
+    ],
+    answer: 2,
+    explanation: "Semua pernyataan benar, namun pilihan yang paling tepat dan lengkap tersedia adalah C, yang mencakup tiga poin akurat."
+  },
+  // ── Soal 20 (Target D) ──
+  {
+    type: "Penerapan & Analisis",
+    text: "Perhatikan pernyataan tentang Kota Baghdad berikut!\n(1) Diberi nama resmi Madīnat al-Salām\n(2) Dijadikan ibu kota pada masa Abu al-Abbas\n(3) Dibangun oleh Khalifah al-Mansur mulai tahun 762 M\n(4) Disebut 'kota bundar' karena tata kotanya berbentuk bundar\n\nFakta sejarah tentang Baghdad yang BENAR adalah...",
+    options: [
+      "(1), (2), dan (3)",
+      "(1), (2), dan (4)",
+      "(2), (3), dan (4)",
+      "(1), (3), dan (4)" // Benar
+    ],
+    answer: 3,
+    explanation: "Yang benar: (1), (3), dan (4). Pernyataan (2) salah karena Baghdad dibangun oleh al-Mansur, bukan dijadikan ibu kota pertama kali oleh Abu al-Abbas."
+  },
+  // ── Soal 21 (Target A) ──
+  {
+    type: "Penerapan & Analisis",
+    text: "Perhatikan fakta tentang perkembangan seni di Baghdad berikut!\n(1) Seni industri yang berkembang adalah permadani dan keramik\n(2) Para penguasa melarang seni patung dan lukis karena bergambar makhluk bernyawa\n(3) Seni kaligrafi murni berkembang dari tradisi Islam, bersumber dari Al-Qur'an\n(4) Khalifah Harun al-Rasyid pernah menyelenggarakan festival yang dimeriahkan dua ribu penyanyi\n\nFakta yang BENAR ditunjukkan nomor...",
+    options: [
+      "(1), (3), dan (4)", // Benar
+      "(1), (2), dan (4)",
+      "(1), (2), dan (3)",
+      "(2), (3), dan (4)"
+    ],
+    answer: 0,
+    explanation: "Yang benar: (1), (3), dan (4). Pernyataan (2) salah karena penguasa tidak melarang, hanya seniman muslim yang menghindarinya."
+  },
+  // ── Soal 22 (Target B) ──
+  {
+    type: "Penerapan & Analisis",
+    text: "Perhatikan fakta tentang Bayt al-Ḥikmah berikut!\n(1) Didirikan oleh Khalifah Harun al-Rasyid sebagai perpustakaan pribadi\n(2) Dikembangkan oleh Khalifah al-Makmun menjadi lembaga pendidikan tinggi\n(3) Pada awalnya merupakan perpustakaan pribadi Khalifah al-Mansur\n(4) Dihancurkan oleh tentara Mongol pada tahun 1258 M\n\nFakta yang BENAR ditunjukkan nomor...",
+    options: [
+      "(1), (2), dan (3)",
+      "(1), (2), dan (4)", // Benar
+      "(1), (3), dan (4)",
+      "(2), (3), dan (4)"
+    ],
+    answer: 1,
+    explanation: "Yang benar: (1), (2), dan (4). Pernyataan (3) salah karena pendirinya adalah Harun al-Rasyid."
+  },
+  // ── Soal 23 (Target C) ──
+  {
+    type: "Penerapan & Analisis",
+    text: "Kisah hidup al-Khawarizmi dalam rubrik Inspirasiku Bab 5 paling mencerminkan nilai keteladanan...",
+    options: [
+      "Toleransi — karena ia bekerja bersama ilmuwan dari berbagai agama",
+      "Seni pangkal keindahan — karena karyanya memiliki keindahan intelektual yang tinggi",
+      "Literasi pangkal kemajuan — karena karya-karyanya dalam matematika lahir dari tradisi keilmuan dan literasi yang kuat, dan kemudian berkembang menjadi ilmu pengetahuan modern", // Benar
+      "Amanah — karena ia bekerja dengan jujur dan bertanggung jawab kepada para khalifah"
+    ],
+    answer: 2,
+    explanation: "Kisah al-Khawarizmi mencerminkan nilai 'literasi pangkal kemajuan'."
+  },
+  // ── Soal 24 (Target D) ──
+  {
+    type: "Penerapan & Analisis",
+    text: "Seorang siswa rajin membaca buku dari berbagai disiplin ilmu, aktif berdiskusi dengan teman-teman dari latar belakang agama berbeda, dan senang mengikuti kegiatan seni di sekolah. Perilaku siswa ini paling selaras dengan tiga semangat keteladanan Bab 5, yaitu...",
+    options: [
+      "Jihad, dakwah, dan hijrah",
+      "Amanah, jujur, dan toleran",
+      "Disiplin, penuh harap kepada Allah, dan kepedulian sosial",
+      "Literasi pangkal kemajuan, toleransi pangkal keharmonisan, dan seni pangkal keindahan" // Benar
+    ],
+    answer: 3,
+    explanation: "Perilaku siswa tersebut mencerminkan ketiga semangat keteladanan Bab 5: literasi, toleransi, dan seni."
+  },
+  // ── Soal 25 (Target A) ──
+  {
+    type: "Penerapan & Analisis",
+    text: "Rangkuman Bab 5 menyebutkan tiga poin utama. Manakah pernyataan yang PALING TEPAT menggambarkan isi keseluruhan rangkuman tersebut?",
+    options: [
+      "Daulah Abbasiyah membangun Baghdad sebagai pusat peradaban (seni dan budaya) sekaligus pusat ilmu pengetahuan dunia melalui Bayt al-Ḥikmah, yang dicapai melalui semangat toleransi dan keharmonisan intelektual antar agama", // Benar
+      "Bani Abbasiyah berhasil membangun peradaban Islam yang berpusat di Mekah dan Madinah dengan ilmu pengetahuan sebagai fondasi utamanya",
+      "Masa keemasan Islam ditandai oleh kemenangan Bani Abbasiyah atas Bani Umayah dan pembangunan militer yang kuat",
+      "Bayt al-Ḥikmah hanya berhasil karena dukungan penuh dari umat Islam tanpa keterlibatan pemeluk agama lain"
+    ],
+    answer: 0,
+    explanation: "Pilihan A merangkum poin utama dengan tepat: Baghdad sebagai pusat peradaban, Bayt al-Ḥikmah sebagai pusat ilmu, dan semangat toleransi sebagai kunci keberhasilannya."
+  }
+];
+
+// ═══════════════════════════════════════════════════════
+// ALGORITMA ACAK SOAL
+// ═══════════════════════════════════════════════════════
+function shuffleNoAdjacent(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  for (let pass = 0; pass < 500; pass++) {
+    let clean = true;
+    for (let i = 0; i < arr.length - 1; i++) {
+      if (arr[i].answer === arr[i + 1].answer) {
+        clean = false;
+        let swapped = false;
+        for (let k = i + 2; k < arr.length; k++) {
+          const ansK = arr[k].answer;
+          const ansBefore = (i > 0) ? arr[i - 1].answer : -1;
+          const ansAfter = (k < arr.length - 1) ? arr[k + 1].answer : -1;
+          if (ansK !== arr[i].answer && ansK !== ansAfter && ansK !== ansBefore) {
+            [arr[i + 1], arr[k]] = [arr[k], arr[i + 1]];
+            swapped = true;
+            break;
+          }
+        }
+        if (!swapped) {
+          for (let k = i + 2; k < arr.length; k++) {
+            const ansK = arr[k].answer;
+            const ansBefore = (i > 0) ? arr[i - 1].answer : -1;
+            const ansAfterI = arr[i + 1].answer;
+            const ansAfterK = (k < arr.length - 1) ? arr[k + 1].answer : -1;
+            if (ansK !== ansAfterI && ansK !== ansBefore &&
+                arr[i].answer !== ansAfterK && arr[i].answer !== ansBefore) {
+              [arr[i], arr[k]] = [arr[k], arr[i]];
+              swapped = true;
+              break;
+            }
+          }
+        }
+      }
+    }
+    if (clean) break;
+  }
+}
+
+// ═══════════════════════════════════════════════════════
+// STATE & RENDER
+// ═══════════════════════════════════════════════════════
+let scoreCorrect = 0;
+let scoreWrong = 0;
+let answered = [];
+
+function typeClass(type) {
+  if (type.includes("Hafalan")) return "t-hafalan";
+  if (type.includes("Pemahaman")) return "t-pemahaman";
+  return "t-penerapan";
+}
+
+function renderAll() {
+  const box = document.getElementById("questions-container");
+  const labels = ["A", "B", "C", "D"];
+  let html = "";
+
+  questions.forEach((q, i) => {
+    html += `<div class="q-card" id="qcard-${i}" data-type="${q.type}">`;
+    html += `<div class="q-header">
+      <span class="q-type-badge ${typeClass(q.type)}">${q.type}</span>
+      <span class="q-num">Soal ${i + 1} dari ${questions.length}</span>
+    </div>`;
+    html += `<div class="q-text">${q.text}</div>`;
+    html += `<div class="q-options" id="opts-${i}">`;
+    q.options.forEach((opt, j) => {
+      html += `<button class="opt-btn" id="opt-${i}-${j}" onclick="pickAnswer(${i},${j})">
+        <span class="opt-label">${labels[j]}</span>
+        <span>${opt}</span>
+      </button>`;
+    });
+    html += `</div>`;
+    html += `<div class="q-feedback" id="fb-${i}"></div>`;
+    html += `</div>`;
+  });
+
+  box.innerHTML = html;
+  renderDistBar();
+}
+
+function renderDistBar() {
+  const counts = [0, 0, 0, 0];
+  questions.forEach(q => counts[q.answer]++);
+  const total = questions.length;
+  const colors = ["var(--teal)", "#0284c7", "var(--gold)", "var(--rose)"];
+  let html = "";
+  counts.forEach((c, i) => {
+    html += `<div style="width:${(c / total * 100)}%;background:${colors[i]}"></div>`;
+  });
+  document.getElementById("dist-bar").innerHTML = html;
+}
+
+// ═══════════════════════════════════════════════════════
+// LOGIKA JAWAB
+// ═══════════════════════════════════════════════════════
+function pickAnswer(qi, oi) {
+  if (answered[qi]) return;
+  answered[qi] = true;
+
+  const q = questions[qi];
+  const isCorrect = (oi === q.answer);
+  if (isCorrect) scoreCorrect++; else scoreWrong++;
+
+  const labels = ["A", "B", "C", "D"];
+
+  q.options.forEach((_, j) => {
+    const btn = document.getElementById(`opt-${qi}-${j}`);
+    btn.disabled = true;
+    if (j === q.answer) {
+      btn.classList.add("correct");
+    } else if (j === oi && !isCorrect) {
+      btn.classList.add("wrong");
+    } else {
+      btn.classList.add("dimmed");
+    }
+  });
+
+  const card = document.getElementById(`qcard-${qi}`);
+  card.classList.add(isCorrect ? "answered-correct" : "answered-wrong");
+
+  const fb = document.getElementById(`fb-${qi}`);
+  fb.className = "q-feedback show " + (isCorrect ? "fb-correct" : "fb-wrong");
+  if (isCorrect) {
+    fb.innerHTML = `<strong>✅ Benar! Jawaban kamu tepat.</strong>${q.explanation}`;
+  } else {
+    fb.innerHTML = `<strong>❌ Salah. Jawaban yang benar adalah <u>${labels[q.answer]}</u>.</strong>${q.explanation}`;
+  }
+
+  updateProgress();
+
+  if (answered.every(a => a)) {
+    setTimeout(() => openResult(), 900);
+  }
+}
+
+function updateProgress() {
+  const done = answered.filter(a => a).length;
+  const total = questions.length;
+  const pct = Math.round((done / total) * 100);
+  document.getElementById("prog-label").textContent = `${done} dari ${total} soal dijawab`;
+  document.getElementById("prog-fill").style.width = pct + "%";
+  document.getElementById("chip-g").textContent = "✅ " + scoreCorrect;
+  document.getElementById("chip-r").textContent = "❌ " + scoreWrong;
+}
+
+// ═══════════════════════════════════════════════════════
+// MODAL HASIL
+// ═══════════════════════════════════════════════════════
+function openResult() {
+  if (!answered.every(a => a)) return;
+
+  const nama = document.getElementById("inp-nama").value.trim() || "Peserta";
+  const kelas = document.getElementById("inp-kelas").value.trim();
+  const pct = Math.round((scoreCorrect / questions.length) * 100);
+
+  let emoji, predikat, prColor;
+  if (pct >= 90)      { emoji = "🏆"; predikat = "Sangat Baik (A)"; prColor = "#22c55e"; }
+  else if (pct >= 75) { emoji = "⭐"; predikat = "Baik (B)"; prColor = "#0d9488"; }
+  else if (pct >= 60) { emoji = "👍"; predikat = "Cukup (C)"; prColor = "#f59e0b"; }
+  else if (pct >= 40) { emoji = "📚"; predikat = "Kurang (D)"; prColor = "#f97316"; }
+  else                { emoji = "💪"; predikat = "Sangat Kurang (E)"; prColor = "#f43f5e"; }
+
+  let motivasi;
+  if (pct >= 90) {
+    motivasi = `<strong>Masya Allah, luar biasa!</strong> Kamu sudah menguasai materi Bab 5 tentang peradaban Abbasiyah dengan sangat baik. Semangat literasi dan toleransi yang kamu pelajari akan menjadi bekal berharga. Pertahankan semangat belajarmu!`;
+  } else if (pct >= 75) {
+    motivasi = `<strong>Hebat sekali!</strong> Pemahaman kamu tentang sejarah Baghdad dan Bayt al-Ḥikmah sudah sangat baik. Sedikit lagi menuai kesempurnaan. Terus asah pengetahuanmu!`;
+  } else if (pct >= 60) {
+    motivasi = `<strong>Cukup baik!</strong> Kamu mulai memahami pentingnya produktivitas dan literasi. Pelajari kembali kisah para ilmuwan Abbasiyah agar inspirasinya lebih melekat dalam hati.`;
+  } else if (pct >= 40) {
+    motivasi = `<strong>Jangan berkecil hati!</strong> Sejarah peradaban Islam sangat kaya. Coba baca kembali materi Bab 5 dengan teliti, perhatikan kontribusi al-Khawarizmi dan kisah toleransi di Bayt al-Ḥikmah.`;
+  } else {
+    motivasi = `<strong>Tetap semangat!</strong> Memahami sejarah membutuhkan ketelitian. Mulai dari membaca ulang subbab tentang Masa Keemasan Islam, niscaya kamu akan menemukan keindahan ilmu pengetahuan di dalamnya.`;
+  }
+
+  document.getElementById("r-emoji").textContent = emoji;
+  document.getElementById("r-name").textContent = nama;
+  document.getElementById("r-class").textContent = kelas ? "Kelas " + kelas : "";
+  document.getElementById("r-score").textContent = pct;
+  document.getElementById("r-correct").textContent = scoreCorrect;
+  document.getElementById("r-wrong").textContent = scoreWrong;
+
+  const pr = document.getElementById("r-predikat");
+  pr.textContent = predikat;
+  pr.style.background = prColor + "22";
+  pr.style.color = prColor;
+
+  document.getElementById("r-motivasi").innerHTML = motivasi;
+
+  const confettiBox = document.getElementById("confetti-box");
+  confettiBox.innerHTML = "";
+  if (pct >= 75) {
+    const colors = ["#22c55e", "#f59e0b", "#0d9488", "#f43f5e", "#3b82f6", "#a855f7", "#ec4899"];
+    for (let c = 0; c < 50; c++) {
+      const el = document.createElement("div");
+      el.className = "confetti";
+      el.style.left = Math.random() * 100 + "%";
+      el.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+      el.style.animationDelay = (Math.random() * 2) + "s";
+      el.style.animationDuration = (2 + Math.random() * 2.5) + "s";
+      const size = 6 + Math.random() * 6;
+      el.style.width = size + "px";
+      el.style.height = size + "px";
+      el.style.borderRadius = Math.random() > 0.5 ? "50%" : "2px";
+      confettiBox.appendChild(el);
+    }
+  }
+
+  document.getElementById("result-overlay").classList.add("show");
+}
+
+function closeResult() {
+  document.getElementById("result-overlay").classList.remove("show");
+  document.getElementById("btn-show-result").style.display = "block";
+}
+
+function restart() {
+  scoreCorrect = 0;
+  scoreWrong = 0;
+  document.getElementById("inp-nama").value = "";
+  document.getElementById("inp-kelas").value = "";
+  document.getElementById("result-overlay").classList.remove("show");
+  document.getElementById("btn-show-result").style.display = "none";
+  shuffleNoAdjacent(questions);
+  answered = new Array(questions.length).fill(false);
+  updateProgress();
+  renderAll();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+// ═══════════════════════════════════════════════════════
+// INISIALISASI
+// ═══════════════════════════════════════════════════════
+shuffleNoAdjacent(questions);
+answered = new Array(questions.length).fill(false);
+renderAll();
+updateProgress();
+</script>
+
+  <footer class="main-footer">
+    <div class="footer-container">
+        <div class="footer-left">
+            <select onchange="location = this.value;">
+                <option value="">Pindah ke...</option>
+                <option value="index.html">🏠 Beranda Utama</option>
+                <option value="bab1.html">Bab 1</option>
+                <option value="bab2.html">Bab 2</option>
+                <option value="bab3.html">Bab 3</option>
+                <option value="bab4.html">Bab 4</option>
+                <option value="bab5.html">Bab 5</option>
+                <option value="bab6.html">Bab 6</option>
+                <option value="bab7.html">Bab 7</option>
+                <option value="bab8.html">Bab 8</option>
+                <option value="bab9.html">Bab 9</option>
+                <option value="bab10.html">Bab 10</option>
+            </select>
+        </div>
+        <div class="footer-right">
+            <p>Copyright 2026 by @just.muhammad</p>
+        </div>
+    </div>
+</footer>
+</body>
+</html>
+
