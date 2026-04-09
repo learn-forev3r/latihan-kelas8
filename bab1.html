@@ -235,6 +235,51 @@
     .r-score{font-size:42px;}
     .identity-card{padding:18px 16px;}
   }
+
+  /* --- PERBAIKAN FOOTER BY MENTOR --- */
+.main-footer {
+    background-color: #1e293b !important; /* Warna gelap modern */
+    color: white !important;
+    padding: 12px 0 !important;
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    z-index: 9999 !important; /* Supaya tidak tertutup elemen soal */
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.2);
+    font-family: 'Nunito', sans-serif;
+}
+
+.footer-container {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    max-width: 1000px;
+    margin: 0 auto !important;
+    padding: 0 20px !important;
+}
+
+.footer-left select {
+    padding: 6px 10px !important;
+    border-radius: 8px !important;
+    border: 1px solid #475569 !important;
+    background: #334155 !important;
+    color: white !important;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.footer-right p {
+    margin: 0 !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    color: #cbd5e1 !important;
+}
+
+/* Supaya konten soal paling bawah tidak tertutup footer */
+body {
+    padding-bottom: 70px !important;
+}
 </style>
 </head>
 <body>
@@ -789,11 +834,11 @@ renderAll();
 updateProgress();
 </script>
 
-<link rel="stylesheet" href="style.css"> <footer class="main-footer">
+<footer class="main-footer">
     <div class="footer-container">
         <div class="footer-left">
             <select onchange="location = this.value;">
-                <option value="">Lanjut ke...</option>
+                <option value="">Pindah ke...</option>
                 <option value="index.html">🏠 Beranda Utama</option>
                 <option value="bab1.html">Bab 1</option>
                 <option value="bab2.html">Bab 2</option>
