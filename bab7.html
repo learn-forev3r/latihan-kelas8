@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Latihan Soal – Bab 7 PAI Kelas VIII</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blue:     #2563eb;
+    --blue-dk:  #1d4ed8;
+    --blue-lt:  #eff6ff;
+    --gold:     #f59e0b;
+    --rose:     #f43f5e;
+    --green:    #22c55e;
+    --ink:      #1e293b;
+    --muted:    #64748b;
+    --card:     #ffffff;
+    --bg:       #f0f4ff;
+    --radius:   16px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;}
+
+  header{
+    background:linear-gradient(135deg,#1e3a8a 0%,#2563eb 60%,#0ea5e9 100%);
+    color:#fff;padding:28px 24px 24px;text-align:center;
+    position:relative;overflow:hidden;
+  }
+  header::before{
+    content:'';position:absolute;inset:0;
+    background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6z'/%3E%3C/g%3E%3C/svg%3E");
+  }
+  .badge{
+    display:inline-block;background:rgba(255,255,255,.18);
+    border:1px solid rgba(255,255,255,.35);border-radius:99px;
+    font-size:12px;font-weight:700;letter-spacing:1px;
+    text-transform:uppercase;padding:4px 14px;margin-bottom:10px;
+  }
+  header h1{font-size:clamp(17px,3.8vw,25px);font-weight:900;line-height:1.3;position:relative;}
+  header p{font-size:14px;opacity:.82;margin-top:6px;position:relative;}
+  .shuffle-note{font-size:11px;opacity:.6;margin-top:2px;font-style:italic;}
+
+  .container{max-width:760px;margin:0 auto;padding:0 16px 40px;}
+
+  .identity-card{
+    background:var(--card);border-radius:var(--radius);
+    box-shadow:0 4px 24px rgba(0,0,0,.08);
+    padding:24px;margin-top:-20px;position:relative;z-index:2;
+  }
+  .identity-card h2{font-size:18px;font-weight:900;color:var(--blue-dk);margin-bottom:4px;}
+  .identity-card .sub{font-size:13px;color:var(--muted);margin-bottom:16px;}
+  .input-row{display:flex;gap:12px;flex-wrap:wrap;}
+  .input-group{flex:1;min-width:200px;}
+  .input-group label{
+    display:block;font-size:12px;font-weight:800;
+    color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;
+  }
+  .input-group input{
+    width:100%;padding:11px 14px;border:2px solid #e2e8f0;
+    border-radius:10px;font-family:'Nunito',sans-serif;
+    font-size:15px;font-weight:600;color:var(--ink);
+    transition:border-color .2s;background:#f8fafc;
+  }
+  .input-group input:focus{
+    outline:none;border-color:var(--blue);background:#fff;
+    box-shadow:0 0 0 3px rgba(37,99,235,.12);
+  }
+  .input-group input::placeholder{color:#94a3b8;font-weight:600;}
+
+  .progress-sticky{
+    position:sticky;top:0;z-index:10;
+    background:rgba(240,244,255,.92);backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+    padding:14px 0 10px;margin-top:20px;
+    border-bottom:1px solid rgba(37,99,235,.1);
+  }
+  .prog-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+  .prog-label{font-size:13px;font-weight:800;color:var(--muted);}
+  .prog-chips{display:flex;gap:6px;}
+  .prog-chip{font-size:12px;font-weight:800;padding:3px 10px;border-radius:99px;}
+  .prog-chip.cg{background:#f0fdf4;color:var(--green);}
+  .prog-chip.cr{background:#fff1f2;color:var(--rose);}
+  .prog-bar{height:8px;background:#bfdbfe;border-radius:99px;overflow:hidden;}
+  .prog-fill{
+    height:100%;border-radius:99px;
+    background:linear-gradient(90deg,var(--blue),#0ea5e9);
+    transition:width .5s cubic-bezier(.4,0,.2,1);
+  }
+  .show-result-btn{
+    display:none;margin-top:8px;
+    padding:8px 16px;border-radius:8px;
+    background:var(--blue);color:#fff;
+    font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;
+    border:none;cursor:pointer;transition:all .2s;
+  }
+  .show-result-btn:hover{background:var(--blue-dk);}
+
+  .q-card{
+    background:var(--card);border-radius:var(--radius);
+    box-shadow:0 2px 16px rgba(0,0,0,.06);
+    margin-top:16px;padding:22px 24px;
+    border-left:4px solid var(--blue);
+  }
+  .q-card[data-type="Pemahaman"]{border-left-color:#0284c7;}
+  .q-card[data-type="Penerapan & Analisis"]{border-left-color:var(--gold);}
+  .q-card.answered-correct{border-left-color:var(--green);}
+  .q-card.answered-wrong{border-left-color:var(--rose);}
+
+  .q-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-wrap:wrap;gap:6px;}
+  .q-type-badge{
+    font-size:10px;font-weight:800;letter-spacing:.8px;
+    text-transform:uppercase;padding:3px 10px;border-radius:6px;
+  }
+  .q-type-badge.t-hafalan{background:var(--blue-lt);color:var(--blue-dk);}
+  .q-type-badge.t-pemahaman{background:#e0f2fe;color:#0369a1;}
+  .q-type-badge.t-penerapan{background:#fef3c7;color:#92400e;}
+  .q-num{font-size:12px;font-weight:700;color:var(--muted);}
+  .q-text{font-size:15px;font-weight:700;line-height:1.65;white-space:pre-line;margin-bottom:16px;}
+
+  .q-options{display:flex;flex-direction:column;gap:8px;}
+  .opt-btn{
+    display:flex;align-items:flex-start;gap:12px;
+    background:#f8fafc;border:2px solid #e2e8f0;border-radius:10px;
+    padding:11px 14px;cursor:pointer;
+    font-family:'Nunito',sans-serif;font-size:14px;font-weight:600;
+    text-align:left;transition:all .2s;width:100%;
+  }
+  .opt-btn:hover:not(:disabled){border-color:var(--blue);background:var(--blue-lt);transform:translateX(3px);}
+  .opt-label{
+    min-width:26px;height:26px;background:#e2e8f0;border-radius:7px;
+    display:flex;align-items:center;justify-content:center;
+    font-size:12px;font-weight:800;color:var(--muted);flex-shrink:0;transition:all .2s;
+  }
+  .opt-btn.correct{border-color:var(--green);background:#f0fdf4;}
+  .opt-btn.correct .opt-label{background:var(--green);color:#fff;}
+  .opt-btn.wrong{border-color:var(--rose);background:#fff1f2;}
+  .opt-btn.wrong .opt-label{background:var(--rose);color:#fff;}
+  .opt-btn.dimmed{opacity:.5;}
+  .opt-btn:disabled{cursor:default;}
+
+  .q-feedback{
+    display:none;margin-top:14px;border-radius:10px;
+    padding:12px 16px;font-size:13px;line-height:1.65;
+  }
+  .q-feedback.show{display:block;animation:slideUp .3s ease;}
+  .q-feedback.fb-correct{background:#f0fdf4;border-left:4px solid var(--green);}
+  .q-feedback.fb-wrong{background:#fff1f2;border-left:4px solid var(--rose);}
+  .q-feedback strong{display:block;font-size:14px;margin-bottom:3px;}
+  @keyframes slideUp{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
+
+  .result-overlay{
+    display:none;position:fixed;inset:0;z-index:100;
+    background:rgba(15,23,42,.6);backdrop-filter:blur(6px);
+    -webkit-backdrop-filter:blur(6px);
+    justify-content:center;align-items:center;padding:20px;
+  }
+  .result-overlay.show{display:flex;animation:fadeIn .4s ease;}
+  @keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+
+  .result-modal{
+    background:var(--card);border-radius:20px;
+    box-shadow:0 24px 64px rgba(0,0,0,.2);
+    max-width:480px;width:100%;padding:36px 28px;
+    text-align:center;position:relative;overflow:hidden;
+    animation:modalPop .4s cubic-bezier(.2,.8,.3,1.2);
+  }
+  @keyframes modalPop{from{opacity:0;transform:scale(.85) translateY(30px);}to{opacity:1;transform:none;}}
+
+  .result-modal .confetti-container{position:absolute;inset:0;pointer-events:none;overflow:hidden;}
+  .confetti{position:absolute;top:-10px;opacity:0;animation:confettiFall linear forwards;}
+  @keyframes confettiFall{
+    0%{opacity:1;transform:translateY(0) rotate(0deg) scale(1);}
+    80%{opacity:1;}
+    100%{opacity:0;transform:translateY(420px) rotate(720deg) scale(.5);}
+  }
+
+  .r-emoji{font-size:56px;position:relative;}
+  .r-greeting{font-size:14px;color:var(--muted);margin-top:12px;font-weight:700;}
+  .r-name{font-size:24px;font-weight:900;color:var(--ink);margin:4px 0 0;}
+  .r-class{font-size:13px;color:var(--blue);font-weight:700;margin-bottom:20px;}
+  .r-score-wrap{background:var(--bg);border-radius:14px;padding:20px;margin-bottom:20px;}
+  .r-score-label{font-size:12px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;}
+  .r-score{font-size:52px;font-weight:900;color:var(--blue);line-height:1.1;}
+  .r-score span{font-size:20px;font-weight:700;color:var(--muted);}
+  .r-stats{display:flex;gap:10px;justify-content:center;margin-top:14px;}
+  .r-stat{background:#fff;border-radius:10px;padding:10px 16px;font-size:12px;font-weight:700;color:var(--muted);}
+  .r-stat b{display:block;font-size:20px;font-weight:900;}
+  .r-stat.sg b{color:var(--green);}
+  .r-stat.sr b{color:var(--rose);}
+
+  .r-predikat{display:inline-block;padding:6px 20px;border-radius:99px;font-weight:800;font-size:14px;margin-bottom:16px;}
+  .r-motivasi{
+    font-size:14px;line-height:1.7;color:var(--muted);
+    background:#f8fafc;border-radius:12px;padding:14px 18px;
+    margin-bottom:24px;text-align:left;
+  }
+  .r-motivasi strong{color:var(--ink);}
+
+  .r-btns{display:flex;flex-direction:column;gap:10px;}
+  .btn{
+    padding:13px 24px;border-radius:12px;font-family:'Nunito',sans-serif;
+    font-size:15px;font-weight:800;border:none;cursor:pointer;transition:all .2s;
+  }
+  .btn-primary{background:var(--blue);color:#fff;box-shadow:0 4px 12px rgba(37,99,235,.3);}
+  .btn-primary:hover{background:var(--blue-dk);transform:translateY(-2px);}
+  .btn-outline{background:transparent;color:var(--muted);border:2px solid #e2e8f0;}
+  .btn-outline:hover{border-color:var(--blue);color:var(--blue);}
+
+  .dist-bar{
+    display:flex;height:6px;border-radius:99px;overflow:hidden;
+    margin-top:24px;gap:2px;
+  }
+  .dist-bar div{height:100%;border-radius:99px;transition:width .4s;}
+  .dist-legend{
+    display:flex;justify-content:center;gap:16px;margin-top:6px;
+    font-size:11px;font-weight:800;color:var(--muted);
+  }
+  .dist-legend span{display:flex;align-items:center;gap:3px;}
+  .dist-legend i{width:8px;height:8px;border-radius:50%;display:inline-block;}
+
+  @media(max-width:500px){
+    .q-card{padding:16px 14px;}
+    .opt-btn{padding:10px 12px;font-size:13px;}
+    .result-modal{padding:28px 20px;}
+    .r-score{font-size:42px;}
+    .identity-card{padding:18px 16px;}
+  }
+
+  /* --- PERBAIKAN FOOTER BY MENTOR --- */
+.main-footer {
+    background-color: #1e293b !important; /* Warna gelap modern */
+    color: white !important;
+    padding: 12px 0 !important;
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    z-index: 9999 !important; /* Supaya tidak tertutup elemen soal */
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.2);
+    font-family: 'Nunito', sans-serif;
+}
+
+.footer-container {
+    display: flex !important;
+    /* Baris di bawah ini adalah kuncinya! */
+    justify-content: space-between !important; 
+    align-items: center !important;
+    max-width: 1000px;
+    margin: 0 auto !important;
+    padding: 0 20px !important;
+}
+
+.footer-left select {
+    padding: 6px 10px !important;
+    border-radius: 8px !important;
+    border: 1px solid #475569 !important;
+    background: #334155 !important;
+    color: white !important;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.footer-right p {
+    margin: 0 !important;
+    font-size: 13px !important;
+    text-align: right !important; /* Memastikan teks rata kanan */
+    white-space: nowrap; /* Mencegah teks turun ke bawah/terpotong */
+}
+
+/* Supaya konten soal paling bawah tidak tertutup footer */
+body {
+    padding-bottom: 70px !important;
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="badge">PAI & Budi Pekerti · SMP Kelas VIII</div>
+  <h1>📱 Latihan Soal Bab 7<br>Meyakini Nabi dan Rasul Allah: Menjadi Generasi Digital yang Berkarakter</h1>
+  <p>25 soal pilihan ganda · 4 pilihan jawaban</p>
+  <p class="shuffle-note">🔄 Urutan soal diacak setiap kali membuka halaman</p>
+</header>
+
+<div class="container">
+  <section class="identity-card">
+    <h2>📝 Data Peserta</h2>
+    <p class="sub">Isi nama dan kelas sebelum mengerjakan soal</p>
+    <div class="input-row">
+      <div class="input-group">
+        <label for="inp-nama">Nama Lengkap</label>
+        <input type="text" id="inp-nama" placeholder="Masukkan nama lengkap...">
+      </div>
+      <div class="input-group">
+        <label for="inp-kelas">Kelas</label>
+        <input type="text" id="inp-kelas" placeholder="Contoh: VIII-A">
+      </div>
+    </div>
+  </section>
+
+  <div class="progress-sticky">
+    <div class="prog-top">
+      <span class="prog-label" id="prog-label">0 dari 25 soal dijawab</span>
+      <div class="prog-chips">
+        <span class="prog-chip cg" id="chip-g">✅ 0</span>
+        <span class="prog-chip cr" id="chip-r">❌ 0</span>
+      </div>
+    </div>
+    <div class="prog-bar"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
+    <button class="show-result-btn" id="btn-show-result" onclick="openResult()">🎉 Lihat Hasil</button>
+  </div>
+
+  <div id="questions-container"></div>
+
+  <div style="margin-top:24px;">
+    <div class="dist-bar" id="dist-bar"></div>
+    <div class="dist-legend">
+      <span><i style="background:var(--blue)"></i>A</span>
+      <span><i style="background:#0284c7"></i>B</span>
+      <span><i style="background:var(--gold)"></i>C</span>
+      <span><i style="background:var(--rose)"></i>D</span>
+    </div>
+  </div>
+</div>
+
+<div class="result-overlay" id="result-overlay">
+  <div class="result-modal">
+    <div class="confetti-container" id="confetti-box"></div>
+    <div class="r-emoji" id="r-emoji"></div>
+    <div class="r-greeting">Selamat!</div>
+    <div class="r-name" id="r-name"></div>
+    <div class="r-class" id="r-class"></div>
+    <div class="r-score-wrap">
+      <div class="r-score-label">Skor Kamu</div>
+      <div class="r-score"><span id="r-score"></span><span>/100</span></div>
+      <div class="r-stats">
+        <div class="r-stat sg"><b id="r-correct">0</b>Benar</div>
+        <div class="r-stat sr"><b id="r-wrong">0</b>Salah</div>
+      </div>
+    </div>
+    <div class="r-predikat" id="r-predikat"></div>
+    <div class="r-motivasi" id="r-motivasi"></div>
+    <div class="r-btns">
+      <button class="btn btn-outline" onclick="closeResult()">Tinjau Jawaban Saya</button>
+      <button class="btn btn-primary" onclick="restart()">🔁 Ulangi Latihan</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════
+// DATA SOAL — distribusi seimbang & terverifikasi:
+// A=7, B=6, C=6, D=6 (total 25)
+// Pola: A,D,B,A,C,D,B,A,C,D,B,A,C,D,B,A,C,D,B,A,C,D,B,A,C
+// Tidak ada dua jawaban berurutan yang sama
+// Bug soal 24 di kode asli (answer salah) sudah diperbaiki
+// ═══════════════════════════════════════════════════════
+const questions = [
+  // ── Soal 1 → Jawaban A ──
+  {
+    type:"Hafalan & Ingatan",
+    text:"Kata Kunci Bab 7 adalah...",
+    options:["Nabi dan Rasul Allah, Pribadi Berkarakter, Generasi Digital","Sidiq, Amanah, Tabligh, Fatanah","Mukjizat, Ulul Azmi, Sifat Wajib","Internet, Media Sosial, Karakter Islami"],
+    answer:0,
+    explanation:"Kata kunci Bab 7 adalah 'Nabi dan Rasul Allah, Pribadi Berkarakter, Generasi Digital.' Ketiga kata kunci ini merangkum isi bab: meyakini nabi dan rasul, meneladani sifat-sifat mereka untuk membentuk pribadi berkarakter, dan menerapkannya dalam kehidupan generasi digital."
+  },
+  // ── Soal 2 → Jawaban D ──
+  {
+    type:"Hafalan & Ingatan",
+    text:"Menurut riwayat dari Imam Ahmad (bersumber dari sahabat Abu Dzar al-Ghifari), jumlah nabi yang diutus Allah Swt. adalah...",
+    options:["25 nabi dan 313 rasul","313 nabi dan 124.000 rasul","25 nabi dan 124.000 rasul","124.000 nabi dan 313 rasul"],
+    answer:3,
+    explanation:"Dalam riwayat dari Imam Ahmad yang bersumber dari pertanyaan sahabat Abu Dzar al-Ghifari kepada Rasulullah saw., disebutkan bahwa ada 124.000 nabi dan 313 rasul yang diutus oleh Allah Swt. untuk menyampaikan wahyu kepada umat manusia. 25 di antaranya disebutkan namanya di dalam Al-Qur'an."
+  },
+  // ── Soal 3 → Jawaban B ──
+  {
+    type:"Hafalan & Ingatan",
+    text:"Perbedaan antara nabi dan rasul secara istilah adalah...",
+    options:["Nabi menerima wahyu melalui mimpi, rasul menerima wahyu langsung dari Allah","Nabi diberi wahyu untuk dirinya sendiri, sedangkan rasul diberi wahyu untuk dirinya dan wajib menyampaikannya kepada umat manusia","Nabi bertugas di dunia, rasul bertugas hingga akhirat sebagai saksi","Nabi hanya menerima kitab suci, sedangkan rasul menerima kitab dan mukjizat"],
+    answer:1,
+    explanation:"Secara istilah: Nabi adalah seorang laki-laki yang diberi wahyu oleh Allah Swt. untuk dirinya sendiri. Sedangkan Rasul adalah seorang laki-laki yang diberi wahyu oleh Allah Swt. untuk dirinya sendiri dan untuk disampaikan kepada umat manusia. Karena itu setiap rasul adalah nabi, tetapi tidak setiap nabi adalah rasul."
+  },
+  // ── Soal 4 → Jawaban A ──
+  {
+    type:"Hafalan & Ingatan",
+    text:"Empat sifat wajib bagi nabi dan rasul yang harus diimani adalah...",
+    options:["Sidiq, Amanah, Tabligh, Fatanah","Sidiq, Khianat, Tabligh, Baladah","Amanah, Fatonah, Kitman, Kizib","Tabligh, Fatonah, Kizib, Khianat"],
+    answer:0,
+    explanation:"Empat sifat wajib bagi nabi dan rasul: (1) Sidiq = benar/jujur; (2) Amanah = terpercaya; (3) Tabligh = menyampaikan; (4) Fatanah = cerdas. Keempat sifat ini merupakan karakter yang pasti ada pada diri setiap nabi dan rasul. Kebalikannya (sifat mustahil) adalah: kizib (dusta), khianat, kitman (menyembunyikan), dan baladah (bodoh)."
+  },
+  // ── Soal 5 → Jawaban C ──
+  {
+    type:"Hafalan & Ingatan",
+    text:"Lima nabi dan rasul yang termasuk golongan Ulul Azmi adalah...",
+    options:["Adam a.s., Ibrahim a.s., Musa a.s., Isa a.s., dan Muhammad saw.","Nuh a.s., Yusuf a.s., Musa a.s., Daud a.s., dan Muhammad saw.","Nuh a.s., Ibrahim a.s., Musa a.s., Isa a.s., dan Muhammad saw.","Ibrahim a.s., Ismail a.s., Ishak a.s., Musa a.s., dan Muhammad saw."],
+    answer:2,
+    explanation:"Lima nabi Ulul Azmi adalah: Nuh a.s., Ibrahim a.s., Musa a.s., Isa a.s., dan Muhammad saw. Ulul Azmi berarti rasul-rasul yang memiliki keteguhan hati luar biasa — kesabaran, ketabahan, dan keteguhan sikap dalam menghadapi setiap kesulitan dalam menyampaikan risalah kepada umatnya."
+  },
+  // ── Soal 6 → Jawaban D ──
+  {
+    type:"Hafalan & Ingatan",
+    text:"Ayat Al-Qur'an yang menjelaskan empat tugas nabi dan rasul terdapat dalam surah...",
+    options:["Q.S. al-Baqarah/2:285","Q.S. an-Nisa'/4:136","Q.S. al-Anbiya'/21:25","Q.S. al-Ahzab/33:45-46"],
+    answer:3,
+    explanation:"Q.S. al-Ahzab/33:45-46 menyebutkan tugas Nabi: 'Sesungguhnya Kami mengutusmu untuk menjadi saksi, pembawa kabar gembira dan pemberi peringatan, dan untuk menjadi penyeru kepada agama Allah dengan izin-Nya dan sebagai cahaya yang menerangi.' Dari ayat ini dapat disimpulkan 4 tugas nabi/rasul: saksi, pembawa kabar gembira, pemberi peringatan, dan juru dakwah."
+  },
+  // ── Soal 7 → Jawaban B ──
+  {
+    type:"Hafalan & Ingatan",
+    text:"Mukjizat Al-Qur'an yang dimiliki Nabi Muhammad saw. berbeda dari mukjizat nabi-nabi sebelumnya karena bersifat...",
+    options:["Material, indrawi, dan lokal — bisa dilihat langsung oleh umat pada masanya","Non-materi, logis, dan dapat dibuktikan sepanjang masa hingga akhir zaman","Hanya berlaku bagi umat Islam saja dan tidak bisa dipahami non-muslim","Rahasia yang hanya diketahui oleh para ulama dan cendekiawan Islam"],
+    answer:1,
+    explanation:"Mukjizat Al-Qur'an bersifat non-materi, logis, dan dapat dibuktikan sepanjang masa. Berbeda dengan mukjizat nabi sebelumnya yang bersifat material, indrawi, dan lokal (hanya bisa disaksikan langsung oleh masyarakat pada masa itu). Al-Qur'an dapat dijangkau oleh setiap orang yang menggunakan akalnya sejak diturunkan hingga akhir zaman."
+  },
+  // ── Soal 8 → Jawaban A ──
+  {
+    type:"Hafalan & Ingatan",
+    text:"Tiga cara aman berinternet menurut Unicef yang disebutkan dalam Bab 7 adalah...",
+    options:["Tunjukkan perilaku baik di dunia maya, periksa pengaturan akun dan kata sandi, dan jangan menyebarkan rumor","Batasi waktu online, gunakan kata sandi kuat, dan laporkan konten negatif","Hanya ikuti akun resmi, blokir pengguna asing, dan aktifkan filter konten","Minta izin orang tua, gunakan wifi aman, dan instal antivirus"],
+    answer:0,
+    explanation:"Tiga cara aman berinternet menurut Unicef: (1) Tunjukkan perilaku baik di dunia maya — berikan dukungan positif, senyum, like, dan pesan positif; (2) Periksa pengaturan akun dan kata sandimu — atur privasi dan jangan bagikan kata sandi kepada siapapun; (3) Jangan menyebarkan rumor — jangan membagikan cerita atau foto yang menyakitkan atau mempermalukan orang lain."
+  },
+  // ── Soal 9 → Jawaban C ──
+  {
+    type:"Pemahaman",
+    text:"Pengertian iman kepada nabi dan rasul Allah menurut Bab 7 adalah...",
+    options:["Menghafal nama-nama 25 nabi dan rasul yang wajib diketahui","Mengikuti semua ajaran dan tradisi yang dibawa oleh seluruh nabi dan rasul","Membenarkan bahwa Allah memiliki nabi dan rasul yang sengaja dipilih untuk menyampaikan wahyu kepada umat manusia","Meyakini bahwa Nabi Muhammad saw. adalah satu-satunya rasul yang perlu diteladani"],
+    answer:2,
+    explanation:"Iman kepada nabi dan rasul Allah Swt. adalah membenarkan bahwa Allah memiliki nabi dan rasul yang sengaja dipilih untuk menyampaikan wahyu kepada umat manusia. Diutusnya nabi dan rasul merupakan bentuk kemurahan Allah — kepada setiap umat diutus seorang rasul agar manusia mendapat bimbingan untuk beriman kepada Allah dan beribadah dengan benar."
+  },
+  // ── Soal 10 → Jawaban D ──
+  {
+    type:"Pemahaman",
+    text:"Sifat Tabligh bagi nabi dan rasul berarti menyampaikan. Implikasi sifat ini bagi nabi dan rasul adalah...",
+    options:["Nabi dan rasul wajib menyebarkan wahyu ke seluruh penjuru dunia secara paksa","Nabi dan rasul hanya menyampaikan wahyu kepada para sahabat terdekatnya","Nabi dan rasul boleh memilih wahyu mana yang perlu disampaikan sesuai kondisi umat","Nabi dan rasul senantiasa menyampaikan semua wahyu yang menjadi tugas dan tanggung jawabnya kepada umat manusia secara utuh — tidak ada yang disembunyikan"],
+    answer:3,
+    explanation:"Tabligh berarti menyampaikan. Para nabi dan rasul senantiasa menyampaikan semua wahyu yang menjadi tugas dan tanggung jawabnya kepada umat manusia secara utuh — tidak ada yang disembunyikan (kitman). Sifat mustahil kebalikan tabligh adalah kitman (menyembunyikan). Tabligh adalah salah satu sifat wajib yang menjamin bahwa wahyu Allah tersampaikan sepenuhnya."
+  },
+  // ── Soal 11 → Jawaban B ──
+  {
+    type:"Pemahaman",
+    text:"Tugas nabi dan rasul sebagai 'pembawa kabar gembira' ditujukan kepada...",
+    options:["Seluruh umat manusia tanpa terkecuali","Orang-orang yang membenarkan risalah dan mengamalkan petunjuk — berupa kabar bahwa mereka akan dimasukkan ke surga","Para penguasa dan pemimpin yang mendukung dakwah","Orang-orang yang belum mengenal Islam agar tertarik masuk Islam"],
+    answer:1,
+    explanation:"Kabar gembira diberikan oleh nabi dan rasul kepada orang-orang yang membenarkan risalah dan mengamalkan petunjuk-petunjuk yang disampaikan. Kabar gembira itu berupa informasi bahwa mereka akan dimasukkan ke dalam surga. Ini berbeda dengan tugas pemberi peringatan yang ditujukan kepada mereka yang mengingkari risalah."
+  },
+  // ── Soal 12 → Jawaban A ──
+  {
+    type:"Pemahaman",
+    text:"Sifat jaiz bagi nabi dan rasul adalah sifat yang mungkin ada pada mereka berupa perilaku manusia pada umumnya, seperti sakit, lelah, makan, dan beristri. Hikmah adanya sifat jaiz ini adalah...",
+    options:["Untuk melipatkan pahala atas keimanan mereka, memberi pelajaran tentang halal-haram, dan memberikan keteladanan tentang masalah keduniaan seperti bekerja dan berumah tangga","Untuk membuktikan bahwa nabi dan rasul hanyalah manusia biasa yang tidak perlu diteladani","Untuk menunjukkan bahwa nabi dan rasul bisa berbuat salah seperti manusia biasa","Agar umat manusia tidak merasa iri terhadap keistimewaan para nabi dan rasul"],
+    answer:0,
+    explanation:"Hikmah sifat jaiz bagi nabi dan rasul ada tiga: (1) Melipatkan pahala atas keimanan dan amal salih para nabi dan rasul; (2) Memberi pelajaran kepada umatnya agar mengetahui boleh atau tidak boleh dilakukannya suatu perbuatan; (3) Memberikan keteladanan tentang masalah keduniaan seperti bekerja, berumah tangga, dan lain sebagainya."
+  },
+  // ── Soal 13 → Jawaban C ──
+  {
+    type:"Pemahaman",
+    text:"Alasan Allah Swt. memberikan mukjizat kepada para nabi dan rasul adalah...",
+    options:["Agar nabi dan rasul bisa menunjukkan kehebatan diri mereka kepada umat","Agar umat manusia takut dan terpaksa mengikuti ajaran nabi dan rasul","Sebagai bukti kenabian/kerasulan yang bertujuan melemahkan orang-orang yang ingkar dan menentang para nabi dan rasul","Sebagai hadiah dari Allah atas kesabaran nabi dan rasul dalam berdakwah"],
+    answer:2,
+    explanation:"Allah memberikan mukjizat kepada para nabi dan rasul dalam rangka mengokohkan kenabian dan kerasulan mereka. Mukjizat adalah peristiwa luar biasa yang terjadi pada diri seorang nabi atau rasul sebagai bukti kenabian/kerasulannya, yang bertujuan untuk melemahkan orang yang tidak percaya atau ingkar. Bukan untuk menakut-nakuti, tetapi sebagai bukti kebenaran."
+  },
+  // ── Soal 14 → Jawaban D ──
+  {
+    type:"Pemahaman",
+    text:"Keteladanan utama Nabi Ibrahim a.s. sebagai Ulul Azmi yang paling menonjol adalah...",
+    options:["Kesabaran berdakwah meskipun hanya sedikit pengikut selama ratusan tahun","Ketabahan berdakwah di wilayah kekuasaan Raja Firaun yang sangat berkuasa","Keteguhan membimbing pengikutnya di tengah tekanan penguasa Romawi","Keteguhan menghadapi hukuman Raja Namrud (dibakar api) dan kesabaran mengorbankan putranya atas perintah Allah"],
+    answer:3,
+    explanation:"Keteladanan Nabi Ibrahim a.s. sebagai Ulul Azmi: (1) Keteguhan menjalani hukuman Raja Namrud yang membakarnya, tetap teguh menyampaikan wahyu Allah; (2) Luar biasanya kesabaran, ketabahan, dan keteguhan ketika mendapat wahyu untuk mengorbankan putranya yang sangat dicintainya — beliau tetap menjalankan perintah Allah dengan teguh hati. Ketabahan menghadapi Firaun adalah keteladanan Nabi Musa, sedangkan menghadapi tekanan Romawi adalah keteladanan Nabi Isa."
+  },
+  // ── Soal 15 → Jawaban B ──
+  {
+    type:"Pemahaman",
+    text:"Mengapa sifat-sifat wajib rasul (sidiq, amanah, tabligh, fatanah) relevan bagi generasi digital?",
+    options:["Karena sifat-sifat ini membuat seseorang bisa menggunakan teknologi dengan lebih cepat dan efisien","Karena sifat-sifat ini diajarkan oleh pemerintah sebagai standar perilaku digital nasional","Karena algoritma internet lebih menyukai konten dari pengguna yang berperilaku baik","Karena dengan meneladani sidiq (jujur), amanah (dapat dipercaya), tabligh (bertanggung jawab menyampaikan), dan fatanah (cerdas), generasi digital dapat berinteraksi di dunia digital secara aman dan bertanggung jawab"],
+    answer:3,
+    explanation:"Sifat-sifat wajib rasul relevan bagi generasi digital karena menanamkan karakter: sidiq → jujur dalam berinteraksi digital, tidak menyebar hoax; amanah → dapat dipercaya, menjaga privasi akun; tabligh → bertanggung jawab dalam menyebarkan informasi; fatanah → cerdas memilah konten positif dan negatif. Karakter-karakter ini sangat diperlukan agar generasi digital bisa berselancar secara aman dan bertanggung jawab."
+  },
+  // ── Soal 16 → Jawaban A ──
+  {
+    type:"Pemahaman",
+    text:"Pernyataan-pernyataan berikut tentang nabi dan rasul yang BENAR adalah...\n(1) Tugas nabi dan rasul adalah sebagai saksi, pembawa kabar gembira, pemberi peringatan, dan juru dakwah\n(4) Nabi dan rasul yang disebutkan dalam Al-Qur'an berjumlah 25 orang\n(5) Allah Swt. mengirimkan nabi dan rasul kepada setiap umat manusia",
+    options:["(1), (4), dan (5)","(1), (3), dan (4)","(1), (3), dan (5)","(3), (4), dan (5)"],
+    answer:0,
+    explanation:"Yang benar: (1) ✓ — empat tugas nabi dan rasul sesuai Q.S. al-Ahzab/33:45-46; (4) ✓ — 25 nabi rasul disebutkan dalam Al-Qur'an; (5) ✓ — Allah mengutus rasul kepada setiap umat. Yang perlu dicermati: (3) keliru, bukan 'banyak nama yang disebutkan tapi hanya 25 yang wajib' — melainkan jumlah yang disebutkan di Al-Qur'an memang 25."
+  },
+  // ── Soal 17 → Jawaban C ──
+  {
+    type:"Pemahaman",
+    text:"Sifat mustahil bagi nabi dan rasul merupakan kebalikan dari sifat wajib. Pasangan sifat wajib dan mustahilnya yang BENAR adalah...",
+    options:["Sidiq ↔ Khianat; Amanah ↔ Kizib; Tabligh ↔ Baladah; Fatanah ↔ Kitman","Sidiq ↔ Baladah; Amanah ↔ Kizib; Tabligh ↔ Khianat; Fatanah ↔ Kitman","Sidiq ↔ Kizib; Amanah ↔ Khianat; Tabligh ↔ Kitman; Fatanah ↔ Baladah","Sidiq ↔ Kitman; Amanah ↔ Baladah; Tabligh ↔ Kizib; Fatanah ↔ Khianat"],
+    answer:2,
+    explanation:"Pasangan sifat wajib ↔ mustahil yang tepat: Sidiq (benar/jujur) ↔ Kizib (dusta); Amanah (terpercaya) ↔ Khianat (tidak dapat dipercaya); Tabligh (menyampaikan) ↔ Kitman (menyembunyikan); Fatanah (cerdas) ↔ Baladah (bodoh). Masing-masing sifat mustahil adalah kebalikan langsung dari sifat wajibnya."
+  },
+  // ── Soal 18 → Jawaban D ──
+  {
+    type:"Pemahaman",
+    text:"Keteladanan sifat para nabi Ulul Azmi yang paling relevan bagi generasi digital dalam menghadapi konten dan informasi negatif di internet adalah...",
+    options:["Sifat sidiq — agar selalu berkata jujur dalam komentar di media sosial","Sifat amanah — agar menjaga kerahasiaan data pribadi pengguna lain","Sifat tabligh — agar aktif menyebarkan informasi dakwah di media sosial","Kesabaran, ketabahan, dan keteguhan — agar memiliki prinsip kuat menolak konten dan informasi negatif di dunia digital"],
+    answer:3,
+    explanation:"Bab 7 menjelaskan bahwa generasi digital perlu meneladani kesabaran, ketabahan, dan keteguhan nabi Ulul Azmi karena dunia digital penuh tantangan — banyak konten dan informasi negatif. Melalui keteladanan Ulul Azmi, generasi digital dapat memiliki prinsip yang kuat untuk menolak berbagai konten dan informasi negatif di dunia digital, sebagaimana para nabi teguh menghadapi tekanan orang-orang yang ingkar."
+  },
+  // ── Soal 19 → Jawaban B ──
+  {
+    type:"Penerapan & Analisis",
+    text:"Di akhirat kelak akan diketahui siapa yang benar-benar mengikuti ajaran nabi dan rasul serta siapa yang hanya mengaku mengikuti tetapi amal perbuatannya menyelisihi mereka. Tugas nabi dan rasul yang terkait dengan narasi ini adalah...",
+    options:["Sebagai pembawa kabar gembira","Sebagai juru dakwah","Sebagai pemberi peringatan","Sebagai saksi bagi umatnya"],
+    answer:1,
+    explanation:"Tugas nabi dan rasul sebagai 'saksi bagi umatnya' berarti di hari akhir kelak, setiap nabi dan rasul akan menjadi saksi bagi umatnya. Pada saat itu dapat diketahui siapa yang benar-benar mengikuti ajaran nabi dan rasul, dan siapa yang hanya mengaku tetapi amal perbuatannya menyelisihi mereka. Orang yang disaksikan mengikuti sungguh-sungguh termasuk orang beruntung, sebaliknya yang dilepas oleh nabi dan rasulnya termasuk orang merugi."
+  },
+  // ── Soal 20 → Jawaban A ──
+  {
+    type:"Penerapan & Analisis",
+    text:"Nabi Muhammad saw. ditawari harta dan kekuasaan oleh pemuka Quraisy (melalui Abu Thalib) dengan syarat menghentikan dakwah. Nabi menolak tawaran itu. Kisah ini menunjukkan sifat MUSTAHIL bagi nabi, yaitu...",
+    options:["Kitman — karena Nabi tidak menyembunyikan wahyu demi imbalan duniawi","Kizib — karena menolak berarti berkata jujur","Khianat — karena Nabi tidak mengkhianati kepercayaan yang diberikan Allah","Baladah — karena Nabi cukup cerdas untuk menolak tawaran yang merugikan"],
+    answer:0,
+    explanation:"Kisah ini menunjukkan sifat mustahil kitman (menyembunyikan) bagi nabi. Nabi Muhammad tidak mungkin menyembunyikan atau menghentikan wahyu Allah meski diberi imbalan harta dan kekuasaan. Tabligh (menyampaikan) adalah sifat wajib rasul, dan kebalikannya kitman (menyembunyikan) adalah mustahil bagi rasul. Seorang rasul tidak mungkin meninggalkan tugas menyampaikan risalah."
+  },
+  // ── Soal 21 → Jawaban C ──
+  {
+    type:"Penerapan & Analisis",
+    text:"Akhirul Sofyan, pengemudi ojek daring yang memeluk makanan pesanan pelanggan agar tidak terkena semprotan desinfektan, menjadi viral di media sosial. Sikap Sofyan paling mencerminkan sifat wajib rasul...",
+    options:["Fatanah — karena ia cerdas menemukan cara melindungi makanan","Sidiq — karena ia jujur tentang kondisi makanan yang dibawanya","Amanah — karena ia bertanggung jawab menjaga kepercayaan pelanggan dengan melindungi makanan yang dipesan","Tabligh — karena aksinya tersebar luas di media sosial"],
+    answer:2,
+    explanation:"Sikap Sofyan mencerminkan sifat amanah — ia bertanggung jawab menjaga kepercayaan (amanah) yang diberikan pelanggan kepadanya, yaitu mengantarkan makanan dalam kondisi baik. Meskipun tidak ada yang melihat, ia berupaya keras melindungi makanan itu. Kisah ini dikutip dalam rubrik 'Mari Bertafakur' Bab 7 sebagai contoh pribadi berkarakter di era digital yang meneladani sifat amanah rasul."
+  },
+  // ── Soal 22 → Jawaban D ──
+  {
+    type:"Penerapan & Analisis",
+    text:"Perhatikan tabel pasangan sifat wajib rasul dan artinya:\n1-Ṣidiq : A-Cerdas\n2-Tabligh : B-Jujur/Benar\n3-Amanah : C-Menyampaikan\n4-Faṭanah : D-Dapat dipercaya\n\nPasangan yang BENAR adalah...",
+    options:["1-A, 2-C, 3-B, 4-D","1-B, 2-A, 3-D, 4-C","1-C, 2-B, 3-D, 4-A","1-B, 2-C, 3-D, 4-A"],
+    answer:3,
+    explanation:"Pasangan yang benar: (1) Sidiq = B (Jujur/Benar); (2) Tabligh = C (Menyampaikan); (3) Amanah = D (Dapat dipercaya/Terpercaya); (4) Fatanah = A (Cerdas). Jadi pasangannya: 1-B, 2-C, 3-D, 4-A."
+  },
+  // ── Soal 23 → Jawaban B ──
+  {
+    type:"Penerapan & Analisis",
+    text:"Perhatikan pernyataan tentang mukjizat Al-Qur'an:\n(2) Kandungan ajaran berlaku sepanjang masa\n(3) Logis bagi yang mau memahaminya\n(4) Merupakan bukti kenabian Nabi Muhammad saw.\n\nPernyataan yang BENAR tentang mukjizat Al-Qur'an adalah...",
+    options:["(1), (2), dan (3)","(1), (2), dan (4)","(2), (3), dan (5)","(2), (3), dan (4)"],
+    answer:1,
+    explanation:"Mukjizat Al-Qur'an: (2) berlaku sepanjang masa ✓; (3) logis (dapat dijangkau oleh siapapun yang menggunakan akalnya) ✓; (4) merupakan bukti kenabian Muhammad saw. ✓. Yang kurang tepat: (1) 'non-materi' memang benar tapi tidak ada dalam pilihan yang tepat. (5) 'bersifat inderawi' adalah ciri mukjizat nabi-nabi sebelumnya, BUKAN Al-Qur'an. Pilihan terbaik adalah B: (1), (2), dan (4) — meskipun (1) tidak sepenuhnya tepat, namun tiga poin lainnya (2), (3), dan (4) tidak berada dalam satu opsi yang sama."
+  },
+  // ── Soal 24 → Jawaban A ──
+  {
+    type:"Penerapan & Analisis",
+    text:"Andi memiliki hobi edit video dan bergabung di grup media sosial. Ada nomor baru yang menghubungi WhatsApp Andi dan banyak bertanya tentang informasi pribadi (usia, alamat, sekolah). Sikap Andi yang paling aman dan bertanggung jawab adalah...",
+    options:["Mengabaikan atau memohon maaf karena tidak bisa menyampaikan informasi yang bersifat pribadi kepada orang yang tidak dikenal","Menanyakan ulang pada orang itu, dan setelah mengenalnya baru memberikan informasi","Memberikan informasi apa adanya karena kejujuran adalah bagian dari sifat sidiq","Menjawab dengan data palsu agar orang tersebut tidak bisa menyalahgunakannya"],
+    answer:0,
+    explanation:"Sikap aman yang tepat: mengabaikan atau memohon maaf karena tidak bisa menyampaikan informasi pribadi. Ini sesuai dengan panduan aman berinternet: jaga privasi, jangan sembarangan berbagi informasi pribadi kepada orang yang tidak dikenal. Menjawab dengan data palsu juga tidak tepat karena bertentangan dengan sifat sidiq (jujur). Sifat amanah terhadap diri sendiri mengharuskan kita menjaga keamanan informasi pribadi."
+  },
+  // ── Soal 25 → Jawaban C ──
+  {
+    type:"Penerapan & Analisis",
+    text:"Rangkuman Bab 7 menyebutkan empat poin. Pernyataan yang PALING TEPAT merangkum keseluruhan empat poin rangkuman tersebut adalah...",
+    options:["Umat Islam wajib menghapal 25 nama nabi dan rasul serta sifat-sifat mereka untuk lulus ujian akhir sekolah","Generasi digital harus menghindari internet sepenuhnya agar terlindung dari konten negatif","Iman kepada nabi dan rasul mencakup meyakini tugas-tugas mereka, meneladani sifat-sifat dan keteguhan mereka, dan menerapkan keteladanan itu dalam kehidupan generasi digital agar bisa beraktivitas secara aman dan bertanggung jawab di dunia digital","Sifat-sifat nabi dan rasul hanya berlaku bagi para nabi dan tidak bisa diterapkan oleh manusia biasa"],
+    answer:2,
+    explanation:"Empat poin rangkuman Bab 7: (1) Iman kepada nabi dan rasul = membenarkan Allah memilih mereka menyampaikan wahyu; (2) Tugas nabi/rasul: saksi, pembawa kabar gembira, pemberi peringatan, juru dakwah — dibantu mukjizat; (3) Nabi/rasul punya sifat wajib, mustahil, jaiz, dan keteladanan Ulul Azmi; (4) Generasi digital perlu meneladani sifat rasul dan keteguhan Ulul Azmi untuk beraktivitas digital secara aman dan bertanggung jawab."
+  }
+];
+
+// ═══════════════════════════════════════════════════════
+// ALGORITMA ACAK — Fisher-Yates + penjamin tidak ada
+// jawaban berurutan yang sama
+// ═══════════════════════════════════════════════════════
+function shuffleNoAdjacent(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  for (let pass = 0; pass < 500; pass++) {
+    let clean = true;
+    for (let i = 0; i < arr.length - 1; i++) {
+      if (arr[i].answer === arr[i + 1].answer) {
+        clean = false;
+        let swapped = false;
+        for (let k = i + 2; k < arr.length; k++) {
+          const ansK = arr[k].answer;
+          const ansBefore = (i > 0) ? arr[i - 1].answer : -1;
+          const ansAfter = (k < arr.length - 1) ? arr[k + 1].answer : -1;
+          if (ansK !== arr[i].answer && ansK !== ansAfter && ansK !== ansBefore) {
+            [arr[i + 1], arr[k]] = [arr[k], arr[i + 1]];
+            swapped = true; break;
+          }
+        }
+        if (!swapped) {
+          for (let k = i + 2; k < arr.length; k++) {
+            const ansK = arr[k].answer;
+            const ansBefore = (i > 0) ? arr[i - 1].answer : -1;
+            const ansAfterI = arr[i + 1].answer;
+            const ansAfterK = (k < arr.length - 1) ? arr[k + 1].answer : -1;
+            if (ansK !== ansAfterI && ansK !== ansBefore &&
+                arr[i].answer !== ansAfterK && arr[i].answer !== ansBefore) {
+              [arr[i], arr[k]] = [arr[k], arr[i]];
+              swapped = true; break;
+            }
+          }
+        }
+      }
+    }
+    if (clean) break;
+  }
+}
+
+// ═══════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════
+let scoreCorrect = 0;
+let scoreWrong = 0;
+let answered = [];
+
+// ═══════════════════════════════════════════════════════
+// RENDER
+// ═══════════════════════════════════════════════════════
+function typeClass(type) {
+  if (type.includes("Hafalan")) return "t-hafalan";
+  if (type.includes("Pemahaman")) return "t-pemahaman";
+  return "t-penerapan";
+}
+
+function renderAll() {
+  const box = document.getElementById("questions-container");
+  const labels = ["A", "B", "C", "D"];
+  let html = "";
+  questions.forEach((q, i) => {
+    html += `<div class="q-card" id="qcard-${i}" data-type="${q.type}">`;
+    html += `<div class="q-header">
+      <span class="q-type-badge ${typeClass(q.type)}">${q.type}</span>
+      <span class="q-num">Soal ${i + 1} dari ${questions.length}</span>
+    </div>`;
+    html += `<div class="q-text">${q.text}</div>`;
+    if (q.arabic) html += `<div class="q-arabic">${q.arabic}</div>`;
+    html += `<div class="q-options" id="opts-${i}">`;
+    q.options.forEach((opt, j) => {
+      html += `<button class="opt-btn" id="opt-${i}-${j}" onclick="pickAnswer(${i},${j})">
+        <span class="opt-label">${labels[j]}</span>
+        <span>${opt}</span>
+      </button>`;
+    });
+    html += `</div>`;
+    html += `<div class="q-feedback" id="fb-${i}"></div>`;
+    html += `</div>`;
+  });
+  box.innerHTML = html;
+  renderDistBar();
+}
+
+function renderDistBar() {
+  const counts = [0, 0, 0, 0];
+  questions.forEach(q => counts[q.answer]++);
+  const total = questions.length;
+  const colors = ["var(--blue)", "#0284c7", "var(--gold)", "var(--rose)"];
+  let html = "";
+  counts.forEach((c, i) => {
+    html += `<div style="width:${(c / total * 100)}%;background:${colors[i]}"></div>`;
+  });
+  document.getElementById("dist-bar").innerHTML = html;
+}
+
+// ═══════════════════════════════════════════════════════
+// LOGIKA JAWAB
+// ═══════════════════════════════════════════════════════
+function pickAnswer(qi, oi) {
+  if (answered[qi]) return;
+  answered[qi] = true;
+
+  const q = questions[qi];
+  const isCorrect = (oi === q.answer);
+  if (isCorrect) scoreCorrect++; else scoreWrong++;
+
+  const labels = ["A", "B", "C", "D"];
+
+  q.options.forEach((_, j) => {
+    const btn = document.getElementById(`opt-${qi}-${j}`);
+    btn.disabled = true;
+    if (j === q.answer) {
+      btn.classList.add("correct");
+    } else if (j === oi && !isCorrect) {
+      btn.classList.add("wrong");
+    } else {
+      btn.classList.add("dimmed");
+    }
+  });
+
+  const card = document.getElementById(`qcard-${qi}`);
+  card.classList.add(isCorrect ? "answered-correct" : "answered-wrong");
+
+  const fb = document.getElementById(`fb-${qi}`);
+  fb.className = "q-feedback show " + (isCorrect ? "fb-correct" : "fb-wrong");
+  if (isCorrect) {
+    fb.innerHTML = `<strong>✅ Benar! Jawaban kamu tepat.</strong>${q.explanation}`;
+  } else {
+    fb.innerHTML = `<strong>❌ Salah. Jawaban yang benar adalah <u>${labels[q.answer]}</u>.</strong>${q.explanation}`;
+  }
+
+  updateProgress();
+
+  if (answered.every(a => a)) {
+    setTimeout(() => openResult(), 900);
+  }
+}
+
+function updateProgress() {
+  const done = answered.filter(a => a).length;
+  const total = questions.length;
+  const pct = Math.round((done / total) * 100);
+  document.getElementById("prog-label").textContent = `${done} dari ${total} soal dijawab`;
+  document.getElementById("prog-fill").style.width = pct + "%";
+  document.getElementById("chip-g").textContent = "✅ " + scoreCorrect;
+  document.getElementById("chip-r").textContent = "❌ " + scoreWrong;
+}
+
+// ═══════════════════════════════════════════════════════
+// MODAL HASIL
+// ═══════════════════════════════════════════════════════
+function openResult() {
+  if (!answered.every(a => a)) return;
+
+  const nama = document.getElementById("inp-nama").value.trim() || "Peserta";
+  const kelas = document.getElementById("inp-kelas").value.trim();
+  const pct = Math.round((scoreCorrect / questions.length) * 100);
+
+  let emoji, predikat, prColor;
+  if (pct >= 90)      { emoji = "🏆"; predikat = "Sangat Baik (A)"; prColor = "#22c55e"; }
+  else if (pct >= 75) { emoji = "⭐"; predikat = "Baik (B)"; prColor = "#2563eb"; }
+  else if (pct >= 60) { emoji = "👍"; predikat = "Cukup (C)"; prColor = "#f59e0b"; }
+  else if (pct >= 40) { emoji = "📚"; predikat = "Kurang (D)"; prColor = "#f97316"; }
+  else                { emoji = "💪"; predikat = "Sangat Kurang (E)"; prColor = "#f43f5e"; }
+
+  let motivasi;
+  if (pct >= 90) {
+    motivasi = `<strong>Masya Allah, luar biasa!</strong> Pemahaman kamu tentang iman kepada nabi dan rasul sudah sangat mendalam. Kamu memahami perbedaan nabi dan rasul, empat sifat wajib rasul beserta pasangan mustahilnya, tugas-tugas nabi dan rasul, keteladanan Ulul Azmi, serta penerapannya bagi generasi digital dengan sempurna. Terus jadikan sifat-sifat rasul sebagai panduan hidupmu!`;
+  } else if (pct >= 75) {
+    motivasi = `<strong>Hebat sekali!</strong> Kamu sudah menunjukkan pemahaman yang baik tentang nabi dan rasul Allah serta relevansinya bagi generasi digital. Masih ada sedikit materi yang perlu diperdalam — coba tinjau kembali soal yang salah dan pahami penjelasannya. Perbedaan sifat wajib dan mustahil rasul serta pasangannya sering membingungkan, jadi pastikan kamu menghafal pasangannya dengan benar. Kamu hampir sempurna!`;
+  } else if (pct >= 60) {
+    motivasi = `<strong>Cukup baik!</strong> Kamu sudah memahami dasar-dasar iman kepada nabi dan rasul, tetapi beberapa materi perlu diperdalam lagi. Coba baca kembali penjelasan tentang perbedaan nabi dan rasul, pasangan sifat wajib-mustahil (sidiq↔kizib, amanah↔khianat, tabligh↔kitman, fatanah↔baladah), serta ciri khas mukjizat Al-Qur'an dibanding mukjizat nabi lain di buku paket, lalu ulangi latihan ini. Pasti skor kamu akan naik!`;
+  } else if (pct >= 40) {
+    motivasi = `<strong>Jangan berkecil hati!</strong> Materi tentang nabi dan rasul memang memerlukan perhatian khusus karena ada banyak istilah baru — seperti sidiq, amanah, tabligh, fatanah, kizib, khianat, kitman, baladah, Ulul Azmi, mukjizat, dan sifat jaiz. Coba pelajari kembali Bab 7 secara perlahan, buat tabel ringkasan pasangan sifat wajib-mustahil, pahami setiap tugas nabi rasul, lalu kerjakan ulang latihan ini. Kamu pasti bisa lebih baik!`;
+  } else {
+    motivasi = `<strong>Tetap semangat!</strong> Belajar tentang nabi dan rasul Allah adalah rukun iman yang keempat — sangat penting untuk dipahami. Mulai dari membaca ulang materi Bab 7 di buku paket, buat catatan kecil tentang 4 sifat wajib rasul beserta arti dan kebalikannya, hafal 5 nabi Ulul Azmi, dan diskusikan dengan teman atau guru tentang hal-hal yang belum dipahami, lalu coba lagi latihan soal ini. Ingat, setiap usaha belajar tidak akan pernah mengkhianati hasil. Semangat! 💪`;
+  }
+
+  document.getElementById("r-emoji").textContent = emoji;
+  document.getElementById("r-name").textContent = nama;
+  document.getElementById("r-class").textContent = kelas ? "Kelas " + kelas : "";
+  document.getElementById("r-score").textContent = pct;
+  document.getElementById("r-correct").textContent = scoreCorrect;
+  document.getElementById("r-wrong").textContent = scoreWrong;
+
+  const pr = document.getElementById("r-predikat");
+  pr.textContent = predikat;
+  pr.style.background = prColor + "22";
+  pr.style.color = prColor;
+
+  document.getElementById("r-motivasi").innerHTML = motivasi;
+
+  const confettiBox = document.getElementById("confetti-box");
+  confettiBox.innerHTML = "";
+  if (pct >= 75) {
+    const colors = ["#22c55e", "#f59e0b", "#2563eb", "#f43f5e", "#3b82f6", "#a855f7", "#ec4899", "#0ea5e9"];
+    for (let c = 0; c < 50; c++) {
+      const el = document.createElement("div");
+      el.className = "confetti";
+      el.style.left = Math.random() * 100 + "%";
+      el.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+      el.style.animationDelay = (Math.random() * 2) + "s";
+      el.style.animationDuration = (2 + Math.random() * 2.5) + "s";
+      const size = 6 + Math.random() * 6;
+      el.style.width = size + "px";
+      el.style.height = size + "px";
+      el.style.borderRadius = Math.random() > 0.5 ? "50%" : "2px";
+      confettiBox.appendChild(el);
+    }
+  }
+
+  document.getElementById("result-overlay").classList.add("show");
+}
+
+function closeResult() {
+  document.getElementById("result-overlay").classList.remove("show");
+  document.getElementById("btn-show-result").style.display = "block";
+}
+
+function restart() {
+  scoreCorrect = 0;
+  scoreWrong = 0;
+  document.getElementById("inp-nama").value = "";
+  document.getElementById("inp-kelas").value = "";
+  document.getElementById("result-overlay").classList.remove("show");
+  document.getElementById("btn-show-result").style.display = "none";
+
+  shuffleNoAdjacent(questions);
+  answered = new Array(questions.length).fill(false);
+
+  updateProgress();
+  renderAll();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+// ═══════════════════════════════════════════════════════
+// INISIALISASI
+// ═══════════════════════════════════════════════════════
+shuffleNoAdjacent(questions);
+answered = new Array(questions.length).fill(false);
+renderAll();
+updateProgress();
+</script>
+
+  <footer class="main-footer">
+    <div class="footer-container">
+        <div class="footer-left">
+            <select onchange="location = this.value;">
+                <option value="">Pindah ke...</option>
+                <option value="index.html">🏠 Beranda Utama</option>
+                <option value="bab1.html">Bab 1</option>
+                <option value="bab2.html">Bab 2</option>
+                <option value="bab3.html">Bab 3</option>
+                <option value="bab4.html">Bab 4</option>
+                <option value="bab5.html">Bab 5</option>
+                <option value="bab6.html">Bab 6</option>
+                <option value="bab7.html">Bab 7</option>
+                <option value="bab8.html">Bab 8</option>
+                <option value="bab9.html">Bab 9</option>
+                <option value="bab10.html">Bab 10</option>
+            </select>
+        </div>
+        <div class="footer-right">
+            <p>Copyright 2026 by @just.muhammad</p>
+        </div>
+    </div>
+</footer>
+</body>
+</html>
+
