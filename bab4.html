@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Latihan Soal – Bab 4 PAI Kelas VIII</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --maroon:    #9f1239;
+    --maroon-dk: #881337;
+    --maroon-lt: #fff1f2;
+    --rose:      #f43f5e;
+    --green:     #22c55e;
+    --ink:       #1c1917;
+    --muted:     #78716c;
+    --card:      #ffffff;
+    --bg:        #fff5f5;
+    --radius:    16px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;}
+
+  header{
+    background:linear-gradient(135deg,#4c0519 0%,#9f1239 55%,#be123c 100%);
+    color:#fff;padding:28px 24px 24px;text-align:center;
+    position:relative;overflow:hidden;
+  }
+  header::before{
+    content:'';position:absolute;inset:0;
+    background:url("data:image/svg+xml,%3Csvg width='52' height='52' viewBox='0 0 52 52' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M26 0l26 26-26 26L0 26z' fill='%23ffffff' fill-opacity='0.04'/%3E%3C/svg%3E");
+  }
+  .badge{
+    display:inline-block;background:rgba(255,255,255,.18);
+    border:1px solid rgba(255,255,255,.35);border-radius:99px;
+    font-size:12px;font-weight:700;letter-spacing:1px;
+    text-transform:uppercase;padding:4px 14px;margin-bottom:10px;
+  }
+  header h1{font-size:clamp(15px,3.8vw,23px);font-weight:900;line-height:1.3;position:relative;}
+  header p{font-size:14px;opacity:.82;margin-top:6px;position:relative;}
+  .shuffle-note{font-size:11px;opacity:.6;margin-top:2px;font-style:italic;}
+
+  .container{max-width:760px;margin:0 auto;padding:0 16px 40px;}
+
+  .identity-card{
+    background:var(--card);border-radius:var(--radius);
+    box-shadow:0 4px 24px rgba(0,0,0,.07);
+    padding:24px;margin-top:-20px;position:relative;z-index:2;
+  }
+  .identity-card h2{font-size:18px;font-weight:900;color:var(--maroon-dk);margin-bottom:4px;}
+  .identity-card .sub{font-size:13px;color:var(--muted);margin-bottom:16px;}
+  .input-row{display:flex;gap:12px;flex-wrap:wrap;}
+  .input-group{flex:1;min-width:200px;}
+  .input-group label{
+    display:block;font-size:12px;font-weight:800;
+    color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;
+  }
+  .input-group input{
+    width:100%;padding:11px 14px;border:2px solid #e7e5e4;
+    border-radius:10px;font-family:'Nunito',sans-serif;
+    font-size:15px;font-weight:600;color:var(--ink);
+    transition:border-color .2s;background:#fafaf9;
+  }
+  .input-group input:focus{
+    outline:none;border-color:var(--maroon);background:#fff;
+    box-shadow:0 0 0 3px rgba(159,18,57,.12);
+  }
+  .input-group input::placeholder{color:#a8a29e;font-weight:600;}
+
+  .progress-sticky{
+    position:sticky;top:0;z-index:10;
+    background:rgba(255,245,245,.92);backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+    padding:14px 0 10px;margin-top:20px;
+    border-bottom:1px solid rgba(159,18,57,.1);
+  }
+  .prog-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+  .prog-label{font-size:13px;font-weight:800;color:var(--muted);}
+  .prog-chips{display:flex;gap:6px;}
+  .prog-chip{font-size:12px;font-weight:800;padding:3px 10px;border-radius:99px;}
+  .prog-chip.cg{background:#f0fdf4;color:var(--green);}
+  .prog-chip.cr{background:#fff1f2;color:var(--rose);}
+  .prog-bar{height:8px;background:#fecdd3;border-radius:99px;overflow:hidden;}
+  .prog-fill{
+    height:100%;border-radius:99px;
+    background:linear-gradient(90deg,var(--maroon),#f43f5e);
+    transition:width .5s cubic-bezier(.4,0,.2,1);
+  }
+  .show-result-btn{
+    display:none;margin-top:8px;
+    padding:8px 16px;border-radius:8px;
+    background:var(--maroon);color:#fff;
+    font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;
+    border:none;cursor:pointer;transition:all .2s;
+  }
+  .show-result-btn:hover{background:var(--maroon-dk);}
+
+  .q-card{
+    background:var(--card);border-radius:var(--radius);
+    box-shadow:0 2px 16px rgba(0,0,0,.06);
+    margin-top:16px;padding:22px 24px;
+    border-left:4px solid var(--maroon);
+  }
+  .q-card[data-type="Pemahaman"]{border-left-color:#0284c7;}
+  .q-card[data-type="Penerapan & Analisis"]{border-left-color:var(--rose);}
+  .q-card.answered-correct{border-left-color:var(--green);}
+  .q-card.answered-wrong{border-left-color:var(--rose);}
+
+  .q-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-wrap:wrap;gap:6px;}
+  .q-type-badge{
+    font-size:10px;font-weight:800;letter-spacing:.8px;
+    text-transform:uppercase;padding:3px 10px;border-radius:6px;
+  }
+  .q-type-badge.t-hafalan{background:var(--maroon-lt);color:var(--maroon-dk);}
+  .q-type-badge.t-pemahaman{background:#e0f2fe;color:#0369a1;}
+  .q-type-badge.t-penerapan{background:#fef3c7;color:#92400e;}
+  .q-num{font-size:12px;font-weight:700;color:var(--muted);}
+  .q-text{font-size:15px;font-weight:700;line-height:1.65;white-space:pre-line;margin-bottom:16px;}
+
+  .q-options{display:flex;flex-direction:column;gap:8px;}
+  .opt-btn{
+    display:flex;align-items:flex-start;gap:12px;
+    background:#fafaf9;border:2px solid #e7e5e4;border-radius:10px;
+    padding:11px 14px;cursor:pointer;
+    font-family:'Nunito',sans-serif;font-size:14px;font-weight:600;
+    text-align:left;transition:all .2s;width:100%;
+  }
+  .opt-btn:hover:not(:disabled){border-color:var(--maroon);background:var(--maroon-lt);transform:translateX(3px);}
+  .opt-label{
+    min-width:26px;height:26px;background:#e7e5e4;border-radius:7px;
+    display:flex;align-items:center;justify-content:center;
+    font-size:12px;font-weight:800;color:var(--muted);flex-shrink:0;transition:all .2s;
+  }
+  .opt-btn.correct{border-color:var(--green);background:#f0fdf4;}
+  .opt-btn.correct .opt-label{background:var(--green);color:#fff;}
+  .opt-btn.wrong{border-color:var(--rose);background:#fff1f2;}
+  .opt-btn.wrong .opt-label{background:var(--rose);color:#fff;}
+  .opt-btn.dimmed{opacity:.5;}
+  .opt-btn:disabled{cursor:default;}
+
+  .q-feedback{
+    display:none;margin-top:14px;border-radius:10px;
+    padding:12px 16px;font-size:13px;line-height:1.65;
+  }
+  .q-feedback.show{display:block;animation:slideUp .3s ease;}
+  .q-feedback.fb-correct{background:#f0fdf4;border-left:4px solid var(--green);}
+  .q-feedback.fb-wrong{background:#fff1f2;border-left:4px solid var(--rose);}
+  .q-feedback strong{display:block;font-size:14px;margin-bottom:3px;}
+  @keyframes slideUp{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
+
+  .result-overlay{
+    display:none;position:fixed;inset:0;z-index:100;
+    background:rgba(15,23,42,.6);backdrop-filter:blur(6px);
+    -webkit-backdrop-filter:blur(6px);
+    justify-content:center;align-items:center;padding:20px;
+  }
+  .result-overlay.show{display:flex;animation:fadeIn .4s ease;}
+  @keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+
+  .result-modal{
+    background:var(--card);border-radius:20px;
+    box-shadow:0 24px 64px rgba(0,0,0,.2);
+    max-width:480px;width:100%;padding:36px 28px;
+    text-align:center;position:relative;overflow:hidden;
+    animation:modalPop .4s cubic-bezier(.2,.8,.3,1.2);
+  }
+  @keyframes modalPop{from{opacity:0;transform:scale(.85) translateY(30px);}to{opacity:1;transform:none;}}
+
+  .result-modal .confetti-container{position:absolute;inset:0;pointer-events:none;overflow:hidden;}
+  .confetti{position:absolute;top:-10px;opacity:0;animation:confettiFall linear forwards;}
+  @keyframes confettiFall{
+    0%{opacity:1;transform:translateY(0) rotate(0deg) scale(1);}
+    80%{opacity:1;}
+    100%{opacity:0;transform:translateY(420px) rotate(720deg) scale(.5);}
+  }
+
+  .r-emoji{font-size:56px;position:relative;}
+  .r-greeting{font-size:14px;color:var(--muted);margin-top:12px;font-weight:700;}
+  .r-name{font-size:24px;font-weight:900;color:var(--ink);margin:4px 0 0;}
+  .r-class{font-size:13px;color:var(--maroon);font-weight:700;margin-bottom:20px;}
+  .r-score-wrap{background:var(--bg);border-radius:14px;padding:20px;margin-bottom:20px;}
+  .r-score-label{font-size:12px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;}
+  .r-score{font-size:52px;font-weight:900;color:var(--maroon);line-height:1.1;}
+  .r-score span{font-size:20px;font-weight:700;color:var(--muted);}
+  .r-stats{display:flex;gap:10px;justify-content:center;margin-top:14px;}
+  .r-stat{background:#fff;border-radius:10px;padding:10px 16px;font-size:12px;font-weight:700;color:var(--muted);}
+  .r-stat b{display:block;font-size:20px;font-weight:900;}
+  .r-stat.sg b{color:var(--green);}
+  .r-stat.sr b{color:var(--rose);}
+
+  .r-predikat{display:inline-block;padding:6px 20px;border-radius:99px;font-weight:800;font-size:14px;margin-bottom:16px;}
+  .r-motivasi{
+    font-size:14px;line-height:1.7;color:var(--muted);
+    background:#fafaf9;border-radius:12px;padding:14px 18px;
+    margin-bottom:24px;text-align:left;
+  }
+  .r-motivasi strong{color:var(--ink);}
+
+  .r-btns{display:flex;flex-direction:column;gap:10px;}
+  .btn{
+    padding:13px 24px;border-radius:12px;font-family:'Nunito',sans-serif;
+    font-size:15px;font-weight:800;border:none;cursor:pointer;transition:all .2s;
+  }
+  .btn-primary{background:var(--maroon);color:#fff;box-shadow:0 4px 12px rgba(159,18,57,.3);}
+  .btn-primary:hover{background:var(--maroon-dk);transform:translateY(-2px);}
+  .btn-outline{background:transparent;color:var(--muted);border:2px solid #e7e5e4;}
+  .btn-outline:hover{border-color:var(--maroon);color:var(--maroon);}
+
+  .dist-bar{
+    display:flex;height:6px;border-radius:99px;overflow:hidden;
+    margin-top:20px;gap:2px;
+  }
+  .dist-bar div{height:100%;border-radius:99px;transition:width .4s;}
+  .dist-legend{
+    display:flex;justify-content:center;gap:16px;margin-top:6px;
+    font-size:11px;font-weight:800;color:var(--muted);
+  }
+  .dist-legend span{display:flex;align-items:center;gap:3px;}
+  .dist-legend i{width:8px;height:8px;border-radius:50%;display:inline-block;}
+
+  @media(max-width:500px){
+    .q-card{padding:16px 14px;}
+    .opt-btn{padding:10px 12px;font-size:13px;}
+    .result-modal{padding:28px 20px;}
+    .r-score{font-size:42px;}
+    .identity-card{padding:18px 16px;}
+  }
+
+  /* --- PERBAIKAN FOOTER BY MENTOR --- */
+.main-footer {
+    background-color: #1e293b !important; /* Warna gelap modern */
+    color: white !important;
+    padding: 12px 0 !important;
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    z-index: 9999 !important; /* Supaya tidak tertutup elemen soal */
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.2);
+    font-family: 'Nunito', sans-serif;
+}
+
+.footer-container {
+    display: flex !important;
+    /* Baris di bawah ini adalah kuncinya! */
+    justify-content: space-between !important; 
+    align-items: center !important;
+    max-width: 1000px;
+    margin: 0 auto !important;
+    padding: 0 20px !important;
+}
+
+.footer-left select {
+    padding: 6px 10px !important;
+    border-radius: 8px !important;
+    border: 1px solid #475569 !important;
+    background: #334155 !important;
+    color: white !important;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.footer-right p {
+    margin: 0 !important;
+    font-size: 13px !important;
+    text-align: right !important; /* Memastikan teks rata kanan */
+    white-space: nowrap; /* Mencegah teks turun ke bawah/terpotong */
+}
+
+/* Supaya konten soal paling bawah tidak tertutup footer */
+body {
+    padding-bottom: 70px !important;
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="badge">PAI & Budi Pekerti · SMP Kelas VIII</div>
+  <h1>🕌 Latihan Soal Bab 4<br>Ibadah dengan Disiplin dan Penuh Harap kepada Allah Swt.<br>serta Peduli terhadap Sesama</h1>
+  <p>25 soal pilihan ganda · 4 pilihan jawaban</p>
+  <p class="shuffle-note">🔄 Urutan soal diacak setiap kali membuka halaman</p>
+</header>
+
+<div class="container">
+  <section class="identity-card">
+    <h2>📝 Data Peserta</h2>
+    <p class="sub">Isi nama dan kelas sebelum mengerjakan soal</p>
+    <div class="input-row">
+      <div class="input-group">
+        <label for="inp-nama">Nama Lengkap</label>
+        <input type="text" id="inp-nama" placeholder="Masukkan nama lengkap...">
+      </div>
+      <div class="input-group">
+        <label for="inp-kelas">Kelas</label>
+        <input type="text" id="inp-kelas" placeholder="Contoh: VIII-A">
+      </div>
+    </div>
+  </section>
+
+  <div class="progress-sticky">
+    <div class="prog-top">
+      <span class="prog-label" id="prog-label">0 dari 25 soal dijawab</span>
+      <div class="prog-chips">
+        <span class="prog-chip cg" id="chip-g">✅ 0</span>
+        <span class="prog-chip cr" id="chip-r">❌ 0</span>
+      </div>
+    </div>
+    <div class="prog-bar"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
+    <button class="show-result-btn" id="btn-show-result" onclick="openResult()">🎉 Lihat Hasil</button>
+  </div>
+
+  <div id="questions-container"></div>
+
+  <div style="margin-top:24px;">
+    <div class="dist-bar" id="dist-bar"></div>
+    <div class="dist-legend">
+      <span><i style="background:var(--maroon)"></i>A</span>
+      <span><i style="background:#0284c7"></i>B</span>
+      <span><i style="background:var(--rose)"></i>C</span>
+      <span><i style="background:#a855f7"></i>D</span>
+    </div>
+  </div>
+</div>
+
+<div class="result-overlay" id="result-overlay">
+  <div class="result-modal">
+    <div class="confetti-container" id="confetti-box"></div>
+    <div class="r-emoji" id="r-emoji"></div>
+    <div class="r-greeting">Selamat!</div>
+    <div class="r-name" id="r-name"></div>
+    <div class="r-class" id="r-class"></div>
+    <div class="r-score-wrap">
+      <div class="r-score-label">Skor Kamu</div>
+      <div class="r-score"><span id="r-score"></span><span>/100</span></div>
+      <div class="r-stats">
+        <div class="r-stat sg"><b id="r-correct">0</b>Benar</div>
+        <div class="r-stat sr"><b id="r-wrong">0</b>Salah</div>
+      </div>
+    </div>
+    <div class="r-predikat" id="r-predikat"></div>
+    <div class="r-motivasi" id="r-motivasi"></div>
+    <div class="r-btns">
+      <button class="btn btn-outline" onclick="closeResult()">Tinjau Jawaban Saya</button>
+      <button class="btn btn-primary" onclick="restart()">🔁 Ulangi Latihan</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════
+// DATA SOAL — kunci jawaban diseimbangkan:
+// Pola berulang A,B,C,D → A=7, B=6, C=6, D=6
+// Tidak ada dua soal berurutan jawabannya sama
+// ═══════════════════════════════════════════════════════
+const questions = [
+  // ── Soal 1 → Jawaban A ──
+  {
+    type:"Hafalan & Ingatan",
+    text:"Titik Fokus (kata kunci) Bab 4 adalah...",
+    options:["Salat Gerhana, Salat Istiska, dan Salat Jenazah","Salat Fardu, Salat Sunah, dan Salat Jenazah","Disiplin, Penuh Harap, dan Kepedulian Sosial","Ibadah Mahdah, Ibadah Gairu Mahdah, dan Takziah"],
+    answer:0,
+    explanation:"Titik Fokus (Kata Kunci) Bab 4 adalah 'Salat Gerhana, Salat Istiska, Salat Jenazah.' Ketiga jenis salat sunah berjamaah inilah yang menjadi pokok bahasan bab ini, beserta nilai-nilai disiplin, penuh harap, dan kepedulian sosial yang terkandung di dalamnya."
+  },
+  // ── Soal 2 → Jawaban B ──
+  {
+    type:"Hafalan & Ingatan",
+    text:"Salat gerhana dalam fikih Islam dikenal dengan istilah salat Kusufain. Istilah ini berarti...",
+    options:["Salat dua rekaat yang dilakukan saat terjadi bencana alam","Salat dua gerhana, yaitu salat yang dilakukan pada saat terjadi gerhana matahari maupun bulan","Salat sunnah yang dilakukan dua kali dalam setahun","Salat yang dilakukan ketika ada dua kejadian luar biasa bersamaan"],
+    answer:1,
+    explanation:"Salat gerhana dalam fikih Islam dikenal dengan istilah salat Kusufain yang berarti salat dua gerhana — yaitu salat yang dilakukan pada saat terjadi gerhana matahari maupun bulan. Salat pada saat gerhana matahari disebut salat Kusuf, sedangkan salat pada saat gerhana bulan disebut salat Khusuf."
+  },
+  // ── Soal 3 → Jawaban C ──
+  {
+    type:"Hafalan & Ingatan",
+    text:"Hukum melaksanakan salat gerhana adalah...",
+    options:["Wajib 'ain (wajib bagi setiap individu muslim)","Fardu kifayah (wajib kolektif)","Sunah muakkad (sangat dianjurkan)","Mubah (boleh dilakukan, boleh ditinggalkan)"],
+    answer:2,
+    explanation:"Hukum salat gerhana adalah sunah muakkad (sangat dianjurkan). Pelaksanaannya disunnahkan secara berjamaah, meskipun boleh dilakukan secara munfarid (sendiri-sendiri). Salat ini dilaksanakan selama gerhana berlangsung."
+  },
+  // ── Soal 4 → Jawaban D ──
+  {
+    type:"Hafalan & Ingatan",
+    text:"Salat gerhana dilaksanakan sebanyak dua rekaat dengan berapa kali rukuk?",
+    options:["Dua kali rukuk (masing-masing satu kali per rekaat)","Tiga kali rukuk","Enam kali rukuk (tiga kali per rekaat)","Empat kali rukuk (dua kali per rekaat)"],
+    answer:3,
+    explanation:"Salat gerhana dilaksanakan sebanyak dua rekaat dengan empat kali rukuk — di setiap satu rekaat ada dua kali rukuk. Ini yang membedakan salat gerhana dari salat biasa yang hanya memiliki satu kali rukuk per rekaat."
+  },
+  // ── Soal 5 → Jawaban A ──
+  {
+    type:"Hafalan & Ingatan",
+    text:"Istilah 'Istiska' berasal dari kata al-Istisqa dalam bahasa Arab yang berarti...",
+    options:["Meminta hujan karena hujan tidak pernah turun atau musim kemarau","Memohon keselamatan dari bencana alam","Berdoa bersama untuk menolak wabah penyakit","Meminta pertolongan Allah dalam keadaan darurat"],
+    answer:0,
+    explanation:"Istilah Istiska berasal dari kata al-Istisqa yang berarti meminta hujan, yang disebabkan hujan tidak pernah turun atau musim kemarau. Salat Istiska adalah salat sunah untuk meminta hujan kepada Allah Swt., dilaksanakan sebanyak dua rekaat di lapangan terbuka dengan disertai khutbah."
+  },
+  // ── Soal 6 → Jawaban B ──
+  {
+    type:"Hafalan & Ingatan",
+    text:"Empat kewajiban seorang muslim atas muslim lain yang meninggal dunia adalah...",
+    options:["Menyalatkan, mendoakan, berta'ziah, dan menguburkan","Memandikan, mengafani, menyalatkan, dan menguburkan","Memandikan, menyalatkan, mendoakan, dan melayat","Mengafani, menyalatkan, menguburkan, dan membacakan yasin"],
+    answer:1,
+    explanation:"Empat kewajiban seorang muslim atas muslim lain yang meninggal dunia adalah: (1) memandikan, (2) mengafani, (3) menyalatkan (salat jenazah), dan (4) menguburkan. Keempat kewajiban ini hukumnya fardu kifayah."
+  },
+  // ── Soal 7 → Jawaban C ──
+  {
+    type:"Hafalan & Ingatan",
+    text:"Hukum salat jenazah adalah fardu kifayah, yang artinya...",
+    options:["Wajib dilakukan oleh seluruh umat Islam tanpa terkecuali","Sunah yang sangat dianjurkan terutama bagi keluarga terdekat","Wajib dilaksanakan, tetapi apabila sudah ada yang melaksanakannya yang lain terbebas dari kewajiban itu; namun jika tidak ada satu pun yang melaksanakan maka semua berdosa","Wajib bagi laki-laki dan sunah bagi perempuan"],
+    answer:2,
+    explanation:"Fardu kifayah artinya wajib dilaksanakan, tetapi apabila sudah ada yang melaksanakannya maka yang lain terbebas dari kewajiban itu. Namun jika tidak ada satu pun yang melaksanakan kewajiban itu, maka semua umat Islam menjadi berdosa."
+  },
+  // ── Soal 8 → Jawaban D ──
+  {
+    type:"Hafalan & Ingatan",
+    text:"Jumlah takbir dalam salat jenazah adalah...",
+    options:["Dua kali takbir","Tiga kali takbir","Lima kali takbir","Empat kali takbir"],
+    answer:3,
+    explanation:"Salat jenazah dilaksanakan dengan empat kali takbir (takbiratulihram termasuk dalam hitungan empat takbir). Setelah takbir pertama membaca al-Fatihah, setelah takbir kedua membaca salawat, setelah takbir ketiga mendoakan jenazah, dan setelah takbir keempat membaca doa, lalu diakhiri salam."
+  },
+  // ── Soal 9 → Jawaban A ──
+  {
+    type:"Pemahaman",
+    text:"Bacaan yang dibaca setelah takbir KETIGA dalam salat jenazah (untuk jenazah laki-laki) adalah...",
+    options:["Doa: 'Allahummaghfir lahu warhamhu wa 'āfihi wa'fu 'anhu' (Ya Allah, ampunilah dia, rahmatilah dia, bebaskanlah dia, dan maafkanlah dia)","Surah al-Fatihah","Salawat atas Nabi Muhammad saw.","Doa: 'Allahumma lā tahrimnā ajrahu wa lā taftinnā ba'dahu' (Ya Allah, jangan haramkan kami dari pahalanya)"],
+    answer:0,
+    explanation:"Urutan bacaan dalam salat jenazah: Takbir 1 → al-Fatihah. Takbir 2 → Salawat atas Nabi. Takbir 3 → Doa untuk jenazah ('Allahummaghfir lahu warhamhu wa 'āfihi wa'fu 'anhu' untuk jenazah laki-laki). Takbir 4 → Doa agar tidak dihalangi dari pahala jenazah. Lalu salam."
+  },
+  // ── Soal 10 → Jawaban B ──
+  {
+    type:"Pemahaman",
+    text:"Amalan sunah yang dianjurkan sebelum pelaksanaan salat Istiska adalah...",
+    options:["Memperbanyak membaca Al-Qur'an, berpuasa tujuh hari, dan berzikir","Berpuasa tiga hari berturut-turut sebelum salat dan satu hari saat pelaksanaan, memperbanyak istighfar, dan bersedekah","Salat tahajud setiap malam selama satu minggu sebelum pelaksanaan","Berpuasa sebulan penuh dan memperbanyak salat sunah"],
+    answer:1,
+    explanation:"Sebelum melaksanakan salat Istiska disunahkan: (1) memperbanyak bacaan istighfar; (2) memperbanyak sedekah dan amal saleh; (3) berpuasa empat hari berturut-turut — tiga hari sebelum pelaksanaan dan satu hari pada waktu pelaksanaan salat Istiska."
+  },
+  // ── Soal 11 → Jawaban C ──
+  {
+    type:"Pemahaman",
+    text:"Dalam khutbah salat Istiska, bacaan yang mengawali khutbah pertama adalah...",
+    options:["Membaca takbir sebanyak tujuh kali","Membaca hamdalah dan puji-pujian kepada Allah","Membaca istighfar sebanyak sembilan kali","Membaca syahadat dan salawat"],
+    answer:2,
+    explanation:"Khutbah salat Istiska disunahkan dimulai dengan bacaan istighfar — sebanyak sembilan kali pada khutbah pertama dan tujuh kali pada khutbah kedua. Setelah itu dilanjutkan dengan puji-pujian kepada Allah, syahadat, salawat, nasihat, kemudian berdoa meminta hujan."
+  },
+  // ── Soal 12 → Jawaban D ──
+  {
+    type:"Pemahaman",
+    text:"Nilai kedisiplinan dalam ibadah, menurut Bab 4, lahir dari adanya rukun ibadah yang bernama...",
+    options:["Niat — karena ibadah harus dimulai dengan niat yang benar","Khusyuk — karena ibadah harus dilakukan dengan penuh konsentrasi","Ikhlas — karena ibadah harus dilakukan semata-mata karena Allah","Tertib — karena ibadah harus dilakukan secara urut sesuai ketentuan dan tidak boleh diubah urutannya"],
+    answer:3,
+    explanation:"Bab 4 menjelaskan bahwa rukun 'tertib' dalam ibadah mengajarkan nilai kedisiplinan. Tertib berarti ibadah harus dilakukan secara urut sesuai ketentuan. Seseorang tidak boleh meninggalkan rukun dan tidak boleh mengubah urutannya."
+  },
+  // ── Soal 13 → Jawaban A ──
+  {
+    type:"Pemahaman",
+    text:"Nabi Muhammad saw. meluruskan keyakinan masyarakat yang menghubungkan gerhana dengan kematian seseorang yang mulia. Beliau menyatakan bahwa gerhana sebenarnya adalah...",
+    options:["Tanda-tanda kekuasaan Allah yang harus dijadikan momentum mengagungkan Allah, salat, dan bersedekah","Hukuman Allah kepada suatu kaum yang banyak berbuat dosa","Pertanda akan terjadi bencana besar di daerah tersebut","Fenomena biasa yang tidak perlu dikhawatirkan oleh umat Islam"],
+    answer:0,
+    explanation:"Nabi saw. mengoreksi keyakinan yang menghubungkan gerhana dengan kematian seseorang. Beliau menyatakan bahwa gerhana adalah tanda-tanda kekuasaan Allah. Nabi mengajak umat untuk mengagungkan Allah, melaksanakan salat, dan bersedekah."
+  },
+  // ── Soal 14 → Jawaban B ──
+  {
+    type:"Pemahaman",
+    text:"Menurut Bab 4, meskipun sains sudah bisa menjelaskan fenomena gerhana secara ilmiah, salat gerhana tetap perlu dilaksanakan dengan khusyuk karena...",
+    options:["Salat gerhana adalah ibadah wajib yang tidak boleh ditinggalkan","Keteraturan alam yang membuat gerhana bisa dihitung jauh hari sebelumnya adalah bukti kekuasaan Allah — dan di tengah luasnya alam semesta, manusia adalah makhluk yang sangat kecil dan lemah","Sains belum sepenuhnya bisa menjelaskan gerhana secara akurat","Melaksanakan salat gerhana adalah tradisi Nabi yang harus dilestarikan"],
+    answer:1,
+    explanation:"Bab 4 menjelaskan bahwa keteraturan alam yang membuat gerhana bisa dihitung jauh hari lewat ilmu falak justru adalah bukti kekuasaan Allah. Jika manusia merenungkan kekuasaan Allah di jagat raya yang sangat luas, manusia akan menyadari betapa kecil dan lemahnya dirinya."
+  },
+  // ── Soal 15 → Jawaban C ──
+  {
+    type:"Pemahaman",
+    text:"Takziah adalah...",
+    options:["Salat yang dilakukan untuk mendoakan jenazah yang sudah dikuburkan","Tradisi memberi makan kepada keluarga yang berduka selama tiga hari","Kunjungan atau ucapan untuk menyatakan turut berduka cita, dengan tujuan menghibur hati orang yang mendapat musibah","Bacaan doa yang dibacakan di atas makam jenazah"],
+    answer:2,
+    explanation:"Takziah adalah kunjungan ataupun ucapan untuk menyatakan turut berduka cita atau belasungkawa. Tujuannya untuk menghibur hati orang yang mendapat musibah. Ucapan takziah bisa berupa anjuran agar bersabar, mendoakan jenazah, dan mendoakan agar musibah berganti dengan kebaikan."
+  },
+  // ── Soal 16 → Jawaban D ──
+  {
+    type:"Pemahaman",
+    text:"Posisi berdiri imam atau orang yang salat jenazah sendirian, jika jenazahnya laki-laki, adalah...",
+    options:["Sejajar dengan bagian tengah jenazah","Sejajar dengan bagian kaki jenazah","Bebas, boleh di bagian mana saja","Sejajar dengan bagian kepala jenazah"],
+    answer:3,
+    explanation:"Dalam salat jenazah, jika jenazahnya laki-laki maka posisi berdiri imam sejajar dengan kepala jenazah. Sementara jika jenazahnya perempuan, maka posisi berdiri imam berada di bagian tengah jenazah."
+  },
+  // ── Soal 17 → Jawaban A ──
+  {
+    type:"Pemahaman",
+    text:"Nilai utama yang ditekankan dalam kegiatan salat jenazah dan takziah, yang juga sudah menjadi tradisi gotong royong masyarakat Indonesia, adalah...",
+    options:["Nilai kepedulian sosial terhadap sesama","Nilai kesabaran dan ketabahan dalam menghadapi kematian","Nilai kedisiplinan dalam menjalankan fardu kifayah","Nilai kekhusyukan dalam berdoa kepada Allah"],
+    answer:0,
+    explanation:"Nilai yang ditekankan dalam salat jenazah dan takziah adalah kepedulian terhadap sesama. Melalui salat jenazah, keluarga yang berduka mendapat kekuatan spiritual. Melalui banyaknya bantuan dari orang yang bertakziah, keluarga yang berduka terbantu mengatasi masalah."
+  },
+  // ── Soal 18 → Jawaban B ──
+  {
+    type:"Pemahaman",
+    text:"Perhatikan pernyataan berikut!\n(1) Berjumlah dua rekaat\n(2) Disertai khutbah setelah salat\n(3) Dilaksanakan di lapangan terbuka\n(4) Empat kali rukuk\n(5) Memperbanyak istighfar sebelum pelaksanaan\n\nPernyataan yang berhubungan dengan salat Istiska adalah...",
+    options:["(1), (2), dan (3)","(1), (2), (3), dan (5)","(1), (3), dan (4)","(2), (4), dan (5)"],
+    answer:1,
+    explanation:"Ciri-ciri salat Istiska: (1) dua rekaat ✓, (2) disertai khutbah setelah salat ✓, (3) dilaksanakan di lapangan terbuka ✓, (5) memperbanyak istighfar sebelum pelaksanaan ✓. Sedangkan (4) empat kali rukuk adalah ciri salat GERHANA, bukan salat Istiska."
+  },
+  // ── Soal 19 → Jawaban C ──
+  {
+    type:"Pemahaman",
+    text:"Dalam salat Istiska, pakaian jamaah yang dianjurkan adalah...",
+    options:["Pakaian terbaik dan paling rapi, seperti pada salat Idul Fitri","Pakaian berwarna putih sebagai simbol kesucian hati","Pakaian yang digunakan sehari-hari untuk menampakkan kesahajaan, pertaubatan, dan kesucian hati","Pakaian berwarna hitam sebagai tanda berkabung atas kemarau panjang"],
+    answer:2,
+    explanation:"Pada hari pelaksanaan salat Istiska, disunahkan mengenakan pakaian yang digunakan sehari-hari — bukan pakaian terbaik seperti pada waktu salat Id. Ini untuk menampakkan kesahajaan, pertaubatan, dan kesucian hati di hadapan Allah Swt."
+  },
+  // ── Soal 20 → Jawaban D ──
+  {
+    type:"Penerapan & Analisis",
+    text:"Pada suatu malam sekitar pukul 21.00, Pak Hasan mengajak anaknya ke masjid. Di sana sudah banyak jamaah berkumpul. Imam kemudian memimpin salat dua rekaat — di setiap rekaat dilakukan dua kali rukuk. Salat apakah yang dilaksanakan?",
+    options:["Salat Kusuf (gerhana matahari)","Salat Istiska","Salat Jenazah","Salat Khusuf (gerhana bulan)"],
+    answer:3,
+    explanation:"Petunjuk kuncinya ada dua: (1) dilaksanakan pada malam hari (sekitar pukul 21.00), dan (2) ada dua kali rukuk di setiap rekaat. Ini adalah ciri khas salat Kusufain. Karena dilaksanakan pada malam hari, maka ini adalah salat Khusuf (gerhana bulan). Salat Kusuf (gerhana matahari) dilaksanakan pada siang hari."
+  },
+  // ── Soal 21 → Jawaban A ──
+  {
+    type:"Penerapan & Analisis",
+    text:"Di sebuah daerah terjadi kemarau panjang. Lahan pertanian mengering dan air bersih mulai sulit didapat. BMKG memprediksi hujan kemungkinan turun dalam seminggu ke depan. Apakah dalam situasi ini salat Istiska tetap diperlukan?",
+    options:["Ya, tetap diperlukan — karena hujan terjadi atas kekuasaan Allah, dan salat Istiska adalah media berdoa dengan kerendahan hati dan penuh harap agar Allah menurunkan hujan","Tidak diperlukan lagi karena BMKG sudah memprediksi hujan akan turun sendirinya","Tidak diperlukan karena sudah bisa digantikan dengan teknologi hujan buatan","Hanya diperlukan jika BMKG memprediksi hujan tidak akan turun sama sekali"],
+    answer:0,
+    explanation:"Bab 4 menjelaskan bahwa meskipun manusia bisa memprediksi hujan melalui sains, salat Istiska tetap perlu dilakukan. Ini karena hujan terjadi melalui siklus alam yang tidak lepas dari kekuasaan Allah. Manusia tetap memerlukan media untuk berdoa dengan kerendahan hati dan penuh harap kepada Allah Swt."
+  },
+  // ── Soal 22 → Jawaban B ──
+  {
+    type:"Penerapan & Analisis",
+    text:"Saat salat jenazah berlangsung, Andi sudah sampai pada takbir ketiga. Bacaan yang seharusnya dibaca Andi setelah takbir ketiga untuk jenazah laki-laki adalah...",
+    options:["Surah al-Fatihah","Doa: 'Allahummaghfir lahu warhamhu wa 'āfihi wa'fu 'anhu'","Salawat: 'Allahumma shalli 'alā Muhammad wa 'alā āli Muhammad...'","Doa: 'Allahumma lā tahrimnā ajrahu wa lā taftinnā ba'dahu'"],
+    answer:1,
+    explanation:"Urutan bacaan salat jenazah: Takbir 1 → al-Fatihah | Takbir 2 → Salawat Nabi | Takbir 3 → Doa untuk jenazah ('Allahummaghfir lahu warhamhu wa 'āfihi wa'fu 'anhu') | Takbir 4 → Doa agar tidak dihalangi dari pahalanya | Salam."
+  },
+  // ── Soal 23 → Jawaban C ──
+  {
+    type:"Penerapan & Analisis",
+    text:"Warga Desa Wonosari bergotong royong menyediakan sembako dan makanan setiap hari bagi empat keluarga yang melakukan isolasi mandiri karena Covid-19. Tindakan warga ini paling mencerminkan nilai...",
+    options:["Salat gerhana — karena mendoakan orang yang kesusahan","Salat Istiska — karena memohon pertolongan Allah bersama-sama","Salat jenazah dan takziah — karena kepedulian sosial dan gotong royong membantu keluarga yang tertimpa musibah","Ibadah fardu kifayah — karena kewajiban yang gugur bila sudah ada yang menjalankan"],
+    answer:2,
+    explanation:"Kisah gotong royong warga Wonosari membantu keluarga yang terdampak Covid-19 adalah contoh nyata nilai kepedulian sosial dan gotong royong — nilai utama yang terkandung dalam salat jenazah dan takziah."
+  },
+  // ── Soal 24 → Jawaban D ──
+  {
+    type:"Penerapan & Analisis",
+    text:"Bu Aminah meninggal dunia karena Covid-19. Sesuai protokol kesehatan, hanya satu petugas yang bisa menyalatkan jenazahnya. Pandangan yang tepat terhadap kondisi ini adalah...",
+    options:["Kewajiban salat jenazah tidak sah karena hanya dilakukan satu orang","Keluarga berdosa karena tidak ikut menyalatkan jenazah Bu Aminah","Seluruh umat Islam di daerah itu berdosa karena tidak ikut menyalatkan","Kewajiban fardu kifayah salat jenazah tetap terpenuhi meskipun hanya dilakukan satu orang, karena sudah ada yang melaksanakannya"],
+    answer:3,
+    explanation:"Salat jenazah hukumnya fardu kifayah — wajib dilaksanakan, tetapi apabila sudah ada yang melaksanakannya maka yang lain terbebas dari kewajiban. Meskipun hanya satu orang yang menyalatkan, kewajiban fardu kifayah sudah terpenuhi."
+  },
+  // ── Soal 25 → Jawaban A ──
+  {
+    type:"Penerapan & Analisis",
+    text:"Rangkuman Bab 4 menyebutkan tiga poin utama. Pernyataan yang PALING TEPAT mewakili ketiga poin rangkuman tersebut adalah...",
+    options:["Salat gerhana, istiska, dan jenazah memiliki ketentuan khusus; salat gerhana dan istiska mengandung dimensi spiritual (penuh harap kepada Allah), sedangkan salat jenazah dan takziah mengandung dimensi sosial (kepedulian dan gotong royong)","Salat gerhana, istiska, dan jenazah adalah salat wajib yang harus dikuasai setiap muslim","Ketiga salat ini mengajarkan agar manusia tidak takut pada gerhana, hujan, dan kematian","Sains dan teknologi modern sudah membuat salat gerhana dan istiska tidak relevan lagi bagi generasi masa kini"],
+    answer:0,
+    explanation:"Tiga poin rangkuman Bab 4: (1) Salat gerhana, istiska, dan jenazah memiliki ketentuan-ketentuan khusus; (2) Salat gerhana dan istiska memiliki dimensi spiritual sebagai media memohon pertolongan Allah; (3) Salat jenazah memiliki dimensi sosial — kepedulian dan gotong royong."
+  }
+];
+
+// ═══════════════════════════════════════════════════════
+// ALGORITMA ACAK — Fisher-Yates + penjamin tidak ada
+// jawaban berurutan yang sama
+// ═══════════════════════════════════════════════════════
+function shuffleNoAdjacent(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  for (let pass = 0; pass < 500; pass++) {
+    let clean = true;
+    for (let i = 0; i < arr.length - 1; i++) {
+      if (arr[i].answer === arr[i + 1].answer) {
+        clean = false;
+        let swapped = false;
+        for (let k = i + 2; k < arr.length; k++) {
+          const ansK = arr[k].answer;
+          const ansBefore = (i > 0) ? arr[i - 1].answer : -1;
+          const ansAfter = (k < arr.length - 1) ? arr[k + 1].answer : -1;
+          if (ansK !== arr[i].answer && ansK !== ansAfter && ansK !== ansBefore) {
+            [arr[i + 1], arr[k]] = [arr[k], arr[i + 1]];
+            swapped = true; break;
+          }
+        }
+        if (!swapped) {
+          for (let k = i + 2; k < arr.length; k++) {
+            const ansK = arr[k].answer;
+            const ansBefore = (i > 0) ? arr[i - 1].answer : -1;
+            const ansAfterI = arr[i + 1].answer;
+            const ansAfterK = (k < arr.length - 1) ? arr[k + 1].answer : -1;
+            if (ansK !== ansAfterI && ansK !== ansBefore &&
+                arr[i].answer !== ansAfterK && arr[i].answer !== ansBefore) {
+              [arr[i], arr[k]] = [arr[k], arr[i]];
+              swapped = true; break;
+            }
+          }
+        }
+      }
+    }
+    if (clean) break;
+  }
+}
+
+// ═══════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════
+let scoreCorrect = 0;
+let scoreWrong = 0;
+let answered = [];
+
+// ═══════════════════════════════════════════════════════
+// RENDER
+// ═══════════════════════════════════════════════════════
+function typeClass(type) {
+  if (type.includes("Hafalan")) return "t-hafalan";
+  if (type.includes("Pemahaman")) return "t-pemahaman";
+  return "t-penerapan";
+}
+
+function renderAll() {
+  const box = document.getElementById("questions-container");
+  const labels = ["A", "B", "C", "D"];
+  let html = "";
+  questions.forEach((q, i) => {
+    html += `<div class="q-card" id="qcard-${i}" data-type="${q.type}">`;
+    html += `<div class="q-header">
+      <span class="q-type-badge ${typeClass(q.type)}">${q.type}</span>
+      <span class="q-num">Soal ${i + 1} dari ${questions.length}</span>
+    </div>`;
+    html += `<div class="q-text">${q.text}</div>`;
+    html += `<div class="q-options" id="opts-${i}">`;
+    q.options.forEach((opt, j) => {
+      html += `<button class="opt-btn" id="opt-${i}-${j}" onclick="pickAnswer(${i},${j})">
+        <span class="opt-label">${labels[j]}</span>
+        <span>${opt}</span>
+      </button>`;
+    });
+    html += `</div>`;
+    html += `<div class="q-feedback" id="fb-${i}"></div>`;
+    html += `</div>`;
+  });
+  box.innerHTML = html;
+  renderDistBar();
+}
+
+function renderDistBar() {
+  const counts = [0, 0, 0, 0];
+  questions.forEach(q => counts[q.answer]++);
+  const total = questions.length;
+  const colors = ["var(--maroon)", "#0284c7", "var(--rose)", "#a855f7"];
+  let html = "";
+  counts.forEach((c, i) => {
+    html += `<div style="width:${(c / total * 100)}%;background:${colors[i]}"></div>`;
+  });
+  document.getElementById("dist-bar").innerHTML = html;
+}
+
+// ═══════════════════════════════════════════════════════
+// LOGIKA JAWAB
+// ═══════════════════════════════════════════════════════
+function pickAnswer(qi, oi) {
+  if (answered[qi]) return;
+  answered[qi] = true;
+
+  const q = questions[qi];
+  const isCorrect = (oi === q.answer);
+  if (isCorrect) scoreCorrect++; else scoreWrong++;
+
+  const labels = ["A", "B", "C", "D"];
+
+  q.options.forEach((_, j) => {
+    const btn = document.getElementById(`opt-${qi}-${j}`);
+    btn.disabled = true;
+    if (j === q.answer) {
+      btn.classList.add("correct");
+    } else if (j === oi && !isCorrect) {
+      btn.classList.add("wrong");
+    } else {
+      btn.classList.add("dimmed");
+    }
+  });
+
+  const card = document.getElementById(`qcard-${qi}`);
+  card.classList.add(isCorrect ? "answered-correct" : "answered-wrong");
+
+  const fb = document.getElementById(`fb-${qi}`);
+  fb.className = "q-feedback show " + (isCorrect ? "fb-correct" : "fb-wrong");
+  if (isCorrect) {
+    fb.innerHTML = `<strong>✅ Benar! Jawaban kamu tepat.</strong>${q.explanation}`;
+  } else {
+    fb.innerHTML = `<strong>❌ Salah. Jawaban yang benar adalah <u>${labels[q.answer]}</u>.</strong>${q.explanation}`;
+  }
+
+  updateProgress();
+
+  if (answered.every(a => a)) {
+    setTimeout(() => openResult(), 900);
+  }
+}
+
+function updateProgress() {
+  const done = answered.filter(a => a).length;
+  const total = questions.length;
+  const pct = Math.round((done / total) * 100);
+  document.getElementById("prog-label").textContent = `${done} dari ${total} soal dijawab`;
+  document.getElementById("prog-fill").style.width = pct + "%";
+  document.getElementById("chip-g").textContent = "✅ " + scoreCorrect;
+  document.getElementById("chip-r").textContent = "❌ " + scoreWrong;
+}
+
+// ═══════════════════════════════════════════════════════
+// MODAL HASIL
+// ═══════════════════════════════════════════════════════
+function openResult() {
+  if (!answered.every(a => a)) return;
+
+  const nama = document.getElementById("inp-nama").value.trim() || "Peserta";
+  const kelas = document.getElementById("inp-kelas").value.trim();
+  const pct = Math.round((scoreCorrect / questions.length) * 100);
+
+  let emoji, predikat, prColor;
+  if (pct >= 90)      { emoji = "🏆"; predikat = "Sangat Baik (A)"; prColor = "#22c55e"; }
+  else if (pct >= 75) { emoji = "⭐"; predikat = "Baik (B)"; prColor = "#9f1239"; }
+  else if (pct >= 60) { emoji = "👍"; predikat = "Cukup (C)"; prColor = "#f59e0b"; }
+  else if (pct >= 40) { emoji = "📚"; predikat = "Kurang (D)"; prColor = "#f97316"; }
+  else                { emoji = "💪"; predikat = "Sangat Kurang (E)"; prColor = "#f43f5e"; }
+
+  let motivasi;
+  if (pct >= 90) {
+    motivasi = `<strong>Masya Allah, luar biasa!</strong> Kamu sudah menguasai materi Bab 4 dengan sangat baik — mulai dari ketentuan salat gerhana (Kusuf/Khusuf dengan empat rukuk), salat Istiska (di lapangan terbuka dengan khutbah istighfar), hingga salat jenazah (empat takbir tanpa rukuk dan sujud). Kamu juga memahami dimensi spiritual dan sosial dari ketiga salat ini. Semoga ilmunya menjadi amal yang bermanfaat!`;
+  } else if (pct >= 75) {
+    motivasi = `<strong>Hebat sekali!</strong> Pemahaman kamu tentang tiga jenis salat sunah berjamaah sudah sangat baik. Kamu mampu membedakan ciri-ciri salat gerhana, Istiska, dan jenazah — termasuk urutan bacaan dan jumlah rukuk/takbirnya. Masih ada sedikit yang perlu diperbaiki, terutama pada soal-soal analisis kasus. Tinjau kembali dan pasti skor kamu akan sempurna!`;
+  } else if (pct >= 60) {
+    motivasi = `<strong>Cukup baik!</strong> Kamu sudah memahami dasar-dasar salat gerhana, Istiska, dan jenazah. Namun beberapa materi perlu diperdalam — terutama perbedaan ciri-ciri ketiga salat ini (jumlah rukuk vs takbir, tempat pelaksanaan, ada/tidaknya khutbah) dan urutan bacaan salat jenazah. Coba baca kembali buku paket dan ulangi latihan ini!`;
+  } else if (pct >= 40) {
+    motivasi = `<strong>Jangan berkecil hati!</strong> Bab 4 memang cukup menantang karena membahas tiga jenis salat sekaligus, masing-masing dengan ketentuan yang berbeda-beda. Tipsnya: buat tabel perbandingan tiga salat (jumlah rekaat, rukuk, takbir, tempat, khutbah, bacaan) agar lebih mudah diingat. Pelajari kembali, lalu kerjakan ulang latihan ini. Kamu pasti bisa lebih baik!`;
+  } else {
+    motivasi = `<strong>Tetap semangat!</strong> Materi Bab 4 tentang salat gerhana, Istiska, dan jenazah memang banyak detailnya — mulai dari istilah Kusufain, empat rukuk dalam gerhana, khutbah istighfar di Istiska, hingga empat takbir dalam salat jenazah. Mulai dari membuat ringkasan per-salat, menghafalkan ciri khas masing-masing, lalu coba lagi latihan soal ini. Setiap usaha belajar pasti akan membuahkan hasil. Semangat! 💪`;
+  }
+
+  document.getElementById("r-emoji").textContent = emoji;
+  document.getElementById("r-name").textContent = nama;
+  document.getElementById("r-class").textContent = kelas ? "Kelas " + kelas : "";
+  document.getElementById("r-score").textContent = pct;
+  document.getElementById("r-correct").textContent = scoreCorrect;
+  document.getElementById("r-wrong").textContent = scoreWrong;
+
+  const pr = document.getElementById("r-predikat");
+  pr.textContent = predikat;
+  pr.style.background = prColor + "22";
+  pr.style.color = prColor;
+
+  document.getElementById("r-motivasi").innerHTML = motivasi;
+
+  const confettiBox = document.getElementById("confetti-box");
+  confettiBox.innerHTML = "";
+  if (pct >= 75) {
+    const colors = ["#22c55e", "#f59e0b", "#9f1239", "#f43f5e", "#3b82f6", "#a855f7", "#ec4899", "#4c0519"];
+    for (let c = 0; c < 50; c++) {
+      const el = document.createElement("div");
+      el.className = "confetti";
+      el.style.left = Math.random() * 100 + "%";
+      el.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+      el.style.animationDelay = (Math.random() * 2) + "s";
+      el.style.animationDuration = (2 + Math.random() * 2.5) + "s";
+      const size = 6 + Math.random() * 6;
+      el.style.width = size + "px";
+      el.style.height = size + "px";
+      el.style.borderRadius = Math.random() > 0.5 ? "50%" : "2px";
+      confettiBox.appendChild(el);
+    }
+  }
+
+  document.getElementById("result-overlay").classList.add("show");
+}
+
+function closeResult() {
+  document.getElementById("result-overlay").classList.remove("show");
+  document.getElementById("btn-show-result").style.display = "block";
+}
+
+function restart() {
+  scoreCorrect = 0;
+  scoreWrong = 0;
+  document.getElementById("inp-nama").value = "";
+  document.getElementById("inp-kelas").value = "";
+  document.getElementById("result-overlay").classList.remove("show");
+  document.getElementById("btn-show-result").style.display = "none";
+
+  shuffleNoAdjacent(questions);
+  answered = new Array(questions.length).fill(false);
+
+  updateProgress();
+  renderAll();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+// ═══════════════════════════════════════════════════════
+// INISIALISASI
+// ═══════════════════════════════════════════════════════
+shuffleNoAdjacent(questions);
+answered = new Array(questions.length).fill(false);
+renderAll();
+updateProgress();
+</script>
+
+  <footer class="main-footer">
+    <div class="footer-container">
+        <div class="footer-left">
+            <select onchange="location = this.value;">
+                <option value="">Pindah ke...</option>
+                <option value="index.html">🏠 Beranda Utama</option>
+                <option value="bab1.html">Bab 1</option>
+                <option value="bab2.html">Bab 2</option>
+                <option value="bab3.html">Bab 3</option>
+                <option value="bab4.html">Bab 4</option>
+                <option value="bab5.html">Bab 5</option>
+                <option value="bab6.html">Bab 6</option>
+                <option value="bab7.html">Bab 7</option>
+                <option value="bab8.html">Bab 8</option>
+                <option value="bab9.html">Bab 9</option>
+                <option value="bab10.html">Bab 10</option>
+            </select>
+        </div>
+        <div class="footer-right">
+            <p>Copyright 2026 by @just.muhammad</p>
+        </div>
+    </div>
+</footer>
+</body>
+</html>
